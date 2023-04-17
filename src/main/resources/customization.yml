@@ -107,6 +107,7 @@ editor-gui:
   emptySlotMaterial: "GRAY_STAINED_GLASS_PANE"
 
 in-game-items:
+  join: "&bJoin"
   leave: "&cLeave"
   radar: "&8Radar"
 

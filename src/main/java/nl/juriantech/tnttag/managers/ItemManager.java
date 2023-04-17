@@ -22,6 +22,9 @@ public class ItemManager {
     }
     public void giveLobbyItems(Player player) {
         clearInv(player);
+        if (player.hasPermission("tnttag.gui.join")) {
+            player.getInventory().setItem(0, new ItemBuilder(Material.DIAMOND_AXE).displayName(ChatUtils.colorize(ChatUtils.getRaw("in-game-items.join"))).build());
+        }
         player.getInventory().setItem(8, new ItemBuilder(Material.BARRIER).displayName(ChatUtils.colorize(ChatUtils.getRaw("in-game-items.leave"))).build());
     }
 
