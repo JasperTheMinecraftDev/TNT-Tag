@@ -12,8 +12,8 @@ import java.util.List;
 
 public class StartRunnable extends BukkitRunnable {
 
-    private GameManager gameManager;
-    private List<Integer> timesToBroadcast;
+    private final GameManager gameManager;
+    private final List<Integer> timesToBroadcast;
     private int timeLeft;
 
     public StartRunnable(GameManager gameManager) {

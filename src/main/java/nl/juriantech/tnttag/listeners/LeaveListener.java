@@ -1,6 +1,5 @@
 package nl.juriantech.tnttag.listeners;
 
-import nl.juriantech.tnttag.Arena;
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.managers.ArenaManager;
 import nl.juriantech.tnttag.utils.ChatUtils;
@@ -12,7 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class LeaveListener implements Listener {
 
