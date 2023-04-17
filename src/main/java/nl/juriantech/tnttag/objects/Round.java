@@ -39,6 +39,9 @@ public class Round {
                     player.setLevel(roundDuration);
                     if (gameManager.playerManager.getPlayers().get(player) == PlayerType.TAGGER) {
                         gameManager.itemManager.updateCompass(player);
+                        ChatUtils.sendActionBarMessage(player, ChatUtils.getRaw("actionBarMessages.tagger"));
+                    } else if (gameManager.playerManager.getPlayers().get(player) == PlayerType.SURVIVOR) {
+                        ChatUtils.sendActionBarMessage(player, ChatUtils.getRaw("actionBarMessages.survivor"));
                     }
                 }
 

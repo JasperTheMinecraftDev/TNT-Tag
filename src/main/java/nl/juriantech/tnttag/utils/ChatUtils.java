@@ -1,6 +1,8 @@
 package nl.juriantech.tnttag.utils;
 
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import nl.juriantech.tnttag.Arena;
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.objects.PlayerData;
@@ -35,6 +37,10 @@ public class ChatUtils {
         if (isEmptyMessage(Tnttag.customizationfile.getString(path))) return;
 
         player.sendTitle(colorize(Tnttag.customizationfile.getString(path)).replace("{seconds}", String.valueOf(seconds)), "", (int) fadeIn, (int) stay, (int) fadeOut);
+    }
+
+    public static void sendActionBarMessage(final Player player, final String message) {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(colorize(message)));
     }
 
     public static void sendCustomMessage(final Player player, final String msg) {

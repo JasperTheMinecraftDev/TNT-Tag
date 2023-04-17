@@ -123,3 +123,7 @@ state:
   STARTING: "&2Starting"
   INGAME: "&6In-game"
   ENDING: "&cEnding.."
+
+actionBarMessages:
+  tagger: "&cYou are the tagger!"
+  survivor: "&2You are a survivor, RUN!"
