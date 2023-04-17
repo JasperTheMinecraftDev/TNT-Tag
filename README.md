@@ -13,7 +13,7 @@ We welcome any contributions that can help make this plugin better!
 If you have an idea for a feature, a bug report, or a pull request, please submit it to our documentation repository.
 We will review it as soon as possible.
 
-Remember that this plugin is licensed under the terms of the included license, which allows you to modify and distribute it for non-commercial purposes, as long as you credit the original author and do not create derivative works without permission.
+Remember that this plugin is licensed under the terms of the included license, which allows you to modify and distribute it for non-commercial and private purposes, as long as you credit the original author and do not create derivative works without permission.
 If you want to use parts of the code or do your own things with it, please read the license carefully and ask for the author's consent if needed.
 
 ### License
