@@ -1,0 +1,9 @@
+name: Tnttag
+version: 6.1
+
+main: nl.juriantech.tnttag.Tnttag
+softdepend: [PlaceholderAPI]
+api-version: 1.13
+authors: [ Jurian ]
+description: A TNT-Tag minigame!
+website: juriantech.nl

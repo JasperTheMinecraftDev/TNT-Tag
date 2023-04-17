@@ -1,0 +1,29 @@
+# You can use the player placeholder %player% in the round and game finish commands!
+round-finish-commands:
+  taggers:
+  #  - eco add %player% 10
+  survivors:
+  # - eco add %player% 20
+
+arena-finish-commands:
+  #- eco add %winner% 1000
+
+timesToBroadcast:
+  - 50
+  - 40
+  - 30
+  - 20
+  - 15
+  - 10
+  - 5
+  - 4
+  - 3
+  - 2
+  - 1
+
+startMessage:
+  - "&b==================&cTNT-Tag&b=================="
+  - "                    &6&lTNT-Tag        "
+  - "   &6You need to avoid the tagger and run fast!        "
+  - " &6&lHit someone quickly when you get tagged before you explode!        "
+  - "&b==================&cTNT-Tag&b=================="

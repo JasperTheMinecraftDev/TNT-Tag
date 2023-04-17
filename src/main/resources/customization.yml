@@ -1,0 +1,124 @@
+general:
+  invalid-number: "&cThe entered number is invalid."
+  invalid-stat-type: "&cThe stat type you specified doesn't exist! Use one of these: <wins/timestagged/tags>"
+  not-enough-stats: "&cThere are not enough stats to do this at the moment."
+  no-permission: "&cYou don't have permission to do this!"
+  negative-error: "&cThe number is negative or zero, this is not allowed!"
+
+arena:
+  player-joined: "&3Player {player} joined the arena! &5({currentPlayers}/{maxPlayers})"
+  player-leaved: "&cPlayer {player} left the arena! &5({currentPlayers}/{maxPlayers})"
+  countdown-stopped: "&cThe countdown stopped because {player} left, there are not enough players to start."
+  countdown-message: "&6The game is starting in {seconds} seconds!"
+  tagger-released: "&cBeware! The &4TAGGER &cis released!!"
+  player-blew-up: "&cThe player {player} didn't survive and blew up!"
+  round-ended: "&2The round ended!"
+  player-win: "&2The player {player} won the game!"
+  last-player-leaved: "&3The last survivor/tagger leaved, stopping the game."
+  active: "&3This arena is currently started, please wait until it is ended."
+  returning-to-lobby: "&bReturning to the lobby..."
+
+player:
+  joined-arena: "&3You joined the arena!"
+  leaved-arena: "&cYou left the arena!"
+  is-tagger: "&cYou are the tagger, tag someone before you blow up!"
+  lost-game: "&3You lost the game and are now a spectator."
+  game-ended: "&8The game has ended, returning you to the lobby.."
+  tagged: "&cYou are tagged by {tagger}, tag someone else before you explode!"
+  tagger-removed: "&8Well done! You are not the tagger anymore, run!!"
+  already-in-game: "&cLeave this arena first!"
+
+commands:
+  invalid-arena: "&cThat arena doesn't exist!"
+  not-in-arena: "&cYou are not in an arena!"
+  available-arenas: "&6Available arena's: {arenas}"
+  no-available-arenas: "&cThere are no available arena's."
+  arena-exists: "&cAn arena with that name already exists!"
+  world-invalid: "&cOne of the worlds you provided is invalid!"
+  minplayers-below-2: "&cThe minPlayers argument needs to be at least 2!"
+  arena-deleted: "&cThe arena {arena} is successfully deleted!"
+  files-reloaded: "&2The files are now reloaded!"
+  arena-started: "&2The arena is started successfully."
+
+help-menu:
+  - "&b=========TNT-Tag========="
+  - "&a/tnttag help - Shows you this menu!"
+  - "&a/tnttag join <arena> - Join the specified arena!"
+  - "&a/tnttag joingui - Shows you a nice GUI to join arenas!"
+  - "&a/tnttag leave - Leave the arena that you're in."
+  - "&a/tnttag create <args> - Create an arena, you can find more information on the spigot page."
+  - "&a/tnttag delete <arena> - Delete the specified arena."
+  - "&a/tnttag list - List all the available TNT-Tag arena's!"
+  - "&a/tnttag reload - Reload the files."
+  - "&a/tntag stats - Show your stats!"
+  - "&a/tnttag top - Shows the top players!"
+  - "&a/tnttag editor <arena> - Opens the arena editor."
+  - "&b=========TNT-Tag========="
+
+setup:
+  start: "&2You are currently creating the arena. Follow the instructions written in the chat, you can cancel this process at any time by sending cancel in the chat."
+  enter-name: "&bEnter the name of the arena:"
+  name-entered: "&2The name of the arena is set!"
+  enter-minPlayers: "&bEnter the amount of players required to start the game, it must be higher or equal to 2."
+  minPlayers-too-low: "&cThe value that you entered is too low!"
+  minPlayers-entered: "&2The amount of players needed to start is set!"
+  enter-maxPlayers: "&bEnter the amount of players that the arena can hold."
+  maxPlayers-too-low: "&cThe value you entered is too low, it should be above the minimum amount of players!"
+  maxPlayers-entered: "&2The amount of players that the arena can hold is set!"
+  set-lobbyLocation: "&bGo to the place where you want to set the lobby location and type setlobby into the chat."
+  lobbyLocation-set: "&2The lobby location is set!"
+  set-startLocation: "&bGo to the place where you want to set the start location and type setstart into the chat."
+  startLocation-set: "&2The start location is set!"
+  finished: "&2Congratulations! You just created an arena called {arena}!"
+  cancelled: "&cThe setup process is now cancelled."
+
+join-gui:
+  title: "&b{count} arena's available"
+  emptySlotMaterial: "GRAY_STAINED_GLASS_PANE"
+  arenaMaterial: "GREEN_WOOL"
+  arenaTitle: "&2Arena &b{name} &2- {state}"
+  arenaLore: "&6Click to join this arena!"
+
+top-gui:
+  wins: "&6Top wins"
+  timestagged: "&6Top times tagged"
+  tags: "&6Top tags"
+  emptySlotMaterial: "GRAY_STAINED_GLASS_PANE"
+
+stats-gui:
+  title: "&6[ Your Stats ]"
+  wins: "&6✦ &bWins: &b{wins} &6✦"
+  timestagged: "&6✦ &bTimes tagged: &b{timestagged} &6✦"
+  tags: "&6✦ &bTags: &b{tags} &6✦"
+  emptySlotMaterial: "GRAY_STAINED_GLASS_PANE"
+
+editor-gui:
+  title: "&8Arena editor: {arena}"
+  minPlayersLore: "&2&lSet the required players to start."
+  maxPlayersLore: "&2&lSet the max amount of players allowed."
+  lobbyLocationLore: "&2&lSet the lobby spawn."
+  startLocationLore: "&2&lSet the start location."
+  countdownLore: "&2&lSet the countdown duration."
+  roundDurationLore: "&2&lSet the duration of each round."
+  increment: "&2Click to increment"
+  decrement: "&cClick to decrement"
+  hint: "&bClick the apply button to apply the made changes."
+  settings-applied: "&2&lThe changed setting(s) were successfully applied."
+  emptySlotMaterial: "GRAY_STAINED_GLASS_PANE"
+
+in-game-items:
+  leave: "&cLeave"
+  radar: "&8Radar"
+
+titles:
+  countdown: "&b{seconds}s"
+  round-start: "&6The round started!"
+  tagged: "&cYou are tagged!"
+  untagged: "&2RUN!!"
+  round-end: "&cThe round ended!"
+
+state:
+  IDLE: "&8Idle"
+  STARTING: "&2Starting"
+  INGAME: "&6In-game"
+  ENDING: "&cEnding.."

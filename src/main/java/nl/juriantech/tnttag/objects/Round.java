@@ -1,0 +1,92 @@
+package nl.juriantech.tnttag.objects;
+
+import nl.juriantech.tnttag.Tnttag;
+import nl.juriantech.tnttag.enums.GameState;
+import nl.juriantech.tnttag.enums.PlayerType;
+import nl.juriantech.tnttag.managers.GameManager;
+import nl.juriantech.tnttag.utils.ChatUtils;
+import nl.juriantech.tnttag.utils.ParticleUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Map;
+
+public class Round {
+
+    private final Tnttag plugin;
+    private final GameManager gameManager;
+    private int roundDuration;
+
+    public Round(Tnttag plugin, GameManager gameManager) {
+        this.plugin = plugin;
+        this.gameManager = gameManager;
+        this.roundDuration = gameManager.arena.getRoundDuration();
+    }
+    public void start() {
+        for (Player player : gameManager.playerManager.getPlayers().keySet()) {
+            ChatUtils.sendTitle(player, "titles.round-start", 20L, 20L, 20L);
+        }
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                roundDuration--;
+                for (Player player : gameManager.playerManager.getPlayers().keySet()) {
+                    player.setLevel(roundDuration);
+                    if (gameManager.playerManager.getPlayers().get(player) == PlayerType.TAGGER) {
+                        gameManager.itemManager.updateCompass(player);
+                    }
+                }
+
+                if (roundDuration <= 0) {
+                    cancel();
+                    end();
+                    if (gameManager.playerManager.getPlayerCount() == 1) {
+                        gameManager.setGameState(GameState.ENDING);
+                    } else {
+                        //Start a new round
+                        gameManager.startRound();
+                    }
+                }
+            }
+        }.runTaskTimer(plugin, 20L, 20L);
+    }
+
+    public void end() {
+        gameManager.playerManager.broadcast(ChatUtils.getRaw("arena.round-ended"));
+        for (Map.Entry<Player, PlayerType> entry : gameManager.playerManager.getPlayers().entrySet()) {
+            Player player = entry.getKey();
+
+            ChatUtils.sendTitle(player, "titles.round-end", 20L, 20L, 20L);
+            if (entry.getValue() == PlayerType.SPECTATOR) continue; //This should NOT affect spectators.
+            if (entry.getValue() == PlayerType.TAGGER) {
+                ConsoleCommandSender console = Bukkit.getConsoleSender();
+                // Execute the round command for tnt players:
+                for (String cmd : Tnttag.configfile.getStringList("round-finish-commands.taggers")) {
+                    Bukkit.dispatchCommand(console, cmd.replace("%player%", player.getName()));
+                }
+
+                player.getWorld().createExplosion(player.getLocation(), 0.5F, false, false);
+                gameManager.playerManager.broadcast(ChatUtils.getRaw("arena.player-blew-up").replace("{player}", player.getName()));
+                player.getInventory().setHelmet(new ItemStack(Material.AIR, 1));
+                player.getInventory().setItem(0, new ItemStack(Material.AIR, 1));
+
+                gameManager.playerManager.setPlayerType(player, PlayerType.SPECTATOR);
+                ChatUtils.sendMessage(player, "player.lost-game");
+                continue;
+            }
+
+            //The other people, survivors.
+            for (String cmd : Tnttag.configfile.getStringList("round-finish-commands.survivors")) {
+                ConsoleCommandSender console = Bukkit.getConsoleSender();
+                Bukkit.dispatchCommand(console, cmd.replace("%player%", player.getName()));
+            }
+
+            ParticleUtils.Firework(player.getLocation(), 0);
+        }
+    }
+}
