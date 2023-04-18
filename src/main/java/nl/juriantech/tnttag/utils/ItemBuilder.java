@@ -1,5 +1,6 @@
 package nl.juriantech.tnttag.utils;
 
+import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
@@ -143,5 +144,14 @@ public class ItemBuilder {
             }
         }
             return item.clone();
+    }
+
+    public static ItemBuilder from(String string) {
+        String[] parts = string.split(":");
+        String material = parts[0];
+        String displayName = parts[1];
+        String lore = parts[2];
+
+        return new ItemBuilder(XMaterial.valueOf(material).parseMaterial()).displayName(displayName).lore(lore);
     }
 }

@@ -23,28 +23,28 @@ public class ItemManager {
     public void giveLobbyItems(Player player) {
         clearInv(player);
         if (player.hasPermission("tnttag.gui.join")) {
-            player.getInventory().setItem(0, new ItemBuilder(Material.DIAMOND_AXE).displayName(ChatUtils.colorize(ChatUtils.getRaw("in-game-items.join"))).build());
+            player.getInventory().setItem(0,ItemBuilder.from(ChatUtils.getRaw("in-game-items.join")).build());
         }
-        player.getInventory().setItem(8, new ItemBuilder(Material.BARRIER).displayName(ChatUtils.colorize(ChatUtils.getRaw("in-game-items.leave"))).build());
+        player.getInventory().setItem(8, ItemBuilder.from(ChatUtils.getRaw("in-game-items.leave")).build());
     }
 
     public void giveGameItems() {
         for (Player player : gameManager.playerManager.getPlayers().keySet()) {
             clearInv(player);
-            player.getInventory().setItem(8, new ItemBuilder(Material.BARRIER).displayName(ChatUtils.colorize(ChatUtils.getRaw("in-game-items.leave"))).build());
+            player.getInventory().setItem(8, ItemBuilder.from(ChatUtils.getRaw("in-game-items.leave")).build());
         }
     }
 
     public void giveGameItems(Player player) {
         clearInv(player);
-        player.getInventory().setItem(8, new ItemBuilder(Material.BARRIER).displayName(ChatUtils.colorize(ChatUtils.getRaw("in-game-items.leave"))).build());
+        player.getInventory().setItem(8, ItemBuilder.from(ChatUtils.getRaw("in-game-items.leave")).build());
     }
 
     public void giveTaggerItems(Player tagger) {
         giveGameItems(); //The inventory is already cleared here.
         tagger.getInventory().setHelmet(new ItemStack(Material.TNT, 1));
         tagger.getInventory().setItem(0, new ItemStack(Material.TNT, 1));
-        tagger.getInventory().setItem(7, new ItemBuilder(Material.COMPASS).displayName(ChatUtils.colorize(ChatUtils.getRaw("in-game-items.radar"))).build());
+        tagger.getInventory().setItem(7, ItemBuilder.from(ChatUtils.getRaw("in-game-items.radar")).build());
     }
 
     public void updateCompass(Player player) {
