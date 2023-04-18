@@ -106,7 +106,7 @@ editor-gui:
   settings-applied: "&2&lThe changed setting(s) were successfully applied."
   emptySlotMaterial: "GRAY_STAINED_GLASS_PANE"
 
-in-game-items:
+items:
   join: "&bJoin"
   leave: "&cLeave"
   radar: "&8Radar"
