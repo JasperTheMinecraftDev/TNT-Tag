@@ -1,5 +1,5 @@
 name: Tnttag
-version: 6.2
+version: 6.3
 main: nl.juriantech.tnttag.Tnttag
 softdepend: [PlaceholderAPI]
 api-version: 1.13
