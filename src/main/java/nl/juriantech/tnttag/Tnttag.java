@@ -118,10 +118,8 @@ public class Tnttag extends JavaPlugin {
         getServer().getPluginManager().registerEvents(updateChecker, this);
         getServer().getPluginManager().registerEvents(new LeaveListener(), this);
         getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerItemDropListener(), this);
         getServer().getPluginManager().registerEvents(new LeaveListener(), this);
         getServer().getPluginManager().registerEvents(new SignListener(this), this);
-        getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
         getServer().getPluginManager().registerEvents(new ItemListener(), this);
     }
 
