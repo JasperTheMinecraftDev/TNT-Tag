@@ -15,17 +15,12 @@ public class PartyAndFriendsHook {
 
     public PlayerParty getPlayerParty(UUID playerUUID) {
         PAFPlayer pafPlayer = PAFPlayerManager.getInstance().getPlayer(playerUUID);
-        PlayerParty party = PartyManager.getInstance().getParty(pafPlayer);
-        return party;
+        return PartyManager.getInstance().getParty(pafPlayer);
     }
 
     public boolean playerIsInParty(UUID playerUUID) {
         PlayerParty party = getPlayerParty(playerUUID);
-        if(party!=null){
-            return true;
-        }else{
-            return false;
-        }
+        return party != null;
     }
 
     public ArrayList<Player> getPlayersOfParty(PlayerParty party) {

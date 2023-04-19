@@ -1,5 +1,6 @@
 package nl.juriantech.tnttag.managers;
 
+import de.simonsator.partyandfriends.spigot.api.party.PlayerParty;
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.enums.GameState;
 import nl.juriantech.tnttag.enums.PlayerType;
@@ -38,6 +39,27 @@ public class PlayerManager {
         if (gameManager.state == GameState.INGAME || getPlayerCount() == maxPlayers) return; //Safety check.
         if (players.containsKey(player)) return; //Safety check.
 
+        if (plugin.getPartyAndFriendsHook() != null) {
+            PartyAndFriendsHook hook = plugin.getPartyAndFriendsHook();
+            if (hook.playerIsInParty(player.getUniqueId())) {
+                PlayerParty party = hook.getPlayerParty(player.getUniqueId());
+                if (party.getLeader().getUniqueId().equals(player.getUniqueId())) {
+                    int partySize = hook.getPlayersOfParty(party).size();
+                    if (players.size() + partySize > maxPlayers) {
+                        ChatUtils.sendMessage(player, "party.too-much-players");
+                        return;
+                    }
+
+                    for (Player partyPlayer : hook.getPlayersOfParty(party)) {
+                        addPlayer(partyPlayer);
+                        ChatUtils.sendMessage(player, "party.joined-game");
+                    }
+                } else {
+                    ChatUtils.sendMessage(player, "party.not-the-leader");
+                }
+            }
+        }
+
         players.put(player, PlayerType.WAITING);
         playerInformationMap.put(player, new PlayerInformation(player));
         gameManager.itemManager.giveLobbyItems(player);
@@ -47,15 +69,6 @@ public class PlayerManager {
 
         if (getPlayerCount() >= minPlayers) {
             gameManager.start();
-        }
-
-        if (plugin.getPartyAndFriendsHook() != null) {
-            PartyAndFriendsHook hook = plugin.getPartyAndFriendsHook();
-            if (hook.playerIsInParty(player.getUniqueId())) {
-                for (Player partyPlayer : hook.getPlayersOfParty(hook.getPlayerParty(player.getUniqueId()))) {
-                    addPlayer(partyPlayer);
-                }
-            }
         }
     }
 

@@ -128,3 +128,8 @@ state:
 actionBarMessages:
   tagger: "&cYou are the tagger!"
   survivor: "&2You are a survivor, RUN!"
+
+party:
+  joined-game: "&bYour party joined the game."
+  too-much-players: "&cYour party has too much players to join this game!"
+  not-the-leader: "&cYou are not the leader of this party!"
