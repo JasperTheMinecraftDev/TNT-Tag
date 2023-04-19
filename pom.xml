@@ -6,7 +6,7 @@
 
     <groupId>nl.juriantech</groupId>
     <artifactId>tnttag</artifactId>
-    <version>6.3</version>
+    <version>6.4</version>
     <packaging>jar</packaging>
 
     <name>Tnttag</name>
