@@ -4,6 +4,7 @@ import dev.dejvokep.boostedyaml.YamlDocument;
 import nl.juriantech.tnttag.checkers.UpdateChecker;
 import nl.juriantech.tnttag.commands.TnttagCommand;
 import nl.juriantech.tnttag.handlers.SetupCommandHandler;
+import nl.juriantech.tnttag.hooks.PartyAndFriendsHook;
 import nl.juriantech.tnttag.hooks.PlaceholderAPIExpansion;
 import nl.juriantech.tnttag.listeners.*;
 import nl.juriantech.tnttag.managers.ArenaManager;
@@ -29,6 +30,7 @@ public class Tnttag extends JavaPlugin {
     private UpdateChecker updateChecker;
     private SignManager signManager;
     private InventoryManager inventoryManager;
+    private PartyAndFriendsHook partyAndFriendsHook;
 
     @Override
     public void onEnable() {
@@ -47,6 +49,13 @@ public class Tnttag extends JavaPlugin {
             new PlaceholderAPIExpansion(this).register();
             logger.info("[TNT-Tag] PlaceholderAPI hooks enabled.");
         }
+
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            logger.info("[TNT-Tag] PartyAndFriends detected, enabling hooks.");
+            this.partyAndFriendsHook = new PartyAndFriendsHook();
+            logger.info("[TNT-Tag] PartyAndFriends hooks enabled.");
+        }
+
         logger.warning("TNT-Tag has been enabled!");
         new BukkitRunnable() {
             @Override
@@ -142,5 +151,9 @@ public class Tnttag extends JavaPlugin {
 
     public SignManager getSignManager() {
         return signManager;
+    }
+
+    public PartyAndFriendsHook getPartyAndFriendsHook() {
+        return partyAndFriendsHook;
     }
 }

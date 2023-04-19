@@ -89,6 +89,10 @@
             <id>placeholderapi</id>
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
+        <repository>
+            <id>simonsators-repo</id>
+            <url>https://simonsator.de/repo/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -130,6 +134,18 @@
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>2.11.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.simonsator</groupId>
+            <artifactId>Party-and-Friends-MySQL-Edition-Spigot-API</artifactId>
+            <version>1.5.4-RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.simonsator</groupId>
+            <artifactId>spigot-party-api-for-party-and-friends</artifactId>
+            <version>1.0.5-RELEASE</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

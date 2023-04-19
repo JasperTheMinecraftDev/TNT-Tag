@@ -3,6 +3,7 @@ package nl.juriantech.tnttag.managers;
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.enums.GameState;
 import nl.juriantech.tnttag.enums.PlayerType;
+import nl.juriantech.tnttag.hooks.PartyAndFriendsHook;
 import nl.juriantech.tnttag.objects.PlayerData;
 import nl.juriantech.tnttag.objects.PlayerInformation;
 import nl.juriantech.tnttag.utils.ChatUtils;
@@ -46,6 +47,15 @@ public class PlayerManager {
 
         if (getPlayerCount() >= minPlayers) {
             gameManager.start();
+        }
+
+        if (plugin.getPartyAndFriendsHook() != null) {
+            PartyAndFriendsHook hook = plugin.getPartyAndFriendsHook();
+            if (hook.playerIsInParty(player.getUniqueId())) {
+                for (Player partyPlayer : hook.getPlayersOfParty(hook.getPlayerParty(player.getUniqueId()))) {
+                    addPlayer(partyPlayer);
+                }
+            }
         }
     }
 
