@@ -80,6 +80,7 @@ public class PlayerManager {
     }
 
     public synchronized void removePlayer(Player player, boolean message) {
+        if (!players.containsKey(player)) return;
         PlayerLeaveArenaEvent event = new PlayerLeaveArenaEvent(player, gameManager.arena.getName());
         Bukkit.getPluginManager().callEvent(event);
 

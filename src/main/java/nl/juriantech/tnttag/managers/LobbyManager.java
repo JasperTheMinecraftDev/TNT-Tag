@@ -27,7 +27,7 @@ public class LobbyManager {
         ChatUtils.sendMessage(player, "player.joined-lobby");
     }
 
-    public void leaveLobby(Player player){
+    public void leaveLobby(Player player) {
         itemManager.clearInv(player);
         players.remove(player);
         PlayerInformation playerInfo = playerInformationMap.remove(player);
