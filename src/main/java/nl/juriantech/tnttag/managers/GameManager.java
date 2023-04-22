@@ -2,6 +2,9 @@ package nl.juriantech.tnttag.managers;
 
 import nl.juriantech.tnttag.Arena;
 import nl.juriantech.tnttag.Tnttag;
+import nl.juriantech.tnttag.api.ArenaEndingEvent;
+import nl.juriantech.tnttag.api.ArenaStartedEvent;
+import nl.juriantech.tnttag.api.ArenaStartingEvent;
 import nl.juriantech.tnttag.enums.GameState;
 import nl.juriantech.tnttag.enums.PlayerType;
 import nl.juriantech.tnttag.objects.PlayerData;
@@ -13,7 +16,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GameManager {
@@ -51,12 +56,18 @@ public class GameManager {
                 break;
             case STARTING:
                 //Start the countdown
+                ArenaStartingEvent arenaStartingEvent = new ArenaStartingEvent(arena.getName());
+                Bukkit.getPluginManager().callEvent(arenaStartingEvent);
+
                 this.state = GameState.STARTING;
                 this.startRunnable = new StartRunnable(this);
                 this.startRunnable.runTaskTimer(plugin, 20, 20);
                 break;
             case INGAME:
                 //Start the game
+                ArenaStartedEvent arenaStartedEvent = new ArenaStartedEvent(arena.getName());
+                Bukkit.getPluginManager().callEvent(arenaStartedEvent);
+
                 if (this.startRunnable != null) this.startRunnable.cancel();
                 this.state = GameState.INGAME;
                 itemManager.giveGameItems();
@@ -81,6 +92,9 @@ public class GameManager {
                             ParticleUtils.Firework(player.getLocation(), 0);
                             playerManager.broadcast(ChatUtils.getRaw("arena.player-win").replace("{player}", player.getName()));
                             playerManager.broadcast(ChatUtils.getRaw("arena.returning-to-lobby"));
+
+                            ArenaEndingEvent arenaEndingEvent = new ArenaEndingEvent(arena.getName(), playerManager.getPlayers(), new ArrayList<Player>(List.of(player)));
+                            Bukkit.getPluginManager().callEvent(arenaEndingEvent);
                         }
                         playerManager.removePlayer(player, false);
                     }

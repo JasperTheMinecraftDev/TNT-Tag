@@ -2,6 +2,7 @@ package nl.juriantech.tnttag.managers;
 
 import de.simonsator.partyandfriends.spigot.api.party.PlayerParty;
 import nl.juriantech.tnttag.Tnttag;
+import nl.juriantech.tnttag.api.PlayerJoinArenaEvent;
 import nl.juriantech.tnttag.enums.GameState;
 import nl.juriantech.tnttag.enums.PlayerType;
 import nl.juriantech.tnttag.hooks.PartyAndFriendsHook;
@@ -59,6 +60,9 @@ public class PlayerManager {
                 }
             }
         }
+
+        PlayerJoinArenaEvent event = new PlayerJoinArenaEvent(player, gameManager.arena.getName());
+        Bukkit.getPluginManager().callEvent(event);
 
         players.put(player, PlayerType.WAITING);
         playerInformationMap.put(player, new PlayerInformation(player));
