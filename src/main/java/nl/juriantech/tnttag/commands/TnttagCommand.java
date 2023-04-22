@@ -11,6 +11,7 @@ import nl.juriantech.tnttag.managers.ArenaManager;
 import nl.juriantech.tnttag.utils.ChatUtils;
 import org.bukkit.entity.Player;
 import revxrsal.commands.annotation.Command;
+import revxrsal.commands.annotation.Optional;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
 
@@ -40,7 +41,12 @@ public class TnttagCommand {
 
     @Subcommand("join")
     @CommandPermission("tnttag.join")
-    public void onJoin(Player player, String arenaName) {
+    public void onJoin(Player player, @Optional String arenaName) {
+        if (arenaName == null) {
+            plugin.getLobbyManager().enterLobby(player);
+            return;
+        }
+
         if (arenaManager.playerIsInArena(player)) {
             ChatUtils.sendMessage(player, "player.already-in-game");
             return;

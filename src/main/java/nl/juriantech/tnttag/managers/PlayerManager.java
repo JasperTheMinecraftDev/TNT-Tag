@@ -8,7 +8,6 @@ import nl.juriantech.tnttag.enums.GameState;
 import nl.juriantech.tnttag.enums.PlayerType;
 import nl.juriantech.tnttag.hooks.PartyAndFriendsHook;
 import nl.juriantech.tnttag.objects.PlayerData;
-import nl.juriantech.tnttag.objects.PlayerInformation;
 import nl.juriantech.tnttag.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -23,18 +22,22 @@ public class PlayerManager {
 
     private final Tnttag plugin;
     private final GameManager gameManager;
-    private HashMap<Player, PlayerType> players;
-    private HashMap<Player, PlayerInformation> playerInformationMap;
+    private final HashMap<Player, PlayerType> players;
     private final Random random = new Random();
+    private final LobbyManager lobbyManager;
 
     public PlayerManager(Tnttag plugin, GameManager gameManager) {
         this.plugin = plugin;
         this.gameManager = gameManager;
         this.players = new HashMap<>();
-        this.playerInformationMap = new HashMap<>();
+        this.lobbyManager = plugin.getLobbyManager();
     }
 
     public synchronized void addPlayer(Player player) {
+        if (!lobbyManager.playerIsInLobby(player)) {
+            lobbyManager.enterLobby(player);
+        }
+
         int minPlayers = gameManager.arena.getMinPlayers();
         int maxPlayers = gameManager.arena.getMaxPlayers();
 
@@ -66,7 +69,6 @@ public class PlayerManager {
         Bukkit.getPluginManager().callEvent(event);
 
         players.put(player, PlayerType.WAITING);
-        playerInformationMap.put(player, new PlayerInformation(player));
         gameManager.itemManager.giveLobbyItems(player);
         teleportToLobby(player);
         ChatUtils.sendMessage(player, "player.joined-arena");
@@ -83,10 +85,6 @@ public class PlayerManager {
 
         setPlayerType(player, PlayerType.WAITING);
         players.remove(player);
-        PlayerInformation playerInfo = playerInformationMap.remove(player);
-        if (playerInfo != null) {
-            playerInfo.restore();
-        }
         if (message) {
             ChatUtils.sendMessage(player, "player.leaved-arena");
             broadcast(ChatUtils.getRaw("arena.player-leaved").replace("{player}", player.getName()));
@@ -221,13 +219,13 @@ public class PlayerManager {
 
             if (parts[2].equalsIgnoreCase("SURVIVORS")) {
                 if (players.get(player).equals(PlayerType.SURVIVOR)) {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.getByName(parts[0]), 2147483647, Integer.parseInt(parts[1])));
+                    player.addPotionEffect(new PotionEffect(Objects.requireNonNull(PotionEffectType.getByName(parts[0])), 2147483647, Integer.parseInt(parts[1])));
                 }
             }
 
             if (parts[2].equalsIgnoreCase("TAGGERS")) {
                 if (players.get(player).equals(PlayerType.TAGGER)) {
-                    player.addPotionEffect(new PotionEffect(PotionEffectType.getByName(parts[0]), 2147483647, Integer.parseInt(parts[1])));
+                    player.addPotionEffect(new PotionEffect(Objects.requireNonNull(PotionEffectType.getByName(parts[0])), 2147483647, Integer.parseInt(parts[1])));
                 }
             }
         }

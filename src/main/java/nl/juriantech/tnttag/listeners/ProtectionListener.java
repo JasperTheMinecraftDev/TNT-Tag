@@ -21,7 +21,7 @@ public class ProtectionListener implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
 
-        if (plugin.getArenaManager().playerIsInArena(player)) {
+        if (plugin.getLobbyManager().playerIsInLobby(player)) {
             event.setCancelled(true);
         }
     }
@@ -30,7 +30,7 @@ public class ProtectionListener implements Listener {
     public void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
 
-        if (plugin.getArenaManager().playerIsInArena(player)) {
+        if (plugin.getLobbyManager().playerIsInLobby(player)) {
             event.setCancelled(true);
         }
     }
@@ -39,7 +39,7 @@ public class ProtectionListener implements Listener {
     public void onPlayerDropItem(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
 
-        if (plugin.getArenaManager().playerIsInArena(player)) {
+        if (plugin.getLobbyManager().playerIsInLobby(player)) {
             event.setCancelled(true);
         }
     }
@@ -48,7 +48,7 @@ public class ProtectionListener implements Listener {
     public void onPlayerDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
-            if (plugin.getArenaManager().playerIsInArena(player)) {
+            if (plugin.getLobbyManager().playerIsInLobby(player)) {
                 event.setCancelled(true);
             }
         }

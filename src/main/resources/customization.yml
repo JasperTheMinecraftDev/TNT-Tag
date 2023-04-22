@@ -19,6 +19,8 @@ arena:
   returning-to-lobby: "&bReturning to the lobby..."
 
 player:
+  joined-lobby: "&3You joined the lobby!"
+  leaved-lobby: "&cYou left the lobby!"
   joined-arena: "&3You joined the arena!"
   leaved-arena: "&cYou left the arena!"
   is-tagger: "&cYou are the tagger, tag someone before you blow up!"

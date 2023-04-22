@@ -78,7 +78,7 @@ public class Tnttag extends JavaPlugin {
     private void managers() {
         this.arenaManager = new ArenaManager(this);
         this.signManager = new SignManager(this);
-        this.lobbyManager = new LobbyManager();
+        this.lobbyManager = new LobbyManager(this);
         this.itemManager = new ItemManager();
     }
 
