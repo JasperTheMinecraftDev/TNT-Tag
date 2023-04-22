@@ -78,8 +78,8 @@ public class Tnttag extends JavaPlugin {
     private void managers() {
         this.arenaManager = new ArenaManager(this);
         this.signManager = new SignManager(this);
-        this.lobbyManager = new LobbyManager(this);
         this.itemManager = new ItemManager();
+        this.lobbyManager = new LobbyManager(this);
     }
 
     private void menuLibrary() {
@@ -166,6 +166,6 @@ public class Tnttag extends JavaPlugin {
     }
 
     public ItemManager getItemManager() {
-        return itemManager;
+        return this.itemManager;
     }
 }

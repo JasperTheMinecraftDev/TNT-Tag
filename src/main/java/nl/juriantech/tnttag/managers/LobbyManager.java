@@ -20,9 +20,10 @@ public class LobbyManager {
     }
 
     public void enterLobby(Player player) {
-        itemManager.giveLobbyItems(player);
         players.add(player);
+        // This should be done first because the PlayerInformation constructor clears the inventory too.
         playerInformationMap.put(player, new PlayerInformation(player));
+        itemManager.giveLobbyItems(player);
         ChatUtils.sendMessage(player, "player.joined-lobby");
     }
 

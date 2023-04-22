@@ -42,7 +42,7 @@ public class TnttagCommand {
     @Subcommand("join")
     @CommandPermission("tnttag.join")
     public void onJoin(Player player, @Optional String arenaName) {
-        if (arenaName == null) {
+        if (!plugin.getLobbyManager().playerIsInLobby(player) && arenaName == null) {
             plugin.getLobbyManager().enterLobby(player);
             return;
         }
@@ -69,6 +69,10 @@ public class TnttagCommand {
 
     @Subcommand("leave")
     public void onLeave(Player player) {
+        if (plugin.getLobbyManager().playerIsInLobby(player)) {
+            plugin.getLobbyManager().leaveLobby(player);
+        }
+
         if (arenaManager.playerIsInArena(player)) {
             Arena arena = arenaManager.getPlayerArena(player);
             arena.getGameManager().playerManager.removePlayer(player, true);
