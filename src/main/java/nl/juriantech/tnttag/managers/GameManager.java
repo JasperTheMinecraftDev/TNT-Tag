@@ -35,7 +35,7 @@ public class GameManager {
         this.plugin = plugin;
         this.arena = arena;
         this.playerManager = new PlayerManager(plugin, this);
-        this.itemManager = new ItemManager(this);
+        this.itemManager = plugin.getItemManager();
     }
 
     public void start() {
@@ -70,7 +70,9 @@ public class GameManager {
 
                 if (this.startRunnable != null) this.startRunnable.cancel();
                 this.state = GameState.INGAME;
-                itemManager.giveGameItems();
+                for (Player player : playerManager.getPlayers().keySet()) {
+                    itemManager.giveGameItems(player);
+                }
                 playerManager.sendStartMessage();
                 startRound();
                 break;

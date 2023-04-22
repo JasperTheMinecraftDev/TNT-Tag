@@ -10,6 +10,8 @@ import nl.juriantech.tnttag.hooks.PlaceholderAPIExpansion;
 import nl.juriantech.tnttag.listeners.*;
 import nl.juriantech.tnttag.managers.ArenaManager;
 import io.github.rysefoxx.inventory.plugin.pagination.InventoryManager;
+import nl.juriantech.tnttag.managers.ItemManager;
+import nl.juriantech.tnttag.managers.LobbyManager;
 import nl.juriantech.tnttag.managers.SignManager;
 import nl.juriantech.tnttag.runnables.SignUpdateRunnable;
 import org.bukkit.Bukkit;
@@ -32,6 +34,8 @@ public class Tnttag extends JavaPlugin {
     private InventoryManager inventoryManager;
     private PartyAndFriendsHook partyAndFriendsHook;
     private static API api;
+    private LobbyManager lobbyManager;
+    private ItemManager itemManager;
 
     @Override
     public void onEnable() {
@@ -72,8 +76,10 @@ public class Tnttag extends JavaPlugin {
     }
 
     private void managers() {
-        arenaManager = new ArenaManager(this);
+        this.arenaManager = new ArenaManager(this);
         this.signManager = new SignManager(this);
+        this.lobbyManager = new LobbyManager();
+        this.itemManager = new ItemManager();
     }
 
     private void menuLibrary() {
@@ -153,5 +159,13 @@ public class Tnttag extends JavaPlugin {
 
     public static API getAPI() {
         return api;
+    }
+
+    public LobbyManager getLobbyManager() {
+        return lobbyManager;
+    }
+
+    public ItemManager getItemManager() {
+        return itemManager;
     }
 }

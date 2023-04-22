@@ -8,12 +8,17 @@ import nl.juriantech.tnttag.managers.GameManager;
 import nl.juriantech.tnttag.utils.ChatUtils;
 import nl.juriantech.tnttag.utils.ParticleUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Map;
 
 public class Round {
@@ -39,7 +44,7 @@ public class Round {
                 for (Player player : gameManager.playerManager.getPlayers().keySet()) {
                     player.setLevel(roundDuration);
                     if (gameManager.playerManager.getPlayers().get(player) == PlayerType.TAGGER) {
-                        gameManager.itemManager.updateCompass(player);
+                        updateCompass(player);
                         ChatUtils.sendActionBarMessage(player, ChatUtils.getRaw("actionBarMessages.tagger"));
                     } else if (gameManager.playerManager.getPlayers().get(player) == PlayerType.SURVIVOR) {
                         ChatUtils.sendActionBarMessage(player, ChatUtils.getRaw("actionBarMessages.survivor"));
@@ -94,5 +99,34 @@ public class Round {
 
             ParticleUtils.Firework(player.getLocation(), 0);
         }
+    }
+
+    public void updateCompass(Player player) {
+        ItemStack compass = player.getInventory().getItem(7);
+        Player nearestPlayer = getNearestSurvivor(player);
+        if (compass != null && nearestPlayer != null && compass.getItemMeta() != null) {
+            ItemMeta meta = compass.getItemMeta();
+            meta.setDisplayName((ChatUtils.colorize("&6" + (int) player.getLocation().distance(nearestPlayer.getLocation()) + "m")));
+            compass.setItemMeta(meta);
+        }
+    }
+
+    /**
+     * Returns the nearest tagger to another player, or null if there is no other player in this world
+     * @param player Player to check
+     * @return Nearest other tagger, or null if there is no other player in this world
+     */
+    public Player getNearestSurvivor(Player player) {
+        World world = player.getWorld();
+        Location location = player.getLocation();
+        ArrayList<Player> playersInWorld = new ArrayList<>(world.getEntitiesByClass(Player.class));
+        if (playersInWorld.size() == 1) {
+            return null;
+        }
+
+        playersInWorld.remove(player);
+        playersInWorld.removeIf(p -> p != null && gameManager.playerManager.getPlayers().get(p).equals(PlayerType.SURVIVOR));
+        playersInWorld.sort(Comparator.comparingDouble(o -> o.getLocation().distanceSquared(location)));
+        return playersInWorld.isEmpty() ? null : playersInWorld.get(0);
     }
 }
