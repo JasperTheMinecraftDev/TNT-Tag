@@ -3,6 +3,7 @@ package nl.juriantech.tnttag.managers;
 import de.simonsator.partyandfriends.spigot.api.party.PlayerParty;
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.api.PlayerJoinArenaEvent;
+import nl.juriantech.tnttag.api.PlayerLeaveArenaEvent;
 import nl.juriantech.tnttag.enums.GameState;
 import nl.juriantech.tnttag.enums.PlayerType;
 import nl.juriantech.tnttag.hooks.PartyAndFriendsHook;
@@ -77,6 +78,9 @@ public class PlayerManager {
     }
 
     public synchronized void removePlayer(Player player, boolean message) {
+        PlayerLeaveArenaEvent event = new PlayerLeaveArenaEvent(player, gameManager.arena.getName());
+        Bukkit.getPluginManager().callEvent(event);
+
         setPlayerType(player, PlayerType.WAITING);
         players.remove(player);
         PlayerInformation playerInfo = playerInformationMap.remove(player);
