@@ -1,6 +1,7 @@
 package nl.juriantech.tnttag.objects;
 
 import nl.juriantech.tnttag.Tnttag;
+import nl.juriantech.tnttag.api.PlayerLooseRoundEvent;
 import nl.juriantech.tnttag.enums.GameState;
 import nl.juriantech.tnttag.enums.PlayerType;
 import nl.juriantech.tnttag.managers.GameManager;
@@ -73,6 +74,8 @@ public class Round {
                     Bukkit.dispatchCommand(console, cmd.replace("%player%", player.getName()));
                 }
 
+                PlayerLooseRoundEvent event = new PlayerLooseRoundEvent(player, gameManager.arena.getName());
+                Bukkit.getPluginManager().callEvent(event);
                 player.getWorld().createExplosion(player.getLocation(), 0.5F, false, false);
                 gameManager.playerManager.broadcast(ChatUtils.getRaw("arena.player-blew-up").replace("{player}", player.getName()));
                 player.getInventory().setHelmet(new ItemStack(Material.AIR, 1));
