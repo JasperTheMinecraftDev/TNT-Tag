@@ -21,9 +21,10 @@ public class TopStats {
 
     private final Player player;
     private final String type;
-    private final Tnttag plugin = Tnttag.getInstance();
+    private final Tnttag plugin;
 
-    public TopStats(Player player, String type) {
+    public TopStats(Tnttag plugin, Player player, String type) {
+        this.plugin = plugin;
         this.player = player;
         this.type = type;
     }
@@ -34,15 +35,15 @@ public class TopStats {
         String topMessage;
         switch (type) {
             case "wins":
-                topData = playerData.getWinsData();
+                topData = Tnttag.getAPI().getWinsData();
                 topMessage = ChatUtils.getRaw("top-gui.wins");
                 break;
             case "timestagged":
-                topData = playerData.getTimesTaggedData();
+                topData = Tnttag.getAPI().getTimesTaggedData();
                 topMessage = ChatUtils.getRaw("top-gui.timestagged");
                 break;
             case "tags":
-                topData = playerData.getTagsData();
+                topData = Tnttag.getAPI().getTagsData();
                 topMessage = ChatUtils.getRaw("top-gui.tags");
                 break;
             default:

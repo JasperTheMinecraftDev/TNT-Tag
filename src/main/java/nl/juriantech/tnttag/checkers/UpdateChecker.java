@@ -21,8 +21,8 @@ public class UpdateChecker implements Listener {
     private String onlineVersion;
     private boolean isAvailable;
 
-    public UpdateChecker() {
-        localVersion = Tnttag.getInstance().getDescription().getVersion();
+    public UpdateChecker(Tnttag plugin) {
+        localVersion = plugin.getDescription().getVersion();
     }
 
     @EventHandler

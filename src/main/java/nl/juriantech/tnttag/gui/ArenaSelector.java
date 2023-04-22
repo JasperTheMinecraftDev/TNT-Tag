@@ -17,10 +17,12 @@ import java.util.ArrayList;
 public class ArenaSelector {
 
     private final Player player;
-    private final Tnttag plugin = Tnttag.getInstance();
-    private final ArenaManager arenaManager = plugin.getArenaManager();
+    private final Tnttag plugin;
+    private final ArenaManager arenaManager;
 
-    public ArenaSelector(Player player) {
+    public ArenaSelector(Tnttag plugin, Player player) {
+        this.plugin = plugin;
+        this.arenaManager = plugin.getArenaManager();
         this.player = player;
     }
 

@@ -19,10 +19,12 @@ public class ArenaEditorGUI {
 
     private final Player player;
     private final Arena arena;
-    private final Tnttag plugin = Tnttag.getInstance();
-    private final ArenaManager arenaManager = plugin.getArenaManager();
+    private final Tnttag plugin;
+    private final ArenaManager arenaManager;
 
-    public ArenaEditorGUI(Player player, Arena arena) {
+    public ArenaEditorGUI(Tnttag plugin, Player player, Arena arena) {
+        this.plugin = plugin;
+        this.arenaManager = plugin.getArenaManager();
         this.player = player;
         this.arena = arena;
     }

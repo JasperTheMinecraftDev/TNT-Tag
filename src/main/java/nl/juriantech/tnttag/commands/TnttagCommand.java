@@ -20,8 +20,13 @@ import java.util.stream.Collectors;
 
 @Command({"tnttag", "tt"})
 public class TnttagCommand {
-    private final Tnttag plugin = Tnttag.getInstance();
-    private final ArenaManager arenaManager = plugin.getArenaManager();
+    private final Tnttag plugin;
+    private final ArenaManager arenaManager;
+
+    public TnttagCommand(Tnttag plugin) {
+        this.plugin = plugin;
+        this.arenaManager = plugin.getArenaManager();
+    }
 
     @Subcommand("help")
     @CommandPermission("tnttag.help")
@@ -53,7 +58,7 @@ public class TnttagCommand {
     @Subcommand("joingui")
     @CommandPermission("tnttag.gui.join")
     public void onGUIJoin(Player player) {
-        new ArenaSelector(player).open();
+        new ArenaSelector(plugin, player).open();
     }
 
     @Subcommand("leave")
@@ -84,7 +89,7 @@ public class TnttagCommand {
     @Subcommand("create")
     @CommandPermission("tnttag.create")
     public void onCreate(Player player) {
-        new SetupCommandHandler().start(player);
+        new SetupCommandHandler(plugin).start(player);
     }
 
     @Subcommand("editor")
@@ -92,7 +97,7 @@ public class TnttagCommand {
     public void onEditor(Player player, String arenaName) {
         Arena arena = arenaManager.getArena(arenaName);
         if (arena != null) {
-            new ArenaEditorGUI(player, arena).open();
+            new ArenaEditorGUI(plugin, player, arena).open();
         } else {
             ChatUtils.sendMessage(player, "commands.invalid-arena");
         }
@@ -122,13 +127,13 @@ public class TnttagCommand {
     @Subcommand("stats")
     @CommandPermission("tnttag.stats")
     public void onStats(Player player) {
-        new Stats(player).open();
+        new Stats(plugin, player).open();
     }
 
     @Subcommand("top")
     @CommandPermission("tnttag.top")
     public void onTop(Player player, String type) {
-        new TopStats(player, type).open();
+        new TopStats(plugin, player, type).open();
     }
 
     @Subcommand("start")

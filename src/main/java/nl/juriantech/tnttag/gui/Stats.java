@@ -15,9 +15,9 @@ import org.bukkit.entity.Player;
 public class Stats {
 
     private final Player player;
-    private final Tnttag plugin = Tnttag.getInstance();
-
-    public Stats(Player player) {
+    private final Tnttag plugin;
+    public Stats(Tnttag plugin, Player player) {
+        this.plugin = plugin;
         this.player = player;
     }
 

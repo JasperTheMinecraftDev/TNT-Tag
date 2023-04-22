@@ -15,8 +15,8 @@ import java.util.ArrayList;
 
 public class SetupCommandHandler implements Listener {
 
-    private final Tnttag plugin = Tnttag.getInstance();
-    private final ArenaManager arenaManager = plugin.getArenaManager();
+    private final Tnttag plugin;
+    private final ArenaManager arenaManager;
     private String currentStep = "";
     private Player currentPlayer = null;
     private String arenaName = "";
@@ -25,7 +25,9 @@ public class SetupCommandHandler implements Listener {
     private Location lobbyLocation = null;
     private Location startLocation = null;
 
-    public SetupCommandHandler() {
+    public SetupCommandHandler(Tnttag plugin) {
+        this.plugin = plugin;
+        this.arenaManager = plugin.getArenaManager();
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
     public void start(Player player) {

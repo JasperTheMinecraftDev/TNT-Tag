@@ -1,6 +1,7 @@
 package nl.juriantech.tnttag;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
+import nl.juriantech.tnttag.api.API;
 import nl.juriantech.tnttag.checkers.UpdateChecker;
 import nl.juriantech.tnttag.commands.TnttagCommand;
 import nl.juriantech.tnttag.handlers.SetupCommandHandler;
@@ -34,8 +35,8 @@ public class Tnttag extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        new SetupCommandHandler();
-        updateChecker = new UpdateChecker();
+        new SetupCommandHandler(this);
+        updateChecker = new UpdateChecker(this);
         updateChecker.check();
         files();
         menuLibrary();
@@ -117,7 +118,7 @@ public class Tnttag extends JavaPlugin {
 
     private void commands() {
         BukkitCommandHandler handler = BukkitCommandHandler.create(this);
-        handler.register(new TnttagCommand());
+        handler.register(new TnttagCommand(this));
     }
 
     private void listeners() {
