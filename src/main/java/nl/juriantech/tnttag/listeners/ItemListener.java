@@ -23,10 +23,10 @@ public class ItemListener implements Listener {
         Player player = event.getPlayer();
         if (event.getHand() != null) {
             if (arenaManager.playerIsInArena(player)) {
-                if (player.getInventory().getItem(event.getHand()).equals(ItemBuilder.from(ChatUtils.getRaw("in-game-items.leave")).build())) {
+                if (player.getInventory().getItem(event.getHand()).equals(ItemBuilder.from(ChatUtils.getRaw("items.leave")).build())) {
                     arenaManager.getPlayerArena(player).getGameManager().playerManager.removePlayer(player, true);
                     event.setCancelled(true);
-                } else if (player.getInventory().getItem(event.getHand()).equals(ItemBuilder.from(ChatUtils.getRaw("in-game-items.join")).build())) {
+                } else if (player.getInventory().getItem(event.getHand()).equals(ItemBuilder.from(ChatUtils.getRaw("items.join")).build())) {
                     player.performCommand("tt joingui");
                     event.setCancelled(true);
                 }
