@@ -13,7 +13,11 @@ import java.util.Map;
 
 public class EntityDamageByEntityListener implements Listener {
 
-    private final Tnttag plugin = Tnttag.getInstance();
+    private final Tnttag plugin;
+
+    public EntityDamageByEntityListener(Tnttag plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {

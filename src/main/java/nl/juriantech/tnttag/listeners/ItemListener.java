@@ -12,8 +12,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 public class ItemListener implements Listener {
 
-    private final Tnttag plugin = Tnttag.getInstance();
-    private final ArenaManager arenaManager = plugin.getArenaManager();
+    private final ArenaManager arenaManager;
+
+    public ItemListener(Tnttag plugin) {
+        this.arenaManager = plugin.getArenaManager();
+    }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {

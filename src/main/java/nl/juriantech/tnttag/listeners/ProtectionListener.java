@@ -11,7 +11,11 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 
 public class ProtectionListener implements Listener {
 
-    private final Tnttag plugin = Tnttag.getInstance();
+    private final Tnttag plugin;
+
+    public ProtectionListener(Tnttag plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {

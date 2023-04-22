@@ -9,8 +9,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class InventoryClickListener implements Listener {
 
-    private final Tnttag plugin = Tnttag.getInstance();
-    private final ArenaManager arenaManager = plugin.getArenaManager();
+    private final ArenaManager arenaManager;
+
+    public InventoryClickListener(Tnttag plugin) {
+        this.arenaManager = plugin.getArenaManager();
+    }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {

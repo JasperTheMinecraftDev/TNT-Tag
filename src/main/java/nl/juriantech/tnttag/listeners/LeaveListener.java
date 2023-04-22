@@ -10,8 +10,11 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class LeaveListener implements Listener {
 
-    private final Tnttag plugin = Tnttag.getInstance();
-    private final ArenaManager arenaManager = plugin.getArenaManager();
+    private final ArenaManager arenaManager;
+
+    public LeaveListener(Tnttag plugin) {
+        this.arenaManager = plugin.getArenaManager();
+    }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {

@@ -23,7 +23,6 @@ import java.util.logging.Logger;
 
 public class Tnttag extends JavaPlugin {
 
-    private static Tnttag instance;
     private final Logger logger = Bukkit.getLogger();
     private ArenaManager arenaManager;
     public static YamlDocument arenasfile, customizationfile, configfile, playerdatafile, signsdatafile;
@@ -31,10 +30,10 @@ public class Tnttag extends JavaPlugin {
     private SignManager signManager;
     private InventoryManager inventoryManager;
     private PartyAndFriendsHook partyAndFriendsHook;
+    private static API api;
 
     @Override
     public void onEnable() {
-        instance = this;
         new SetupCommandHandler();
         updateChecker = new UpdateChecker();
         updateChecker.check();
@@ -55,7 +54,7 @@ public class Tnttag extends JavaPlugin {
             this.partyAndFriendsHook = new PartyAndFriendsHook();
             logger.info("[TNT-Tag] PartyAndFriends hooks enabled.");
         }
-
+        api = new API(this);
         logger.warning("TNT-Tag has been enabled!");
         new BukkitRunnable() {
             @Override
@@ -122,14 +121,13 @@ public class Tnttag extends JavaPlugin {
     }
 
     private void listeners() {
-        getServer().getPluginManager().registerEvents(new ProtectionListener(), this);
-        getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
+        getServer().getPluginManager().registerEvents(new ProtectionListener(this), this);
+        getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(this), this);
         getServer().getPluginManager().registerEvents(updateChecker, this);
-        getServer().getPluginManager().registerEvents(new LeaveListener(), this);
-        getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
-        getServer().getPluginManager().registerEvents(new LeaveListener(), this);
+        getServer().getPluginManager().registerEvents(new LeaveListener(this), this);
+        getServer().getPluginManager().registerEvents(new InventoryClickListener(this), this);
         getServer().getPluginManager().registerEvents(new SignListener(this), this);
-        getServer().getPluginManager().registerEvents(new ItemListener(), this);
+        getServer().getPluginManager().registerEvents(new ItemListener(this), this);
     }
 
     @Override
@@ -137,12 +135,7 @@ public class Tnttag extends JavaPlugin {
         arenaManager.endAllArenas();
         signManager.saveSigns();
         arenaManager.saveArenasToFile();
-        instance = null;
         logger.severe("TNT-Tag has been disabled!");
-    }
-
-    public static Tnttag getInstance() {
-        return instance;
     }
 
     public ArenaManager getArenaManager() {
@@ -155,5 +148,9 @@ public class Tnttag extends JavaPlugin {
 
     public PartyAndFriendsHook getPartyAndFriendsHook() {
         return partyAndFriendsHook;
+    }
+
+    public static API getAPI() {
+        return api;
     }
 }
