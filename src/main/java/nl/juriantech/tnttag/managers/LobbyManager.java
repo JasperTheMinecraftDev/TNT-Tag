@@ -23,10 +23,11 @@ public class LobbyManager {
     }
 
     public void enterLobby(Player player) {
-        if (Tnttag.configfile.getString("globalLobby") != null) {
+        if (Tnttag.configfile.getString("globalLobby") == null) {
             ChatUtils.sendMessage(player, "player.global-lobby-not-set");
             return;
         }
+
         String[] parts = Tnttag.configfile.getString("globalLobby").split(",");
         World world = Bukkit.getWorld(parts[0]);
         int x = Integer.parseInt(parts[1]);
