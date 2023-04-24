@@ -9,6 +9,7 @@ import nl.juriantech.tnttag.gui.TopStats;
 import nl.juriantech.tnttag.handlers.SetupCommandHandler;
 import nl.juriantech.tnttag.managers.ArenaManager;
 import nl.juriantech.tnttag.utils.ChatUtils;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Optional;
@@ -172,5 +173,16 @@ public class TnttagCommand {
         int minPlayers = arenaObj.getMinPlayers();
         int maxPlayers = arenaObj.getMaxPlayers();
         ChatUtils.sendCustomMessage(player, "&6Countdown: " + countdown + ", minPlayers: " + minPlayers + ", maxPlayers: " + maxPlayers);
+    }
+
+    //setlobby command for the global lobby
+    @Subcommand("setlobby")
+    @CommandPermission("tnttag.setlobby")
+    public void onSetLobby(Player player) throws IOException {
+        Location loc = player.getLocation();
+        Tnttag.configfile.set("globalLobby", loc.getWorld() + "," + loc.getX() + "," + loc.getY() + "," + loc.getZ());
+        Tnttag.configfile.save();
+
+        ChatUtils.sendMessage(player, "commands.global-lobby-set");
     }
 }

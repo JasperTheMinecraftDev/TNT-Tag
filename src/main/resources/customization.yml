@@ -29,6 +29,7 @@ player:
   tagged: "&cYou are tagged by {tagger}, tag someone else before you explode!"
   tagger-removed: "&8Well done! You are not the tagger anymore, run!!"
   already-in-game: "&cLeave this arena first!"
+  global-lobby-not-set: "&cThe global lobby is not set, this is required. Use /tt setlobby to do this."
 
 commands:
   invalid-arena: "&cThat arena doesn't exist!"
@@ -41,6 +42,7 @@ commands:
   arena-deleted: "&cThe arena {arena} is successfully deleted!"
   files-reloaded: "&2The files are now reloaded!"
   arena-started: "&2The arena is started successfully."
+  global-lobby-set: "&2The global lobby is set to your location."
 
 help-menu:
   - "&b=========TNT-Tag========="
