@@ -130,6 +130,7 @@ public class TnttagCommand {
     @CommandPermission("tnttag.reload")
     public void onReload(Player player) throws IOException {
         Tnttag.customizationfile.reload();
+        Tnttag.configfile.reload();
         arenaManager.reload();
 
         ChatUtils.sendMessage(player, "commands.files-reloaded");
