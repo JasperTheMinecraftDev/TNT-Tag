@@ -5,7 +5,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class PlayerLooseRoundEvent extends Event {
+public class PlayerLostRoundEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
     private final Player player;
@@ -15,7 +15,7 @@ public class PlayerLooseRoundEvent extends Event {
         return HANDLERS;
     }
 
-    public PlayerLooseRoundEvent(Player player, String arenaName) {
+    public PlayerLostRoundEvent(Player player, String arenaName) {
         this.player = player;
         this.arenaName = arenaName;
     }
