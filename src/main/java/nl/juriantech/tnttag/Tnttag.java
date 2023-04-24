@@ -54,7 +54,7 @@ public class Tnttag extends JavaPlugin {
             logger.info("[TNT-Tag] PlaceholderAPI hooks enabled.");
         }
 
-        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+        if (Bukkit.getPluginManager().getPlugin("PartyAndFriends") != null) {
             logger.info("[TNT-Tag] PartyAndFriends detected, enabling hooks.");
             this.partyAndFriendsHook = new PartyAndFriendsHook();
             logger.info("[TNT-Tag] PartyAndFriends hooks enabled.");
