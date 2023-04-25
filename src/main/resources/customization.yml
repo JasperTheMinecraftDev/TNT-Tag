@@ -54,7 +54,7 @@ help-menu:
   - "&a/tnttag delete <arena> - Delete the specified arena."
   - "&a/tnttag list - List all the available TNT-Tag arena's!"
   - "&a/tnttag reload - Reload the files."
-  - "&a/tntag stats - Show your stats!"
+  - "&a/tnttag stats - Show your stats!"
   - "&a/tnttag top - Shows the top players!"
   - "&a/tnttag editor <arena> - Opens the arena editor."
   - "&b=========TNT-Tag========="
