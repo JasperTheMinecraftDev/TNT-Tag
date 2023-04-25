@@ -45,7 +45,6 @@ public class TnttagCommand {
     public void onJoin(Player player, @Optional String arenaName) {
         if (!plugin.getLobbyManager().playerIsInLobby(player)) {
             plugin.getLobbyManager().enterLobby(player);
-            return;
         }
 
         if (arenaName != null) {
