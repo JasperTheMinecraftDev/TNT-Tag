@@ -43,23 +43,25 @@ public class TnttagCommand {
     @Subcommand("join")
     @CommandPermission("tnttag.join")
     public void onJoin(Player player, @Optional String arenaName) {
-        if (!plugin.getLobbyManager().playerIsInLobby(player) && arenaName == null) {
+        if (!plugin.getLobbyManager().playerIsInLobby(player)) {
             plugin.getLobbyManager().enterLobby(player);
             return;
         }
 
-        if (arenaManager.playerIsInArena(player)) {
-            ChatUtils.sendMessage(player, "player.already-in-game");
-            return;
-        }
+        if (arenaName != null) {
+            if (arenaManager.playerIsInArena(player)) {
+                ChatUtils.sendMessage(player, "player.already-in-game");
+                return;
+            }
 
-        Arena arena = arenaManager.getArena(arenaName);
-        if (arena == null) {
-            ChatUtils.sendMessage(player, "commands.invalid-arena");
-            return;
-        }
+            Arena arena = arenaManager.getArena(arenaName);
+            if (arena == null) {
+                ChatUtils.sendMessage(player, "commands.invalid-arena");
+                return;
+            }
 
-        arena.getGameManager().playerManager.addPlayer(player);
+            arena.getGameManager().playerManager.addPlayer(player);
+        }
     }
 
     @Subcommand("joingui")
@@ -70,15 +72,15 @@ public class TnttagCommand {
 
     @Subcommand("leave")
     public void onLeave(Player player) {
-        if (plugin.getLobbyManager().playerIsInLobby(player)) {
-            plugin.getLobbyManager().leaveLobby(player);
-        }
-
         if (arenaManager.playerIsInArena(player)) {
             Arena arena = arenaManager.getPlayerArena(player);
             arena.getGameManager().playerManager.removePlayer(player, true);
         } else {
             ChatUtils.sendMessage(player, "commands.not-in-arena");
+        }
+
+        if (plugin.getLobbyManager().playerIsInLobby(player)) {
+            plugin.getLobbyManager().leaveLobby(player);
         }
     }
 
