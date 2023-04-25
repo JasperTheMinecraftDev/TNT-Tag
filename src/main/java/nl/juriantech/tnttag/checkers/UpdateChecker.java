@@ -32,8 +32,8 @@ public class UpdateChecker implements Listener {
             check();
         if (isAvailable) {
                 player.sendMessage(ChatUtils.colorize("&b================&cTNT-Tag&b================"));
-                player.sendMessage(ChatUtils.colorize("&cTNT-Tag >>  &fNew version available: &b" + onlineVersion));
-                player.sendMessage(ChatUtils.colorize("&cTNT-Tag >>  &fCurrent version: &b" + localVersion));
+                player.sendMessage(ChatUtils.colorize("&fNew version available: &b" + onlineVersion));
+                player.sendMessage(ChatUtils.colorize("&fCurrent version: &b" + localVersion));
                 player.sendMessage(ChatUtils.colorize("&b========================================"));
             }
     }
