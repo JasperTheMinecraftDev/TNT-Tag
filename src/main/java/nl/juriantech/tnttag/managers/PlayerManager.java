@@ -144,8 +144,11 @@ public class PlayerManager {
                 player.teleport(gameManager.arena.getLobbyLocation());
                 break;
             case SURVIVOR:
+                if (players.get(player) != PlayerType.TAGGER) {
+                    player.teleport(gameManager.arena.getStartLocation());
+                }
+
                 setType(player, PlayerType.SURVIVOR);
-                player.teleport(gameManager.arena.getStartLocation());
                 break;
             case TAGGER:
                 if (players.get(player) != PlayerType.SURVIVOR) return; //Safety check.
