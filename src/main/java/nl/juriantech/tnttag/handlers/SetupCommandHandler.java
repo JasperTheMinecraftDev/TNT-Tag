@@ -146,8 +146,6 @@ public class SetupCommandHandler implements Listener {
         ArrayList<String> defaultPotionEffects = new ArrayList<>();
         defaultPotionEffects.add("SPEED:2:SURVIVORS");
         defaultPotionEffects.add("SPEED:3:TAGGERS");
-        defaultPotionEffects.add("SLOW_FALLING:1:TAGGERS");
-        defaultPotionEffects.add("SLOW_FALLING:1:SURVIVORS");
         defaultPotionEffects.add("HEALTH_BOOST:1:TAGGERS");
         defaultPotionEffects.add("HEALTH_BOOST:1:SURVIVORS");
 
