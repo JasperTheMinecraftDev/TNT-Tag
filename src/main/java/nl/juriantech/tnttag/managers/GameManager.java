@@ -77,6 +77,9 @@ public class GameManager {
                 startRound();
                 break;
             case ENDING:
+                if (round != null) {
+                    round.end();
+                }
                 //Stop the game
                 HashMap<Player, PlayerType> playersCopy = new HashMap<>(playerManager.getPlayers());
                 for (Map.Entry<Player, PlayerType> entry : playersCopy.entrySet()) {
