@@ -40,7 +40,7 @@ commands:
   world-invalid: "&cOne of the worlds you provided is invalid!"
   minplayers-below-2: "&cThe minPlayers argument needs to be at least 2!"
   arena-deleted: "&cThe arena {arena} is successfully deleted!"
-  files-reloaded: "&2SlimeWalls is now reloaded!"
+  files-reloaded: "&2TNT-Tag is now reloaded!"
   arena-started: "&2The arena is started successfully."
   global-lobby-set: "&2The global lobby is set to your location."
 
