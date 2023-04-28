@@ -40,7 +40,7 @@ commands:
   world-invalid: "&cOne of the worlds you provided is invalid!"
   minplayers-below-2: "&cThe minPlayers argument needs to be at least 2!"
   arena-deleted: "&cThe arena {arena} is successfully deleted!"
-  files-reloaded: "&2The files are now reloaded!"
+  files-reloaded: "&2SlimeWalls is now reloaded!"
   arena-started: "&2The arena is started successfully."
   global-lobby-set: "&2The global lobby is set to your location."
 
@@ -53,7 +53,7 @@ help-menu:
   - "&a/tnttag create <args> - Create an arena, you can find more information on the spigot page."
   - "&a/tnttag delete <arena> - Delete the specified arena."
   - "&a/tnttag list - List all the available TNT-Tag arena's!"
-  - "&a/tnttag reload - Reload the files."
+  - "&a/tnttag reload - Reload the plugin."
   - "&a/tnttag stats - Show your stats!"
   - "&a/tnttag top - Shows the top players!"
   - "&a/tnttag editor <arena> - Opens the arena editor."
