@@ -15,6 +15,7 @@ import nl.juriantech.tnttag.managers.LobbyManager;
 import nl.juriantech.tnttag.managers.SignManager;
 import nl.juriantech.tnttag.runnables.SignUpdateRunnable;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -140,6 +141,11 @@ public class Tnttag extends JavaPlugin {
     @Override
     public void onDisable() {
         arenaManager.endAllArenas();
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (lobbyManager.playerIsInLobby(player)) {
+                lobbyManager.leaveLobby(player);
+            }
+        }
         signManager.saveSigns();
         arenaManager.saveArenasToFile();
         logger.severe("TNT-Tag has been disabled!");
