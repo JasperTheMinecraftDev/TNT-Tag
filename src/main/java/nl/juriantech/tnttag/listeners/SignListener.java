@@ -6,6 +6,7 @@ import nl.juriantech.tnttag.managers.SignManager;
 import nl.juriantech.tnttag.utils.ChatUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -31,36 +32,34 @@ public class SignListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() != null && event.getClickedBlock().getState() instanceof Sign) {
+            Player player = event.getPlayer();
+            Block block = event.getClickedBlock();
+            Sign sign = (Sign) block.getState();
+
+            //If the player tries to break the sign.
+            if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+                if (signManager.isTNTTagSign(block.getLocation())) {
+                    if (!event.getPlayer().hasPermission("tnttag.breaksigns")) {
+                        ChatUtils.sendMessage(event.getPlayer(), "general.no-permission");
+                        event.setCancelled(true);
+                    } else {
+                        if (plugin.getArenaManager().getArena(ChatColor.stripColor(sign.getLine(1))) != null) {
+                            signManager.removeSign(ChatColor.stripColor(sign.getLine(1)), block.getLocation());
+                            block.setType(Material.AIR);
+                        }
+
+                        if (event.getPlayer().getGameMode() == GameMode.SURVIVAL) {
+                            block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(block.getType()));
+                        }
+                    }
+                }
+            }
             if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                Player player = event.getPlayer();
-                Block block = event.getClickedBlock();
-                Sign sign = (Sign) block.getState();
                 if (signManager.isTNTTagSign(block.getLocation())) {
                     String targetMap = ChatColor.stripColor(sign.getLine(1));
 
                     player.getInventory().setHeldItemSlot(0);
                     player.performCommand("tnttag join " + targetMap);
-                }
-            }
-        }
-    }
-
-    @EventHandler
-    public void onBlockBreak(BlockBreakEvent event) {
-        Block block = event.getBlock();
-        if (block.getState() instanceof Sign) {
-            Sign sign = (Sign) block.getState();
-            if (signManager.isTNTTagSign(block.getLocation())) {
-                if (!event.getPlayer().hasPermission("tnttag.breaksigns")) {
-                    ChatUtils.sendMessage(event.getPlayer(), "general.no-permission");
-                    event.setCancelled(true);
-                } else {
-                    if (plugin.getArenaManager().getArena(ChatColor.stripColor(sign.getLine(1))) != null) {
-                        signManager.removeSign(ChatColor.stripColor(sign.getLine(1)), block.getLocation());
-                    }
-                    if (event.getPlayer().getGameMode() == GameMode.SURVIVAL) {
-                        block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(block.getType()));
-                    }
                 }
             }
         }
