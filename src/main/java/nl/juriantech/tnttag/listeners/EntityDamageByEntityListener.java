@@ -4,6 +4,7 @@ import nl.juriantech.tnttag.Arena;
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.enums.PlayerType;
 import nl.juriantech.tnttag.utils.ChatUtils;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -40,6 +41,9 @@ public class EntityDamageByEntityListener implements Listener {
                 damagerArena.getGameManager().playerManager.setPlayerType(damager, PlayerType.SURVIVOR);
                 damagerArena.getGameManager().playerManager.setPlayerType(victim, PlayerType.TAGGER);
                 ChatUtils.sendCustomMessage(victim, ChatUtils.getRaw("player.tagged").replace("{tagger}", damager.getName()));
+
+                victim.playSound(victim.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.tagged").toUpperCase()), 1, 1);
+                damager.playSound(damager.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.untagged").toUpperCase()), 1, 1);
             }
         }
     }

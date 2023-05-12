@@ -5,6 +5,7 @@ import nl.juriantech.tnttag.objects.PlayerInformation;
 import nl.juriantech.tnttag.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -40,6 +41,7 @@ public class LobbyManager {
         playerInformationMap.put(player, new PlayerInformation(player));
         itemManager.giveLobbyItems(player);
         ChatUtils.sendMessage(player, "player.joined-lobby");
+        player.playSound(player.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.lobby-join").toUpperCase()), 1, 1);
     }
 
     public void leaveLobby(Player player) {
@@ -50,6 +52,7 @@ public class LobbyManager {
             playerInfo.restore();
         }
         ChatUtils.sendMessage(player, "player.leaved-lobby");
+        player.playSound(player.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.lobby-leave").toUpperCase()), 1, 1);
     }
 
     public boolean playerIsInLobby(Player player) {

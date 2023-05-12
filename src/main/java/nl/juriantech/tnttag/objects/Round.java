@@ -7,10 +7,7 @@ import nl.juriantech.tnttag.enums.PlayerType;
 import nl.juriantech.tnttag.managers.GameManager;
 import nl.juriantech.tnttag.utils.ChatUtils;
 import nl.juriantech.tnttag.utils.ParticleUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -34,6 +31,7 @@ public class Round {
     }
     public void start() {
         for (Player player : gameManager.playerManager.getPlayers().keySet()) {
+            player.playSound(player.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.round-start").toUpperCase()), 1, 1);
             ChatUtils.sendTitle(player, "titles.round-start", 20L, 20L, 20L);
         }
 
@@ -70,6 +68,7 @@ public class Round {
         for (Map.Entry<Player, PlayerType> entry : gameManager.playerManager.getPlayers().entrySet()) {
             Player player = entry.getKey();
 
+            player.playSound(player.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.round-end").toUpperCase()), 1, 1);
             ChatUtils.sendTitle(player, "titles.round-end", 20L, 20L, 20L);
             if (entry.getValue() == PlayerType.SPECTATOR) continue; //This should NOT affect spectators.
             if (entry.getValue() == PlayerType.TAGGER) {

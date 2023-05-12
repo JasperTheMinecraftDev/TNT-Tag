@@ -137,3 +137,14 @@ party:
   joined-game: "&bYour party joined the game."
   too-much-players: "&cYour party has too much players to join this game!"
   not-the-leader: "&cYou are not the leader of this party!"
+
+#You can find sounds at: https://helpch.at/docs/1.13/index.html?org/bukkit/Sound.html
+#The sound names are case-insensitive.
+sounds:
+  lobby-join: "entity_experience_orb_pickup"
+  lobby-leave: "entity_experience_orb_drop"
+  countdown: "entity_player_levelup"
+  round-start: "entity_firework_rocket_launch"
+  round-end: "entity_generic_explode"
+  tagged: "entity_arrow_hit_player"
+  untagged: "entity_player_levelup"
