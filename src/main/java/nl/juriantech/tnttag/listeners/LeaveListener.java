@@ -39,9 +39,5 @@ public class LeaveListener implements Listener {
         if (arenaManager.playerIsInArena(player)) {
             arenaManager.getPlayerArena(player).getGameManager().playerManager.removePlayer(player, true);
         }
-
-        if (lobbyManager.playerIsInLobby(player)) {
-            lobbyManager.leaveLobby(player);
-        }
     }
 }
