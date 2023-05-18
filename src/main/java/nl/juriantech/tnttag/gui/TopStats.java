@@ -50,6 +50,7 @@ public class TopStats {
                 ChatUtils.sendMessage(player, "general.invalid-stat-type");
                 return;
         }
+
         List<Map.Entry<UUID, Integer>> topThreePlayers = topData.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .limit(3)

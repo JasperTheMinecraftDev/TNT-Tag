@@ -11,6 +11,6 @@ public class SignUpdateRunnable implements Runnable {
 
     @Override
     public void run() {
-        plugin.getSignManager().updateAllSigns();
+        plugin.getSignManager().updateSigns();
     }
 }

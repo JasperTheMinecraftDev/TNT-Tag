@@ -1,145 +1,176 @@
 package nl.juriantech.tnttag.managers;
 
-import nl.juriantech.tnttag.Arena;
+import dev.dejvokep.boostedyaml.YamlDocument;
 import nl.juriantech.tnttag.Tnttag;
-import org.bukkit.Bukkit;
+import nl.juriantech.tnttag.enums.SignType;
+import nl.juriantech.tnttag.signs.JoinSign;
+import nl.juriantech.tnttag.signs.LeaveSign;
+import nl.juriantech.tnttag.signs.SignInterface;
+import nl.juriantech.tnttag.signs.TopSign;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SignManager {
 
     private final Tnttag plugin;
-    private final Map<String, List<Location>> signLocations;
+    private final ArrayList<JoinSign> joinSigns;
+    private final ArrayList<LeaveSign> leaveSigns;
+    private final ArrayList<TopSign> topSigns;
+    public static final String SIGN_PREFIX = ChatColor.GOLD + "[" + ChatColor.RED + "Tnttag" + ChatColor.GOLD + "]";
+
 
     public SignManager(Tnttag plugin) {
         this.plugin = plugin;
-        this.signLocations = new HashMap<>();
+        this.joinSigns = new ArrayList<>();
+        this.leaveSigns = new ArrayList<>();
+        this.topSigns = new ArrayList<>();
     }
 
-    public void addSign(String arenaName, Location location) {
-        if (signLocations.containsKey(arenaName)) {
-            signLocations.get(arenaName).add(location);
-            saveSigns();
-        } else {
-            List<Location> locations = new ArrayList<>();
-            locations.add(location);
-            signLocations.put(arenaName, locations);
-            saveSigns();
+    public void addJoinSign(JoinSign sign) {
+        joinSigns.add(sign);
+        sign.update();
+    }
+
+    public void addLeaveSign(LeaveSign sign) {
+        leaveSigns.add(sign);
+        sign.update();
+    }
+
+    public void addTopSign(TopSign sign) {
+        topSigns.add(sign);
+        sign.update();
+    }
+
+    public SignType getSignType(Sign sign) {
+        Location signLocation = sign.getLocation();
+
+        if (joinSigns.stream().anyMatch(joinSign -> joinSign.getLoc().equals(signLocation))) {
+            return SignType.JOIN;
+        } else if (leaveSigns.stream().anyMatch(leaveSign -> leaveSign.getLoc().equals(signLocation))) {
+            return SignType.LEAVE;
+        } else if (topSigns.stream().anyMatch(topSign -> topSign.getLoc().equals(signLocation))) {
+            return SignType.TOP;
+        }
+
+        return null;
+    }
+
+    public boolean isPluginSign(Sign sign) {
+        return getSignType(sign) != null;
+    }
+
+    public SignInterface getPluginSign(Sign sign) {
+        SignType type = getSignType(sign);
+        if (type == null) {
+            return null;
+        }
+
+        Location signLocation = sign.getLocation();
+
+        switch (type) {
+            case JOIN:
+                return joinSigns.stream()
+                        .filter(joinSign -> joinSign.getLoc().equals(signLocation))
+                        .findFirst()
+                        .orElse(null);
+            case LEAVE:
+                return leaveSigns.stream()
+                        .filter(leaveSign -> leaveSign.getLoc().equals(signLocation))
+                        .findFirst()
+                        .orElse(null);
+            case TOP:
+                return topSigns.stream()
+                        .filter(topSign -> topSign.getLoc().equals(signLocation))
+                        .findFirst()
+                        .orElse(null);
+            default:
+                throw new ArithmeticException("Invalid SignType enum.");
         }
     }
 
-    public void removeSign(String arenaName, Location location) {
-        if (signLocations.containsKey(arenaName)) {
-            List<Location> locations = signLocations.get(arenaName);
-            locations.remove(location);
-            if (locations.isEmpty()) {
-                signLocations.remove(arenaName);
-                saveSigns();
-            }
+    public void removeSign(Sign sign) {
+        SignType type = getSignType(sign);
+        if (type == null) return;
+
+        switch(type) {
+            case JOIN:
+                JoinSign joinSign = joinSigns.stream()
+                        .filter(joinSign2 -> joinSign2.getLoc().equals(sign.getLocation()))
+                        .findAny()
+                        .orElse(null);
+                if (joinSign == null) return;
+
+                joinSigns.remove(joinSign);
+                break;
+            case LEAVE:
+                LeaveSign leaveSign = leaveSigns.stream()
+                        .filter(leaveSign2 -> leaveSign2.getLoc().equals(sign.getLocation()))
+                        .findAny()
+                        .orElse(null);
+                if (leaveSign == null) return;
+
+                leaveSigns.remove(leaveSign);
+                break;
+            case TOP:
+                TopSign topSign = topSigns.stream()
+                        .filter(topSign2 -> topSign2.getLoc().equals(sign.getLocation()))
+                        .findAny()
+                        .orElse(null);
+                if (topSign == null) return;
+
+                topSigns.remove(topSign);
+                break;
+            default:
+                throw new ArithmeticException("Invalid SignType enum.");
         }
     }
 
-    public boolean isTNTTagSign(Location location) {
-        for (Map.Entry<String, List<Location>> entry : signLocations.entrySet()) {
-            if (entry.getValue().contains(location)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void loadSigns() {
-        for (String arenaName : Tnttag.signsdatafile.getRoutesAsStrings(false)) {
-            List<Location> locations = new ArrayList<>();
-            List<String> serializedLocations = Tnttag.signsdatafile.getStringList(arenaName);
-
-            for (String serializedLocation : serializedLocations) {
-                Location location = deserializeLocation(serializedLocation);
-                locations.add(location);
-            }
-
-            signLocations.put(arenaName, locations);
-        }
+    public void updateSigns() {
+        joinSigns.forEach(JoinSign::update);
+        leaveSigns.forEach(LeaveSign::update);
+        topSigns.forEach(TopSign::update);
     }
 
     public void saveSigns() {
-        for (String arenaName : signLocations.keySet()) {
-            List<Location> locations = signLocations.get(arenaName);
-            List<String> serializedLocations = new ArrayList<>();
+        YamlDocument signsDataFile = Tnttag.signsdatafile;
+        signsDataFile.clear(); // We do not want duplicate entries.
 
-            for (Location location : locations) {
-                String serializedLocation = serializeLocation(location);
-                serializedLocations.add(serializedLocation);
-            }
+        ArrayList<String> joinSigns = new ArrayList<>();
+        ArrayList<String> leaveSigns = new ArrayList<>();
+        ArrayList<String> topSigns = new ArrayList<>();
 
-            Tnttag.signsdatafile.set(arenaName, serializedLocations);
-        }
+        this.joinSigns.forEach(joinSign -> joinSigns.add(joinSign.toString()));
+        this.leaveSigns.forEach(leaveSign -> leaveSigns.add(leaveSign.toString()));
+        this.topSigns.forEach(topSign -> topSigns.add(topSign.toString()));
+
+        signsDataFile.set("joinSigns", joinSigns);
+        signsDataFile.set("leaveSigns", leaveSigns);
+        signsDataFile.set("topSigns", topSigns);
 
         try {
-            Tnttag.signsdatafile.save();
+            signsDataFile.save();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void updateSigns(String arenaName) {
-        List<Location> locations = signLocations.get(arenaName);
-        if (locations == null) {
-            return;
+    public void loadSigns() {
+        YamlDocument signsDataFile = Tnttag.signsdatafile;
+        for (String str : signsDataFile.getStringList("joinSigns")) {
+            joinSigns.add(JoinSign.fromString(plugin, str));
         }
-        for (Location location : locations) {
-            if (location != null) {
-                Block block = location.getBlock();
-                if (block.getState() instanceof Sign) {
-                    Sign sign = (Sign) block.getState();
-                    Arena arena = plugin.getArenaManager().getArena(arenaName);
-                    if (arena == null) {
-                        return;
-                    }
-                    int currentPlayers = arena.getGameManager().playerManager.getPlayerCount();
-                    int maxPlayers = arena.getMaxPlayers();
-                    sign.setLine(0, ChatColor.GOLD + "[" + ChatColor.RED + "Tnttag" + ChatColor.GOLD + "]");
-                    sign.setLine(1, ChatColor.WHITE + arenaName);
-                    sign.setLine(2, arena.getGameManager().getCustomizedState() + ChatColor.RESET + ": " + ChatColor.GOLD + ChatColor.BOLD + currentPlayers
-                            + ChatColor.YELLOW + "/" + ChatColor.WHITE + ChatColor.BOLD + maxPlayers);
-                    sign.update(true);
-                }
-            } else {
-                plugin.getLogger().severe("One of your signs is corrupted, please reset your signs.yml file and replace your signs.");
-            }
-        }
-    }
 
-    public void updateAllSigns() {
-        for (String arenaName : signLocations.keySet()) {
-            updateSigns(arenaName);
-        }
-    }
 
-    private String serializeLocation(Location location) {
-        if (location.getWorld() == null) {
-            plugin.getLogger().severe("We tried to load a sign but it failed because the world was null.");
+        for (String str : signsDataFile.getStringList("leaveSigns")) {
+            leaveSigns.add(LeaveSign.fromString(plugin, str));
         }
-        return location.getWorld().getName() + "," +
-                location.getX() + "," +
-                location.getY() + "," +
-                location.getZ();
-    }
 
-    private Location deserializeLocation(String serializedLocation) {
-        String[] parts = serializedLocation.split(",");
-        String worldName = parts[0];
-        double x = Double.parseDouble(parts[1]);
-        double y = Double.parseDouble(parts[2]);
-        double z = Double.parseDouble(parts[3]);
-        return new Location(Bukkit.getWorld(worldName), x, y, z);
+        for (String str : signsDataFile.getStringList("topSigns")) {
+            topSigns.add(TopSign.fromString(plugin, str));
+        }
     }
 }
