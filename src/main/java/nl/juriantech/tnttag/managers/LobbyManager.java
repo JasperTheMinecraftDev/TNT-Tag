@@ -23,10 +23,10 @@ public class LobbyManager {
         this.playerInformationMap = new HashMap<>();
     }
 
-    public void enterLobby(Player player) {
+    public boolean enterLobby(Player player) {
         if (Tnttag.configfile.getString("globalLobby") == null) {
             ChatUtils.sendMessage(player, "player.global-lobby-not-set");
-            return;
+            return false;
         }
 
         String[] parts = Tnttag.configfile.getString("globalLobby").split(",");
@@ -42,6 +42,7 @@ public class LobbyManager {
         itemManager.giveLobbyItems(player);
         ChatUtils.sendMessage(player, "player.joined-lobby");
         player.playSound(player.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.lobby-join").toUpperCase()), 1, 1);
+        return true;
     }
 
     public void leaveLobby(Player player) {
