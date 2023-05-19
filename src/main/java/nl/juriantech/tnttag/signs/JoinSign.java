@@ -23,7 +23,7 @@ public class JoinSign implements SignInterface {
 
     @Override
     public void onClick(Player player) {
-        player.performCommand("/tnttag join " + arena);
+        player.performCommand("tnttag join " + arena);
     }
 
     @Override

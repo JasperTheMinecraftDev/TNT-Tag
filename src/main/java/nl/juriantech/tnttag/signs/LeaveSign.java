@@ -20,7 +20,7 @@ public class LeaveSign implements SignInterface {
 
     @Override
     public void onClick(Player player) {
-        player.performCommand("/tnttag leave");
+        player.performCommand("tnttag leave");
     }
 
     @Override
