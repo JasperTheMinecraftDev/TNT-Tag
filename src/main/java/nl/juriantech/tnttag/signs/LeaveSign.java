@@ -31,7 +31,7 @@ public class LeaveSign implements SignInterface {
                 org.bukkit.block.Sign sign = (org.bukkit.block.Sign) block.getState();
 
                 sign.setLine(0, SignManager.SIGN_PREFIX);
-                sign.setLine(1, ChatColor.RED + "leave");
+                sign.setLine(1, ChatColor.WHITE + "leave");
                 sign.setLine(2, "");
                 sign.setLine(3, "");
                 sign.update(true);
