@@ -5,8 +5,10 @@ import nl.juriantech.tnttag.api.API;
 import nl.juriantech.tnttag.enums.StatType;
 import nl.juriantech.tnttag.managers.SignManager;
 import nl.juriantech.tnttag.objects.SimpleLocation;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
@@ -41,7 +43,7 @@ public class TopSign implements SignInterface {
                 API api = Tnttag.getAPI();
                 TreeMap<UUID, Integer> data = null;
 
-                switch(statType) {
+                switch (statType) {
                     case WINS:
                         data = api.getWinsData();
                         break;
@@ -64,7 +66,12 @@ public class TopSign implements SignInterface {
                 sign.setLine(0, SignManager.SIGN_PREFIX);
                 sign.setLine(1, ChatColor.YELLOW + "TOP " + statType.toString());
                 sign.setLine(2, ChatColor.WHITE + String.valueOf(position));
-                sign.setLine(3, ChatColor.GOLD + topTenPlayers.get(position - 1).toString()); //array is zero based
+                OfflinePlayer player = Bukkit.getOfflinePlayer(topTenPlayers.get(position - 1).getKey()); //array is zero based
+                if (player.getName() == null) {
+                    sign.setLine(3, ChatColor.GOLD + "NOBODY");
+                } else {
+                    sign.setLine(3, ChatColor.GOLD + player.getName());
+                }
                 sign.update(true);
             }
         }
