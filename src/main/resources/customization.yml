@@ -142,7 +142,7 @@ party:
 #The sound names are case-insensitive.
 sounds:
   lobby-join: "entity_experience_orb_pickup"
-  lobby-leave: "entity_experience_orb_drop"
+  lobby-leave: "entity_experience_orb_pickup"
   countdown: "entity_player_levelup"
   round-start: "entity_firework_rocket_launch"
   round-end: "entity_generic_explode"
