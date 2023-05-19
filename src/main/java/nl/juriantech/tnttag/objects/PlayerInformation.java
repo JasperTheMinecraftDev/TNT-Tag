@@ -42,6 +42,7 @@ public class PlayerInformation {
         player.teleport(oldLocation);
         player.setGameMode(gameMode);
         player.teleport(oldLocation);
+        player.setFoodLevel(foodLevel);
     }
 
     public Player getPlayer() {
