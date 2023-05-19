@@ -10,6 +10,7 @@ import nl.juriantech.tnttag.signs.TopSign;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.IOException;
 import java.util.*;
@@ -32,17 +33,36 @@ public class SignManager {
 
     public void addJoinSign(JoinSign sign) {
         joinSigns.add(sign);
-        sign.update();
+
+        //The sign is not yet placed so we have to wait a second.
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                sign.update();
+            }
+        }.runTaskLater(plugin, 20);
     }
 
     public void addLeaveSign(LeaveSign sign) {
         leaveSigns.add(sign);
-        sign.update();
+        //The sign is not yet placed so we have to wait a second.
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                sign.update();
+            }
+        }.runTaskLater(plugin, 20);
     }
 
     public void addTopSign(TopSign sign) {
         topSigns.add(sign);
-        sign.update();
+        //The sign is not yet placed so we have to wait a second.
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                sign.update();
+            }
+        }.runTaskLater(plugin, 20);
     }
 
     public SignType getSignType(Sign sign) {
