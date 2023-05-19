@@ -14,6 +14,7 @@ public class PlayerInformation {
     private final ItemStack[] armor;
     private final float exp;
     private final GameMode gameMode;
+    private final int foodLevel;
 
     public PlayerInformation(Player player) {
         this.player = player;
@@ -22,9 +23,12 @@ public class PlayerInformation {
         this.armor = player.getInventory().getArmorContents();
         this.exp = player.getExp();
         this.gameMode = player.getGameMode();
+        this.foodLevel = player.getFoodLevel();
+
         player.getInventory().clear();
         player.setExp(0);
         player.setGameMode(GameMode.SURVIVAL);
+        player.setFoodLevel(20);
     }
 
     public void restore() {
