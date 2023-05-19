@@ -41,6 +41,7 @@ public class SignManager {
                 sign.update();
             }
         }.runTaskLater(plugin, 20);
+        saveSigns();
     }
 
     public void addLeaveSign(LeaveSign sign) {
@@ -52,6 +53,7 @@ public class SignManager {
                 sign.update();
             }
         }.runTaskLater(plugin, 20);
+        saveSigns();
     }
 
     public void addTopSign(TopSign sign) {
@@ -63,6 +65,7 @@ public class SignManager {
                 sign.update();
             }
         }.runTaskLater(plugin, 20);
+        saveSigns();
     }
 
     public SignType getSignType(Sign sign) {
@@ -125,6 +128,7 @@ public class SignManager {
                 if (joinSign == null) return;
 
                 joinSigns.remove(joinSign);
+                saveSigns();
                 break;
             case LEAVE:
                 LeaveSign leaveSign = leaveSigns.stream()
@@ -134,6 +138,7 @@ public class SignManager {
                 if (leaveSign == null) return;
 
                 leaveSigns.remove(leaveSign);
+                saveSigns();
                 break;
             case TOP:
                 TopSign topSign = topSigns.stream()
@@ -143,6 +148,7 @@ public class SignManager {
                 if (topSign == null) return;
 
                 topSigns.remove(topSign);
+                saveSigns();
                 break;
             default:
                 throw new ArithmeticException("Invalid SignType enum.");
