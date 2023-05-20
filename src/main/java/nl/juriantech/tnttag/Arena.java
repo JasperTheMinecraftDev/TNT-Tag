@@ -17,7 +17,6 @@ public class Arena {
     private int countdown;
     private final GameManager gameManager;
 
-
     public Arena(Tnttag plugin, String name, Location startLocation, Location lobbyLocation, int maxPlayers, int minPlayers, ArrayList<String> potionEffects, int roundDuration, int countdown) {
         this.name = name;
         this.startLocation = startLocation;

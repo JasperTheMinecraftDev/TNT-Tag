@@ -193,7 +193,7 @@ public class PlayerManager {
         }
     }
     public void teleportToLobby(Player player) {
-        Location lobbyLocation = gameManager.arena.getStartLocation();
+        Location lobbyLocation = gameManager.arena.getLobbyLocation();
         player.teleport(lobbyLocation);
     }
 
