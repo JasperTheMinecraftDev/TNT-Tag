@@ -6,7 +6,6 @@ import nl.juriantech.tnttag.managers.LobbyManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class LeaveListener implements Listener {
@@ -29,15 +28,6 @@ public class LeaveListener implements Listener {
 
         if (lobbyManager.playerIsInLobby(player)) {
             lobbyManager.leaveLobby(player);
-        }
-    }
-
-    @EventHandler
-    public void onPlayerWorldChange(PlayerChangedWorldEvent event) {
-        Player player = event.getPlayer();
-
-        if (arenaManager.playerIsInArena(player)) {
-            arenaManager.getPlayerArena(player).getGameManager().playerManager.removePlayer(player, true);
         }
     }
 }
