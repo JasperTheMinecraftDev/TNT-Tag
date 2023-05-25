@@ -97,10 +97,9 @@ public class GameManager {
                             ParticleUtils.Firework(player.getLocation(), 0);
                             playerManager.broadcast(ChatUtils.getRaw("arena.player-win").replace("{player}", player.getName()));
                             playerManager.broadcast(ChatUtils.getRaw("arena.returning-to-lobby"));
-
-                            ArenaEndingEvent arenaEndingEvent = new ArenaEndingEvent(arena.getName(), playerManager.getPlayers(), new ArrayList<Player>(List.of(player)));
-                            Bukkit.getPluginManager().callEvent(arenaEndingEvent);
                         }
+                        ArenaEndingEvent arenaEndingEvent = new ArenaEndingEvent(arena.getName(), playerManager.getPlayers(), new ArrayList<>(List.of(player)));
+                        Bukkit.getPluginManager().callEvent(arenaEndingEvent);
                         playerManager.removePlayer(player, false);
                     }
 
