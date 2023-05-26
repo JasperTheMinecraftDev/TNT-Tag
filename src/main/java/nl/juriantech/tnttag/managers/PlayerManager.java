@@ -98,6 +98,7 @@ public class PlayerManager {
             return;
         }
 
+        if (players.size() == 0) gameManager.stop();
         if (players.size() == 1 && gameManager.state == GameState.INGAME) {
             if (message) {
                 broadcast(ChatUtils.getRaw("arena.last-player-leaved").replace("{player}", player.getName()));
@@ -119,9 +120,7 @@ public class PlayerManager {
         //If the player was a spectator before.
         if (players.get(player) == PlayerType.SPECTATOR) {
             // Make the player visible again
-            for (Player p : players.keySet()) {
-                p.showPlayer(plugin, player);
-            }
+            player.setInvisible(false);
             player.setGameMode(GameMode.SURVIVAL);
             player.setFlying(false);
             player.setAllowFlight(false);
@@ -163,9 +162,7 @@ public class PlayerManager {
                 break;
             case SPECTATOR:
                 // The player should be invisible.
-                for (Player p : players.keySet()) {
-                    p.hidePlayer(plugin, player);
-                }
+                player.setInvisible(true);
                 player.setGameMode(GameMode.ADVENTURE);
                 player.setAllowFlight(true);
                 player.setFlying(true);
