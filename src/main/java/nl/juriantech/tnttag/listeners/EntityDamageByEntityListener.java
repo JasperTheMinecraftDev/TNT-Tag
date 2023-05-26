@@ -2,6 +2,7 @@ package nl.juriantech.tnttag.listeners;
 
 import nl.juriantech.tnttag.Arena;
 import nl.juriantech.tnttag.Tnttag;
+import nl.juriantech.tnttag.enums.GameState;
 import nl.juriantech.tnttag.enums.PlayerType;
 import nl.juriantech.tnttag.utils.ChatUtils;
 import org.bukkit.Sound;
@@ -31,10 +32,13 @@ public class EntityDamageByEntityListener implements Listener {
 
         Arena damagerArena = plugin.getArenaManager().getPlayerArena(damager);
         Arena victimArena = plugin.getArenaManager().getPlayerArena(victim);
-        if (victimArena == null || damagerArena == null || !victimArena.getName().equals(damagerArena.getName())) {
-            return;
+        if (victimArena == null || damagerArena == null || !victimArena.getName().equals(damagerArena.getName())) return;
+
+        if (damagerArena.getGameManager().state == GameState.INGAME) {
+            victim.setHealth(victim.getHealth() + event.getDamage());
+        } else {
+            event.setCancelled(true);
         }
-        event.setCancelled(true);
 
         for (Map.Entry<Player, PlayerType> entry : damagerArena.getGameManager().playerManager.getPlayers().entrySet()) {
             if (entry.getValue() == PlayerType.TAGGER && entry.getKey().getName().equals(damager.getName())) {
