@@ -3,9 +3,10 @@ package nl.juriantech.tnttag.listeners;
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.managers.ArenaManager;
 import nl.juriantech.tnttag.managers.LobbyManager;
+import nl.juriantech.tnttag.managers.SignManager;
 import nl.juriantech.tnttag.utils.ChatUtils;
 import nl.juriantech.tnttag.utils.ItemBuilder;
-import org.bukkit.Material;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,20 +24,22 @@ public class ItemListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.getHand() == null) return;
+
         Player player = event.getPlayer();
-        if (event.getHand() != null) {
-            if (lobbyManager.playerIsInLobby(player)) {
-                if (player.getInventory().getItem(event.getHand()).equals(ItemBuilder.from(ChatUtils.getRaw("items.leave")).build())) {
-                    if (arenaManager.playerIsInArena(player)) {
-                        arenaManager.getPlayerArena(player).getGameManager().playerManager.removePlayer(player, true);
-                    }
-                    lobbyManager.leaveLobby(player);
-                    event.setCancelled(true);
-                } else if (player.getInventory().getItem(event.getHand()).equals(ItemBuilder.from(ChatUtils.getRaw("items.join")).build())) {
-                    player.performCommand("tt joingui");
-                    event.setCancelled(true);
-                }
+        if (!lobbyManager.playerIsInLobby(player)) return;
+
+        if (player.getInventory().getItem(event.getHand()).equals(ItemBuilder.from(ChatUtils.getRaw("items.leave")).build())) {
+            if (arenaManager.playerIsInArena(player)) {
+                arenaManager.getPlayerArena(player).getGameManager().playerManager.removePlayer(player, true);
             }
+            lobbyManager.leaveLobby(player);
+            event.setCancelled(true);
+        } else if (player.getInventory().getItem(event.getHand()).equals(ItemBuilder.from(ChatUtils.getRaw("items.join")).build())) {
+            if (Tnttag.configfile.getBoolean("open-arena-gui-on-join")) {
+                player.performCommand("tt joingui");
+            }
+            event.setCancelled(true);
         }
     }
 }
