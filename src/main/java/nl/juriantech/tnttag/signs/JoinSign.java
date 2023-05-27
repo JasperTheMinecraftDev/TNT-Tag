@@ -2,9 +2,8 @@ package nl.juriantech.tnttag.signs;
 
 import nl.juriantech.tnttag.Arena;
 import nl.juriantech.tnttag.Tnttag;
-import nl.juriantech.tnttag.managers.SignManager;
 import nl.juriantech.tnttag.objects.SimpleLocation;
-import org.bukkit.ChatColor;
+import nl.juriantech.tnttag.utils.ChatUtils;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -28,23 +27,32 @@ public class JoinSign implements SignInterface {
 
     @Override
     public void update() {
-        if (loc != null) {
-            Block block = loc.getBlock();
-            if (block.getState() instanceof org.bukkit.block.Sign) {
-                org.bukkit.block.Sign sign = (org.bukkit.block.Sign) block.getState();
-                Arena arena = plugin.getArenaManager().getArena(this.arena);
-                if (arena == null) {
-                    return;
-                }
-                int currentPlayers = arena.getGameManager().playerManager.getPlayerCount();
-                int maxPlayers = arena.getMaxPlayers();
-                sign.setLine(0, SignManager.SIGN_PREFIX);
-                sign.setLine(1, ChatColor.WHITE + this.arena);
-                sign.setLine(2, arena.getGameManager().getCustomizedState() + ChatColor.RESET + ": " + ChatColor.GOLD + ChatColor.BOLD + currentPlayers
-                        + ChatColor.YELLOW + "/" + ChatColor.WHITE + ChatColor.BOLD + maxPlayers);
-                sign.update(true);
-            }
+        if (loc == null) return;
+
+        Block block = loc.getBlock();
+        if (!(block.getState() instanceof org.bukkit.block.Sign)) return;
+
+        org.bukkit.block.Sign sign = (org.bukkit.block.Sign) block.getState();
+        Arena arena = plugin.getArenaManager().getArena(this.arena);
+        if (arena == null) {
+            return;
         }
+
+        int currentPlayers = arena.getGameManager().playerManager.getPlayerCount();
+        int maxPlayers = arena.getMaxPlayers();
+
+        for (int i = 0; i <= 3; i++) {
+            sign.setLine(i, ChatUtils.colorize(
+                    Tnttag.customizationfile.getStringList("join-sign.lines").get(i)
+                            .replace("%arena%", this.arena)
+                            .replace("%state%", arena.getGameManager().getCustomizedState())
+                            .replace("%current_players%", String.valueOf(currentPlayers))
+                            .replace("%max_players%", String.valueOf(maxPlayers))
+                    )
+            );
+        }
+
+        sign.update(true);
     }
 
     @Override
