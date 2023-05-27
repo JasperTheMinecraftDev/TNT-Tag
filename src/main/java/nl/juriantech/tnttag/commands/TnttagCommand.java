@@ -182,8 +182,7 @@ public class TnttagCommand {
     @CommandPermission("tnttag.setlobby")
     public void onSetLobby(Player player) throws IOException {
         Location loc = player.getLocation();
-        // If we don't cast this to int, it will be doubles and that will cause errors in the join process.
-        // I gotcha
+        
         Tnttag.configfile.set(
                 "globalLobby",
                 loc.getWorld().getName() + ","
