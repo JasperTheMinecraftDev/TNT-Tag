@@ -1,20 +1,17 @@
 package nl.juriantech.tnttag.signs;
 
 import nl.juriantech.tnttag.Tnttag;
-import nl.juriantech.tnttag.managers.SignManager;
 import nl.juriantech.tnttag.objects.SimpleLocation;
-import org.bukkit.ChatColor;
+import nl.juriantech.tnttag.utils.ChatUtils;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 public class LeaveSign implements SignInterface {
 
-    private final Tnttag plugin;
     private final Location loc;
 
     public LeaveSign(Tnttag plugin, Location loc) {
-        this.plugin = plugin;
         this.loc = loc;
     }
 
@@ -25,18 +22,18 @@ public class LeaveSign implements SignInterface {
 
     @Override
     public void update() {
-        if (loc != null) {
-            Block block = loc.getBlock();
-            if (block.getState() instanceof org.bukkit.block.Sign) {
-                org.bukkit.block.Sign sign = (org.bukkit.block.Sign) block.getState();
+        if (loc == null) return;
 
-                sign.setLine(0, SignManager.SIGN_PREFIX);
-                sign.setLine(1, ChatColor.WHITE + "leave");
-                sign.setLine(2, "");
-                sign.setLine(3, "");
-                sign.update(true);
-            }
+        Block block = loc.getBlock();
+        if (!(block.getState() instanceof org.bukkit.block.Sign)) return;
+
+        org.bukkit.block.Sign sign = (org.bukkit.block.Sign) block.getState();
+
+        for (int i = 0; i <= 3; i++) {
+            sign.setLine(i, ChatUtils.colorize(Tnttag.customizationfile.getStringList("leave-sign.lines").get(i)));
         }
+
+        sign.update(true);
     }
 
     @Override

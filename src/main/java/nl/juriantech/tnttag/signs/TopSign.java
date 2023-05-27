@@ -3,10 +3,9 @@ package nl.juriantech.tnttag.signs;
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.api.API;
 import nl.juriantech.tnttag.enums.StatType;
-import nl.juriantech.tnttag.managers.SignManager;
 import nl.juriantech.tnttag.objects.SimpleLocation;
+import nl.juriantech.tnttag.utils.ChatUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
@@ -36,45 +35,54 @@ public class TopSign implements SignInterface {
 
     @Override
     public void update() {
-        if (loc != null) {
-            Block block = loc.getBlock();
-            if (block.getState() instanceof org.bukkit.block.Sign) {
-                org.bukkit.block.Sign sign = (org.bukkit.block.Sign) block.getState();
-                API api = Tnttag.getAPI();
-                TreeMap<UUID, Integer> data = null;
+        if (loc == null) return;
 
-                switch (statType) {
-                    case WINS:
-                        data = api.getWinsData();
-                        break;
-                    case TIMESTAGGED:
-                        data = api.getTimesTaggedData();
-                        break;
-                    case TAGS:
-                        data = api.getTagsData();
-                        break;
-                    default:
-                        return;
-                }
+        Block block = loc.getBlock();
+        if (!(block.getState() instanceof org.bukkit.block.Sign)) return;
 
+        org.bukkit.block.Sign sign = (org.bukkit.block.Sign) block.getState();
+        API api = Tnttag.getAPI();
+        TreeMap<UUID, Integer> data = null;
 
-                List<Map.Entry<UUID, Integer>> topTenPlayers = data.entrySet().stream()
-                        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                        .limit(10)
-                        .collect(Collectors.toList());
-
-                sign.setLine(0, SignManager.SIGN_PREFIX);
-                sign.setLine(1, ChatColor.YELLOW + "TOP " + statType.toString());
-                sign.setLine(2, ChatColor.WHITE + String.valueOf(position));
-                OfflinePlayer player = Bukkit.getOfflinePlayer(topTenPlayers.get(position - 1).getKey()); //array is zero based
-                if (player.getName() == null) {
-                    sign.setLine(3, ChatColor.GOLD + "NOBODY");
-                } else {
-                    sign.setLine(3, ChatColor.GOLD + player.getName());
-                }
-                sign.update(true);
-            }
+        switch (statType) {
+            case WINS:
+                data = api.getWinsData();
+                break;
+            case TIMESTAGGED:
+                data = api.getTimesTaggedData();
+                break;
+            case TAGS:
+                data = api.getTagsData();
+                break;
+            default:
+                return;
         }
+
+
+        List<Map.Entry<UUID, Integer>> topTenPlayers = data.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .limit(10)
+                .collect(Collectors.toList());
+
+        String playerName = "NOBODY";
+
+        OfflinePlayer player = Bukkit.getOfflinePlayer(topTenPlayers.get(position - 1).getKey()); //array is zero based
+
+        if (player.getName() != null) {
+            playerName = player.getName();
+        }
+
+        for (int i = 0; i <= 3; i++) {
+            sign.setLine(i, ChatUtils.colorize(
+                    Tnttag.customizationfile.getStringList("top-sign.lines").get(i)
+                            .replace("%top_type%", Tnttag.customizationfile.getString("top-sign.types." + statType.toString()))
+                            .replace("%top_position%", String.valueOf(position))
+                            .replace("%player%", playerName)
+                    )
+            );
+        }
+
+        sign.update(true);
     }
 
     @Override

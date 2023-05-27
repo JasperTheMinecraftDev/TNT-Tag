@@ -31,11 +31,16 @@ public class LobbyManager {
 
         String[] parts = Tnttag.configfile.getString("globalLobby").split(",");
         World world = Bukkit.getWorld(parts[0]);
-        int x = Integer.parseInt(parts[1]);
-        int y = Integer.parseInt(parts[2]);
-        int z = Integer.parseInt(parts[3]);
+        double x = Double.parseDouble(parts[1]);
+        double y = Double.parseDouble(parts[2]);
+        double z = Double.parseDouble(parts[3]);
 
-        player.teleport(new Location(world, x, y, z));
+        Location globalLobbyLocation = new Location(world, x, y, z);
+        globalLobbyLocation.setYaw(Float.parseFloat(parts[4]));
+        globalLobbyLocation.setPitch(Float.parseFloat(parts[5]));
+
+        player.teleport(globalLobbyLocation);
+
         players.add(player);
         // This should be done first because the PlayerInformation constructor clears the inventory too.
         playerInformationMap.put(player, new PlayerInformation(player));

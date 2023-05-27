@@ -8,6 +8,9 @@ round-finish-commands:
 arena-finish-commands:
   #- eco add %winner% 1000
 
+# Automatically open the arena gui when joining an arena
+open-arena-gui-on-join: true
+
 timesToBroadcast:
   - 50
   - 40
