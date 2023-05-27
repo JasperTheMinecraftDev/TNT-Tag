@@ -16,10 +16,12 @@ public class ItemListener implements Listener {
 
     private final ArenaManager arenaManager;
     private final LobbyManager lobbyManager;
+    private final SignManager signManager;
 
     public ItemListener(Tnttag plugin) {
         this.arenaManager = plugin.getArenaManager();
         this.lobbyManager = plugin.getLobbyManager();
+        this.signManager = plugin.getSignManager();
     }
 
     @EventHandler
@@ -30,6 +32,13 @@ public class ItemListener implements Listener {
         if (!lobbyManager.playerIsInLobby(player)) return;
 
         if (player.getInventory().getItem(event.getHand()).equals(ItemBuilder.from(ChatUtils.getRaw("items.leave")).build())) {
+            //You need to do this otherwise if you click a plugin sign with quick inventory slot 9 selected the player will join and immediately leave
+            if (event.getClickedBlock() != null && event.getClickedBlock().getState() instanceof Sign)  {
+                if (signManager.isPluginSign((Sign) event.getClickedBlock().getState())) {
+                    event.setCancelled(true);
+                    return;
+                }
+            }
             if (arenaManager.playerIsInArena(player)) {
                 arenaManager.getPlayerArena(player).getGameManager().playerManager.removePlayer(player, true);
             }
