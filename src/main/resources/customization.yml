@@ -168,6 +168,10 @@ top-sign:
     - "&c%top_type%"
     - "&6Position &4#%top_position%"
     - "&f%player%"
+  types:
+    WINS: "&aWins"
+    TIMESTAGGED: "&cTimes tagged"
+    TAGS: "&bTags got"
 
 #You can find sounds at: https://helpch.at/docs/1.13/index.html?org/bukkit/Sound.html
 #The sound names are case-insensitive.

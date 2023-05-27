@@ -75,7 +75,7 @@ public class TopSign implements SignInterface {
         for (int i = 0; i <= 3; i++) {
             sign.setLine(i, ChatUtils.colorize(
                     Tnttag.customizationfile.getStringList("top-sign.lines").get(i)
-                            .replace("%top_type%", statType.toString())
+                            .replace("%top_type%", Tnttag.customizationfile.getString("top-sign.types." + statType.toString()))
                             .replace("%top_position%", String.valueOf(position))
                             .replace("%player%", playerName)
                     )
