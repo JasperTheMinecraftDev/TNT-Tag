@@ -45,6 +45,15 @@ commands:
   global-lobby-set: "&2The global lobby is set to your location."
   arena-is-running: "&cYou can't edit this arena while is running, because it will cause errors."
 
+info-command:
+  - "&b=========TNT-Tag========="
+  - ""
+  - "&3ARENA:&b {arena_name}"
+  - ""
+  - "&bIs running?: &f{is_running}"
+  - "&bCountdown: &f{countdown}"
+  - "&bPlayers (min/max): &f{min_players}/{max_players}"
+  
 help-menu:
   - "&b=========TNT-Tag========="
   - "&a/tnttag help - Shows you this menu!"
