@@ -35,7 +35,7 @@ public class EntityDamageByEntityListener implements Listener {
         if (victimArena == null || damagerArena == null || !victimArena.getName().equals(damagerArena.getName())) return;
 
         if (damagerArena.getGameManager().state == GameState.INGAME) {
-            victim.setHealth(victim.getHealth() + event.getDamage());
+            victim.setHealth(28);
         } else {
             event.setCancelled(true);
         }
