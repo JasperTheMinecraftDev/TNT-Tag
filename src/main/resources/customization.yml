@@ -53,7 +53,7 @@ info-command:
   - "&bIs running?: &f{is_running}"
   - "&bCountdown: &f{countdown}"
   - "&bPlayers (min/max): &f{min_players}/{max_players}"
-  
+
 help-menu:
   - "&b=========TNT-Tag========="
   - "&a/tnttag help - Shows you this menu!"
@@ -150,16 +150,16 @@ party:
 
 #Signs customization
 #Placeholders:
-# %arena% -> the arena name
-# %state% -> the game state that you can set above (IDLE, STARTING...)
-# %current_players% -> the amount of players that are playing, will be an empty string if the arena state isn't "INGAME"
-# %max_players% -> same as above but returns the max amount of players that the arena is configured to handle
+# {arena} -> the arena name
+# {state} -> the game state that you can set above (IDLE, STARTING...)
+# {current_players} -> the amount of players that are playing, will be an empty string if the arena state isn't "INGAME"
+# {max_players} -> same as above but returns the max amount of players that the arena is configured to handle
 join-sign:
   lines:
     - "&6[&cTNT-Tag&6]"
-    - "&f%arena%"
-    - "%state%"
-    - "&a&l%current_players%&f/&2&l%max_players%"
+    - "&f{arena}"
+    - "{state}"
+    - "&a&l{current_players}&f/&2&l{max_players}"
 
 leave-sign:
   lines:
@@ -169,15 +169,15 @@ leave-sign:
     - "&cClick to leave"
 
 #Placeholders:
-# %top_type% -> The top type you specified when setting up the sign (WINS, TIMESTAGGED, TAGS)
-# %top_position% -> Returns the top position as number
-# %player% -> the Player name that corresponds
+# {top_type} -> The top type you specified when setting up the sign (WINS, TIMESTAGGED, TAGS)
+# {top_position} -> Returns the top position as number
+# {player} -> the Player name that corresponds
 top-sign:
   lines:
     - "&6[&cTNT-Tag&6]"
-    - "&c%top_type%"
-    - "&6Position &4#%top_position%"
-    - "&f%player%"
+    - "&c{top_type}"
+    - "&6Position &4#{top_position}"
+    - "&f{player}"
   types:
     WINS: "&aWins"
     TIMESTAGGED: "&cTimes tagged"

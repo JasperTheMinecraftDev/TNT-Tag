@@ -44,10 +44,10 @@ public class JoinSign implements SignInterface {
         for (int i = 0; i <= 3; i++) {
             sign.setLine(i, ChatUtils.colorize(
                     Tnttag.customizationfile.getStringList("join-sign.lines").get(i)
-                            .replace("%arena%", this.arena)
-                            .replace("%state%", arena.getGameManager().getCustomizedState())
-                            .replace("%current_players%", String.valueOf(currentPlayers))
-                            .replace("%max_players%", String.valueOf(maxPlayers))
+                            .replace("{arena}", this.arena)
+                            .replace("{state}", arena.getGameManager().getCustomizedState())
+                            .replace("{current_players}", String.valueOf(currentPlayers))
+                            .replace("{max_players}", String.valueOf(maxPlayers))
                     )
             );
         }
