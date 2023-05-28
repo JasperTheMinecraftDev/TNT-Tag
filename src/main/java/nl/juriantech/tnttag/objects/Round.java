@@ -30,9 +30,11 @@ public class Round {
         this.roundDuration = gameManager.arena.getRoundDuration();
     }
     public void start() {
-        for (Player player : gameManager.playerManager.getPlayers().keySet()) {
-            player.playSound(player.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.round-start").toUpperCase()), 1, 1);
-            ChatUtils.sendTitle(player, "titles.round-start", 20L, 20L, 20L);
+        for (Map.Entry<Player, PlayerType> player : gameManager.playerManager.getPlayers().entrySet()) {
+            if (player.getValue().equals(PlayerType.SPECTATOR)) continue;
+
+            player.getKey().playSound(player.getKey().getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.round-start").toUpperCase()), 1, 1);
+            ChatUtils.sendTitle(player.getKey(), "titles.round-start", 20L, 20L, 20L);
         }
 
         new BukkitRunnable() {
