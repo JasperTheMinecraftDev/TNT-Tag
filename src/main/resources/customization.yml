@@ -43,6 +43,7 @@ commands:
   files-reloaded: "&2TNT-Tag is now reloaded!"
   arena-started: "&2The arena is started successfully."
   global-lobby-set: "&2The global lobby is set to your location."
+  arena-is-running: "&cYou can't edit this arena while is running, because it will cause errors."
 
 help-menu:
   - "&b=========TNT-Tag========="

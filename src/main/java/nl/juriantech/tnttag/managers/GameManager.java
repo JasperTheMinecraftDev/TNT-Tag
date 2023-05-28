@@ -122,4 +122,8 @@ public class GameManager {
     public String getCustomizedState() {
         return ChatUtils.colorize(ChatUtils.getRaw("state." + state.toString().toUpperCase()));
     }
+
+    public boolean isRunning() {
+        return this.state == GameState.INGAME;
+    }
 }

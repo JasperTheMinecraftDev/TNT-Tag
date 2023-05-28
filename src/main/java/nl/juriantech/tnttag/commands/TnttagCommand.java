@@ -109,6 +109,10 @@ public class TnttagCommand {
     public void onEditor(Player player, String arenaName) {
         Arena arena = arenaManager.getArena(arenaName);
         if (arena != null) {
+            if (arena.getGameManager().isRunning()) {
+                ChatUtils.sendMessage(player, "commands.arena-is-running");
+                return;
+            }
             new ArenaEditorGUI(plugin, player, arena).open();
         } else {
             ChatUtils.sendMessage(player, "commands.invalid-arena");
