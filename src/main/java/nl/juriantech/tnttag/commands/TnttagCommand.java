@@ -109,6 +109,10 @@ public class TnttagCommand {
     public void onEditor(Player player, String arenaName) {
         Arena arena = arenaManager.getArena(arenaName);
         if (arena != null) {
+            if (arena.getGameManager().isRunning()) {
+                ChatUtils.sendMessage(player, "commands.arena-is-running");
+                return;
+            }
             new ArenaEditorGUI(plugin, player, arena).open();
         } else {
             ChatUtils.sendMessage(player, "commands.invalid-arena");
@@ -171,10 +175,16 @@ public class TnttagCommand {
             return;
         }
 
-        int countdown = arenaObj.getCountdown();
-        int minPlayers = arenaObj.getMinPlayers();
-        int maxPlayers = arenaObj.getMaxPlayers();
-        ChatUtils.sendCustomMessage(player, "&6Countdown: " + countdown + ", minPlayers: " + minPlayers + ", maxPlayers: " + maxPlayers);
+        for (String string : Tnttag.customizationfile.getStringList("info-command")) {
+            ChatUtils.sendCustomMessage(player,
+                    string
+                    .replace("{arena_name}", arenaObj.getName())
+                    .replace("{is_running}", String.valueOf(arenaObj.getGameManager().isRunning()))
+                    .replace("{countdown}", String.valueOf(arenaObj.getCountdown()))
+                    .replace("{min_players}", String.valueOf(arenaObj.getMinPlayers()))
+                    .replace("{max_players}", String.valueOf(arenaObj.getMaxPlayers()))
+            );
+        }
     }
 
     //setlobby command for the global lobby
