@@ -42,7 +42,7 @@ public class Round {
             public void run() {
                 roundDuration--;
                 for (Player player : gameManager.playerManager.getPlayers().keySet()) {
-                    player.setLevel(roundDuration);
+                    player.setLevel(Math.max(roundDuration, 0));
                     if (gameManager.playerManager.getPlayers().get(player) == PlayerType.TAGGER) {
                         updateCompass(player);
                         ChatUtils.sendActionBarMessage(player, ChatUtils.getRaw("actionBarMessages.tagger"));
@@ -51,7 +51,7 @@ public class Round {
                     }
                 }
 
-                if (roundDuration <= 0) {
+                if (roundDuration == 0) {
                     cancel();
                     end();
                     if (gameManager.playerManager.getPlayerCount() == 1) {
@@ -60,6 +60,12 @@ public class Round {
                         //Start a new round
                         gameManager.startRound();
                     }
+                } else if (roundDuration < 0) {
+                    //The game has crashed due to an error
+                    cancel();
+                    end();
+                    Bukkit.getLogger().severe("This round is on a crashed state. Something has caused an error and made the round unable to continue. Stopping game...");
+                    Bukkit.getLogger().severe("Please report the stacktrace above to our discord!");
                 }
             }
         }.runTaskTimer(plugin, 20L, 20L);
