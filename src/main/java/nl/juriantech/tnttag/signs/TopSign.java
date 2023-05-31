@@ -66,10 +66,12 @@ public class TopSign implements SignInterface {
 
         String playerName = "NOBODY";
 
-        OfflinePlayer player = Bukkit.getOfflinePlayer(topTenPlayers.get(position - 1).getKey()); //array is zero based
+        if (topTenPlayers.get(position - 1) != null) {
+            OfflinePlayer player = Bukkit.getOfflinePlayer(topTenPlayers.get(position - 1).getKey()); //array is zero based
 
-        if (player.getName() != null) {
-            playerName = player.getName();
+            if (player.getName() != null) {
+                playerName = player.getName();
+            }
         }
 
         for (int i = 0; i <= 3; i++) {
