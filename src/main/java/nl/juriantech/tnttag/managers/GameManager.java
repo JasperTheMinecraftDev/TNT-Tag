@@ -18,7 +18,6 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class GameManager {
@@ -77,9 +76,10 @@ public class GameManager {
                 startRound();
                 break;
             case ENDING:
-                if (round != null) {
-                    round.end();
-                }
+                if (round != null) round.end();
+
+                ArrayList<Player> winners = new ArrayList<>();
+
                 //Stop the game
                 HashMap<Player, PlayerType> playersCopy = new HashMap<>(playerManager.getPlayers());
                 for (Map.Entry<Player, PlayerType> entry : playersCopy.entrySet()) {
@@ -97,11 +97,13 @@ public class GameManager {
                             ParticleUtils.Firework(player.getLocation(), 0);
                             playerManager.broadcast(ChatUtils.getRaw("arena.player-win").replace("{player}", player.getName()));
                             playerManager.broadcast(ChatUtils.getRaw("arena.returning-to-lobby"));
+                            winners.add(player);
                         }
-                        ArenaEndingEvent arenaEndingEvent = new ArenaEndingEvent(arena.getName(), playerManager.getPlayers(), new ArrayList<>(List.of(player)));
-                        Bukkit.getPluginManager().callEvent(arenaEndingEvent);
                         playerManager.removePlayer(player, false);
                     }
+
+                ArenaEndingEvent arenaEndingEvent = new ArenaEndingEvent(arena.getName(), playerManager.getPlayers(), winners);
+                Bukkit.getPluginManager().callEvent(arenaEndingEvent);
 
                 setGameState(GameState.IDLE);
                 this.startRunnable = null;

@@ -11,6 +11,9 @@ arena-finish-commands:
 # Automatically open the arena gui when joining an arena
 open-arena-gui-on-join: true
 
+# The amount of people that will be the tagger in a round.
+taggers-percentage: "40%"
+
 timesToBroadcast:
   - 50
   - 40

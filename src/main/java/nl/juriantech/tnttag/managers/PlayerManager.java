@@ -23,7 +23,6 @@ public class PlayerManager {
     private final Tnttag plugin;
     private final GameManager gameManager;
     private final HashMap<Player, PlayerType> players;
-    private final Random random = new Random();
     private final LobbyManager lobbyManager;
 
     public PlayerManager(Tnttag plugin, GameManager gameManager) {
@@ -233,32 +232,35 @@ public class PlayerManager {
     }
 
     public void pickPlayers() {
-        Player tagger = null;
         List<Player> playersList = new ArrayList<>(players.keySet());
+        List<Player> taggers = new ArrayList<>();
 
-        // Keep selecting a random player until a non-spectator player is found
-        while (tagger == null || players.get(tagger) == PlayerType.SPECTATOR) {
-            int randomPlayerIndex = random.nextInt(players.size());
-            tagger = playersList.get(randomPlayerIndex);
+        // Remove the percentage sign and convert to a double
+        double taggerPercentage = Double.parseDouble(Tnttag.configfile.getString("taggers-percentage").replace("%", "")) / 100.0;
+        int numTaggers = (int) Math.round(playersList.size() * taggerPercentage);
+
+        // Shuffle the players list to introduce randomness
+        Collections.shuffle(playersList);
+
+        for (int i = 0; i < numTaggers; i++) {
+            Player player = playersList.get(i);
+            taggers.add(player);
+            setType(player, PlayerType.TAGGER);
+            ChatUtils.sendMessage(player, "player.is-tagger");
+            gameManager.itemManager.giveTaggerItems(player);
         }
-
-        setType(tagger, PlayerType.TAGGER);
-        ChatUtils.sendMessage(tagger, "player.is-tagger");
-        gameManager.itemManager.giveTaggerItems(tagger);
 
         for (Player p : players.keySet()) {
             // Only process players that are not spectators
             if (players.get(p) != PlayerType.SPECTATOR) {
-                // Set the player's type to PlayerType.SURVIVOR if they are not the tagger
-                if (!p.equals(tagger)) {
+                // Set the player's type to PlayerType.SURVIVOR if they are not a tagger
+                if (!taggers.contains(p)) {
                     setType(p, PlayerType.SURVIVOR);
                 }
+                givePotionEffects(p);
             }
-            givePotionEffects(p);
         }
     }
-
-
 
     public int getPlayerCount() {
         //Do NOT count spectators!!
