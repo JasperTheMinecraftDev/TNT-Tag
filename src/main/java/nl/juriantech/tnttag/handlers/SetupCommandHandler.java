@@ -127,8 +127,8 @@ public class SetupCommandHandler implements Listener {
     }
 
     public void cancel(Player player) {
-        ChatUtils.sendMessage(player, "setup.cancelled");
         clearChat(player);
+        ChatUtils.sendMessage(player, "setup.cancelled");
         // Unregister the event
         HandlerList.unregisterAll(this);
     }

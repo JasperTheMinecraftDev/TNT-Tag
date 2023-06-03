@@ -76,9 +76,7 @@ public class GameManager {
                 startRound();
                 break;
             case ENDING:
-                if (round != null) {
-                    round.end();
-                }
+                if (round != null) round.end();
 
                 ArrayList<Player> winners = new ArrayList<>();
 
