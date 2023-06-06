@@ -69,9 +69,12 @@ public class GameManager {
 
                 if (this.startRunnable != null) this.startRunnable.cancel();
                 this.state = GameState.INGAME;
+
                 for (Player player : playerManager.getPlayers().keySet()) {
+                    playerManager.setPlayerType(player, PlayerType.SURVIVOR);
                     itemManager.giveGameItems(player);
                 }
+
                 playerManager.sendStartMessage();
                 startRound();
                 break;
