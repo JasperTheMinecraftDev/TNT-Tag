@@ -84,6 +84,7 @@ public class PlayerManager {
         Bukkit.getPluginManager().callEvent(event);
 
         setPlayerType(player, PlayerType.WAITING);
+        gameManager.itemManager.giveLobbyItems(player);
         players.remove(player);
         if (message) {
             ChatUtils.sendMessage(player, "player.leaved-arena");
