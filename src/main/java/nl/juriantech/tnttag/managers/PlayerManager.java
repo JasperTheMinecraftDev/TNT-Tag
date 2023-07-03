@@ -276,4 +276,8 @@ public class PlayerManager {
     public HashMap<Player, PlayerType> getPlayers() {
         return players;
     }
+
+    public PlayerType getPlayerType(Player player) {
+        return players.get(player);
+    }
 }

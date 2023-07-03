@@ -11,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import java.util.Map;
 
 public class EntityDamageByEntityListener implements Listener {
 
@@ -46,15 +45,15 @@ public class EntityDamageByEntityListener implements Listener {
             event.setCancelled(true);
         }
 
-        for (Map.Entry<Player, PlayerType> entry : damagerArena.getGameManager().playerManager.getPlayers().entrySet()) {
-            if (entry.getValue() == PlayerType.TAGGER && entry.getKey().getName().equals(damager.getName())) {
-                damagerArena.getGameManager().playerManager.setPlayerType(damager, PlayerType.SURVIVOR);
-                damagerArena.getGameManager().playerManager.setPlayerType(victim, PlayerType.TAGGER);
-                ChatUtils.sendCustomMessage(victim, ChatUtils.getRaw("player.tagged").replace("{tagger}", damager.getName()));
+        if (damagerArena.getGameManager().playerManager.getPlayerType(damager) == PlayerType.TAGGER
+                && damagerArena.getGameManager().playerManager.getPlayerType(victim) == PlayerType.SURVIVOR) {
 
-                victim.playSound(victim.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.tagged").toUpperCase()), 1, 1);
-                damager.playSound(damager.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.untagged").toUpperCase()), 1, 1);
-            }
+            damagerArena.getGameManager().playerManager.setPlayerType(damager, PlayerType.SURVIVOR);
+            damagerArena.getGameManager().playerManager.setPlayerType(victim, PlayerType.TAGGER);
+            ChatUtils.sendCustomMessage(victim, ChatUtils.getRaw("player.tagged").replace("{tagger}", damager.getName()));
+
+            victim.playSound(victim.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.tagged").toUpperCase()), 1, 1);
+            damager.playSound(damager.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.untagged").toUpperCase()), 1, 1);
         }
     }
 }
