@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -38,9 +39,9 @@ public class TopSign implements SignInterface {
         if (loc == null) return;
 
         Block block = loc.getBlock();
-        if (!(block.getState() instanceof org.bukkit.block.Sign)) return;
+        if (!(block.getState() instanceof Sign)) return;
 
-        org.bukkit.block.Sign sign = (org.bukkit.block.Sign) block.getState();
+        Sign sign = (Sign) block.getState();
         API api = Tnttag.getAPI();
         TreeMap<UUID, Integer> data = null;
 
@@ -64,7 +65,7 @@ public class TopSign implements SignInterface {
                 .limit(10)
                 .collect(Collectors.toList());
 
-        String playerName = "NOBODY";
+        String playerName = Tnttag.customizationfile.getString("top-sign.no-data");
 
         if (!topTenPlayers.isEmpty()) {
             OfflinePlayer player = Bukkit.getOfflinePlayer(topTenPlayers.get(position - 1).getKey()); //array is zero based
