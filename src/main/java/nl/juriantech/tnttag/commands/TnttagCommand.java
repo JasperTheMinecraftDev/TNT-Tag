@@ -10,6 +10,7 @@ import nl.juriantech.tnttag.handlers.SetupCommandHandler;
 import nl.juriantech.tnttag.managers.ArenaManager;
 import nl.juriantech.tnttag.utils.ChatUtils;
 import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import revxrsal.commands.annotation.Command;
 import revxrsal.commands.annotation.Optional;
@@ -212,57 +213,5 @@ public class TnttagCommand {
         Tnttag.configfile.save();
 
         ChatUtils.sendMessage(player, "commands.global-lobby-set");
-    }
-
-    @Subcommand("dump log")
-    public void onDumpLog(Player player) {
-        Logger logger = plugin.getLogger();
-
-        try {
-            // Retrieve the latest log entries
-            Process process = Runtime.getRuntime().exec("tail -n 1000 logs/latest.log");
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-            StringBuilder logDataBuilder = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                logDataBuilder.append(line).append('\n');
-            }
-
-            // Close the reader and wait for the process to finish
-            reader.close();
-            process.waitFor();
-
-            String logData = logDataBuilder.toString();
-
-            // Send the log data to the specified URL
-            URL url = new URL("https://paste.juriantech.nl/api/create.php");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setRequestProperty("charset", "utf-8");
-
-            byte[] postData = logData.getBytes(StandardCharsets.UTF_8);
-            conn.getOutputStream().write(postData);
-
-            // Read the response from the server
-            BufferedReader responseReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            StringBuilder response = new StringBuilder();
-            while ((line = responseReader.readLine()) != null) {
-                response.append(line);
-            }
-            responseReader.close();
-
-            // Get the link from the response
-            String link = "https://paste.juriantech.nl/view.php?id=" + response.toString();
-
-            // Return the link to the command sender
-            player.sendMessage("Log has been uploaded, send this link to the developer: " + link);
-        } catch (Exception e) {
-            // Handle any exceptions that may occur during the request
-            player.sendMessage("An error occurred while uploading the log, report the error under this message to the developer.");
-            e.printStackTrace();
-        }
     }
 }
