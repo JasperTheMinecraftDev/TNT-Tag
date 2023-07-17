@@ -85,6 +85,7 @@ public class PlayerManager {
 
         setPlayerType(player, PlayerType.WAITING);
         gameManager.itemManager.giveLobbyItems(player);
+        plugin.getLobbyManager().teleportToLobby(player);
         players.remove(player);
         if (message) {
             ChatUtils.sendMessage(player, "player.leaved-arena");
