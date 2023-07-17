@@ -30,11 +30,13 @@ public class Round {
         this.roundDuration = gameManager.arena.getRoundDuration();
     }
     public void start() {
+        boolean teleportToStart = gameManager.playerManager.getPlayerCount() <= Tnttag.configfile.getInt("player-teleport-threshold");
         for (Map.Entry<Player, PlayerType> player : gameManager.playerManager.getPlayers().entrySet()) {
             if (player.getValue().equals(PlayerType.SPECTATOR)) continue;
 
             player.getKey().playSound(player.getKey().getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.round-start").toUpperCase()), 1, 1);
             ChatUtils.sendTitle(player.getKey(), "titles.round-start", 20L, 20L, 20L);
+            if (teleportToStart) player.getKey().teleport(gameManager.arena.getStartLocation());
         }
 
         new BukkitRunnable() {

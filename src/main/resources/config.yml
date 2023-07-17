@@ -33,3 +33,6 @@ startMessage:
   - "   &6You need to avoid the tagger and run fast!        "
   - " &6&lHit someone quickly when you get tagged before you explode!        "
   - "&b==================&cTNT-Tag&b=================="
+
+# Determines the number of players left in the arena to trigger teleportation to the start location at each round.
+player-teleport-threshold: 5
