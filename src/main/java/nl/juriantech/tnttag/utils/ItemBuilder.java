@@ -3,6 +3,7 @@ package nl.juriantech.tnttag.utils;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -20,6 +21,8 @@ import java.util.UUID;
  *
  * @author MiniDigger
  * @version 1.2
+ *
+ * Lots of other stuff is added by JasperTheMinecraftDev.
  */
 public class ItemBuilder {
     private final ItemStack item;
@@ -91,11 +94,32 @@ public class ItemBuilder {
     /**
      * Sets the skull owner of the item to the specified player.
      *
-     * @param player The player's name or UUID
+     * @param owner The player's name or UUID
      * @return This ItemBuilder
      */
-    public ItemBuilder setSkullOwner(UUID player) {
-        this.skullOwner = player;
+    public ItemBuilder setSkullOwner(String owner) {
+
+        try {
+            UUID uuid;
+            OfflinePlayer offlinePlayer;
+
+            // Try parsing UUID directly
+            try {
+                uuid = UUID.fromString(owner);
+                offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+            } catch (IllegalArgumentException e) {
+                // If it's not a UUID, try getting the player by name
+                offlinePlayer = Bukkit.getOfflinePlayer(owner);
+                uuid = offlinePlayer.getUniqueId();
+            }
+
+            SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
+            skullMeta.setOwningPlayer(offlinePlayer);
+            item.setItemMeta(skullMeta);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return this;
     }
 

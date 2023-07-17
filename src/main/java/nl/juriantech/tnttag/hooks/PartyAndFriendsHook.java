@@ -12,7 +12,6 @@ import java.util.UUID;
 
 public class PartyAndFriendsHook {
 
-
     public PlayerParty getPlayerParty(UUID playerUUID) {
         PAFPlayer pafPlayer = PAFPlayerManager.getInstance().getPlayer(playerUUID);
         return PartyManager.getInstance().getParty(pafPlayer);
@@ -20,6 +19,7 @@ public class PartyAndFriendsHook {
 
     public boolean playerIsInParty(UUID playerUUID) {
         PlayerParty party = getPlayerParty(playerUUID);
+
         return party != null;
     }
 

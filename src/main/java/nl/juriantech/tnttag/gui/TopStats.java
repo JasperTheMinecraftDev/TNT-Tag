@@ -70,7 +70,7 @@ public class TopStats {
                         topThreePlayers.forEach(entry -> {
                             UUID playerId = entry.getKey();
                             int playerStat = entry.getValue();
-                            contents.set(position.getAndIncrement(), IntelligentItem.empty(new ItemBuilder(Material.PLAYER_HEAD).setSkullOwner(playerId).displayName(ChatUtils.colorize("&b" + Bukkit.getOfflinePlayer(playerId).getName() + "&6 - &b" + playerStat)).build()));
+                            contents.set(position.getAndIncrement(), IntelligentItem.empty(new ItemBuilder(Material.PLAYER_HEAD).setSkullOwner(playerId.toString()).displayName(ChatUtils.colorize("&b" + Bukkit.getOfflinePlayer(playerId).getName() + "&6 - &b" + playerStat)).build()));
                         });
                         contents.fillEmpty(new ItemBuilder(XMaterial.valueOf(ChatUtils.getRaw("top-gui.emptySlotMaterial")).parseMaterial()).build());
                     }
