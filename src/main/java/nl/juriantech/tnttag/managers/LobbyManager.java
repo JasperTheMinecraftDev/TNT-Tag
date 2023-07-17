@@ -17,17 +17,11 @@ public class LobbyManager {
     private final ItemManager itemManager;
     private final ArrayList<Player> players = new ArrayList<Player>();
     private final HashMap<Player, PlayerInformation> playerInformationMap;
+    private final Location globalLobbyLocation;
 
     public LobbyManager(Tnttag plugin) {
         this.itemManager = plugin.getItemManager();
         this.playerInformationMap = new HashMap<>();
-    }
-
-    public boolean enterLobby(Player player) {
-        if (Tnttag.configfile.getString("globalLobby") == null) {
-            ChatUtils.sendMessage(player, "player.global-lobby-not-set");
-            return false;
-        }
 
         String[] parts = Tnttag.configfile.getString("globalLobby").split(",");
         World world = Bukkit.getWorld(parts[0]);
@@ -35,9 +29,16 @@ public class LobbyManager {
         double y = Double.parseDouble(parts[2]);
         double z = Double.parseDouble(parts[3]);
 
-        Location globalLobbyLocation = new Location(world, x, y, z);
+        this.globalLobbyLocation = new Location(world, x, y, z);
         globalLobbyLocation.setYaw(Float.parseFloat(parts[4]));
         globalLobbyLocation.setPitch(Float.parseFloat(parts[5]));
+    }
+
+    public boolean enterLobby(Player player) {
+        if (Tnttag.configfile.getString("globalLobby") == null) {
+            ChatUtils.sendMessage(player, "player.global-lobby-not-set");
+            return false;
+        }
 
         player.teleport(globalLobbyLocation);
 
@@ -63,5 +64,9 @@ public class LobbyManager {
 
     public boolean playerIsInLobby(Player player) {
         return players.contains(player);
+    }
+
+    public void teleportToLobby(Player player) {
+        player.teleport(globalLobbyLocation);
     }
 }
