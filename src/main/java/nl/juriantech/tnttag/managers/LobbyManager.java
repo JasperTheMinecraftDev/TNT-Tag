@@ -39,7 +39,7 @@ public class LobbyManager {
         players.add(player);
         // This should be done first because the PlayerInformation constructor clears the inventory too.
         playerInformationMap.put(player, new PlayerInformation(player));
-        itemManager.giveLobbyItems(player);
+        itemManager.giveGlobalLobbyItems(player);
         ChatUtils.sendMessage(player, "player.joined-lobby");
         player.playSound(player.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.lobby-join").toUpperCase()), 1, 1);
         return true;
