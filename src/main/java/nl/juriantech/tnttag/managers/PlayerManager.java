@@ -234,7 +234,12 @@ public class PlayerManager {
     }
 
     public void pickPlayers() {
-        List<Player> playersList = new ArrayList<>(players.keySet());
+        List<Player> playersList = new ArrayList<>();
+        for (Map.Entry<Player, PlayerType> entry : players.entrySet()) {
+            if (entry.getValue() == PlayerType.SPECTATOR) continue;
+            playersList.add(entry.getKey());
+        }
+
         List<Player> taggers = new ArrayList<>();
 
         // Remove the percentage sign and convert to a double
