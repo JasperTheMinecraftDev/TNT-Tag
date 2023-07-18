@@ -211,7 +211,20 @@ public class TnttagCommand {
         );
 
         Tnttag.configfile.save();
+        plugin.getLobbyManager().load();
 
         ChatUtils.sendMessage(player, "commands.global-lobby-set");
+    }
+
+    @Subcommand("dump all")
+    @CommandPermission("tnttag.dump.all")
+    public void onDumpAll(CommandSender commandSender) {
+        plugin.getDumpManager().dumpAll(commandSender);
+    }
+
+    @Subcommand("dump log")
+    @CommandPermission("tnttag.dump.log")
+    public void onDumpLog(CommandSender commandSender) {
+        plugin.getDumpManager().dumpLog(commandSender);
     }
 }
