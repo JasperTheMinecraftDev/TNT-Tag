@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class ItemManager {
 
-    public void giveLobbyItems(Player player) {
+    public void giveGlobalLobbyItems(Player player) {
         clearInv(player);
         if (player.hasPermission("tnttag.gui.join")) {
             player.getInventory().setItem(0,ItemBuilder.from(ChatUtils.getRaw("items.join")).build());
@@ -16,13 +16,13 @@ public class ItemManager {
         player.getInventory().setItem(8, ItemBuilder.from(ChatUtils.getRaw("items.leave")).build());
     }
 
-    public void giveGameItems(Player player) {
+    public void giveWaitingAndGameItems(Player player) {
         clearInv(player);
         player.getInventory().setItem(8, ItemBuilder.from(ChatUtils.getRaw("items.leave")).build());
     }
 
     public void giveTaggerItems(Player tagger) {
-        giveGameItems(tagger); //The inventory is already cleared here.
+        giveWaitingAndGameItems(tagger); //The inventory is already cleared here.
         tagger.getInventory().setHelmet(new ItemStack(Material.TNT, 1));
         tagger.getInventory().setItem(0, new ItemStack(Material.TNT, 1));
         tagger.getInventory().setItem(7, ItemBuilder.from(ChatUtils.getRaw("items.radar")).build());

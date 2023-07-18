@@ -18,7 +18,6 @@ public class ArenaManager {
     private final Tnttag plugin;
     public ArrayList<Arena> arenaObjects = new ArrayList<>();
 
-
     public ArenaManager(Tnttag plugin) {
         this.plugin = plugin;
     }
