@@ -63,7 +63,11 @@ public class EntityDamageByEntityListener implements Listener {
             victim.playSound(victim.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.tagged").toUpperCase()), 1, 1);
             damager.playSound(damager.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.untagged").toUpperCase()), 1, 1);
         } else {
-            event.setCancelled(true);
+            if (!Tnttag.configfile.getBoolean("game-combat")) {
+                event.setCancelled(true);
+            } else if (gameManager.isRunning()) {
+                event.setDamage(0);
+            }
         }
     }
 

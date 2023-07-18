@@ -36,3 +36,6 @@ startMessage:
 
 # Determines the number of players left in the arena to trigger teleportation to the start location at each round.
 player-teleport-threshold: 5
+
+# If everyone can hit each other in the game, this can be a fun thing that also prevents people from camping in one place.
+game-combat: true
