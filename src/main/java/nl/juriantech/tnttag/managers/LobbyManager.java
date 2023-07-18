@@ -15,23 +15,25 @@ import java.util.HashMap;
 public class LobbyManager {
 
     private final ItemManager itemManager;
-    private final ArrayList<Player> players = new ArrayList<Player>();
+    private final ArrayList<Player> players = new ArrayList<>();
     private final HashMap<Player, PlayerInformation> playerInformationMap;
-    private final Location globalLobbyLocation;
+    private Location globalLobbyLocation;
 
     public LobbyManager(Tnttag plugin) {
         this.itemManager = plugin.getItemManager();
         this.playerInformationMap = new HashMap<>();
 
-        String[] parts = Tnttag.configfile.getString("globalLobby").split(",");
-        World world = Bukkit.getWorld(parts[0]);
-        double x = Double.parseDouble(parts[1]);
-        double y = Double.parseDouble(parts[2]);
-        double z = Double.parseDouble(parts[3]);
+        if (Tnttag.configfile.getString("globalLobby") != null) {
+            String[] parts = Tnttag.configfile.getString("globalLobby").split(",");
+            World world = Bukkit.getWorld(parts[0]);
+            double x = Double.parseDouble(parts[1]);
+            double y = Double.parseDouble(parts[2]);
+            double z = Double.parseDouble(parts[3]);
 
-        this.globalLobbyLocation = new Location(world, x, y, z);
-        globalLobbyLocation.setYaw(Float.parseFloat(parts[4]));
-        globalLobbyLocation.setPitch(Float.parseFloat(parts[5]));
+            this.globalLobbyLocation = new Location(world, x, y, z);
+            globalLobbyLocation.setYaw(Float.parseFloat(parts[4]));
+            globalLobbyLocation.setPitch(Float.parseFloat(parts[5]));
+        }
     }
 
     public boolean enterLobby(Player player) {
