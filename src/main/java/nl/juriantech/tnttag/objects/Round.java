@@ -134,7 +134,7 @@ public class Round {
         }
 
         playersInWorld.remove(player);
-        playersInWorld.removeIf(p -> p != null && gameManager.playerManager.getPlayers().get(p).equals(PlayerType.SURVIVOR));
+        playersInWorld.removeIf(p -> p != null && gameManager.playerManager.getPlayers().containsKey(p) && gameManager.playerManager.getPlayers().get(p).equals(PlayerType.SURVIVOR));
         playersInWorld.sort(Comparator.comparingDouble(o -> o.getLocation().distanceSquared(location)));
         return playersInWorld.isEmpty() ? null : playersInWorld.get(0);
     }
