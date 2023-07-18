@@ -37,20 +37,24 @@ public class EntityDamageByEntityListener implements Listener {
         }
 
         GameManager gameManager = damagerArena.getGameManager();
+
         if (gameManager.state == GameState.INGAME) {
+            PlayerType damagerType = gameManager.playerManager.getPlayerType(damager);
+
+            // Check if the damager is not a tagger
+            if (damagerType != PlayerType.TAGGER) {
+                event.setCancelled(true);
+                return;
+            }
+
             PlayerType victimType = gameManager.playerManager.getPlayerType(victim);
             if (victimType == PlayerType.TAGGER) {
                 return;
             }
-            victim.setHealth(28);
-        } else {
-            event.setCancelled(true);
-        }
 
-        PlayerType damagerType = gameManager.playerManager.getPlayerType(damager);
+            event.setDamage(0);
 
-        // Switch player types if the damager is a tagger and the victim is a survivor
-        if (damagerType == PlayerType.TAGGER) {
+            // Switch player types if the damager is a tagger and the victim is a survivor
             gameManager.playerManager.setPlayerType(damager, PlayerType.SURVIVOR);
             gameManager.playerManager.setPlayerType(victim, PlayerType.TAGGER);
 
@@ -58,6 +62,9 @@ public class EntityDamageByEntityListener implements Listener {
 
             victim.playSound(victim.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.tagged").toUpperCase()), 1, 1);
             damager.playSound(damager.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.untagged").toUpperCase()), 1, 1);
+        } else {
+            event.setCancelled(true);
         }
     }
+
 }
