@@ -24,20 +24,12 @@ public class LobbyManager {
         this.playerInformationMap = new HashMap<>();
 
         if (Tnttag.configfile.getString("globalLobby") != null) {
-            String[] parts = Tnttag.configfile.getString("globalLobby").split(",");
-            World world = Bukkit.getWorld(parts[0]);
-            double x = Double.parseDouble(parts[1]);
-            double y = Double.parseDouble(parts[2]);
-            double z = Double.parseDouble(parts[3]);
-
-            this.globalLobbyLocation = new Location(world, x, y, z);
-            globalLobbyLocation.setYaw(Float.parseFloat(parts[4]));
-            globalLobbyLocation.setPitch(Float.parseFloat(parts[5]));
+            load();
         }
     }
 
     public boolean enterLobby(Player player) {
-        if (Tnttag.configfile.getString("globalLobby") == null) {
+        if (globalLobbyLocation == null) {
             ChatUtils.sendMessage(player, "player.global-lobby-not-set");
             return false;
         }
@@ -70,5 +62,17 @@ public class LobbyManager {
 
     public void teleportToLobby(Player player) {
         player.teleport(globalLobbyLocation);
+    }
+
+    public void load() {
+        String[] parts = Tnttag.configfile.getString("globalLobby").split(",");
+        World world = Bukkit.getWorld(parts[0]);
+        double x = Double.parseDouble(parts[1]);
+        double y = Double.parseDouble(parts[2]);
+        double z = Double.parseDouble(parts[3]);
+
+        this.globalLobbyLocation = new Location(world, x, y, z);
+        globalLobbyLocation.setYaw(Float.parseFloat(parts[4]));
+        globalLobbyLocation.setPitch(Float.parseFloat(parts[5]));
     }
 }
