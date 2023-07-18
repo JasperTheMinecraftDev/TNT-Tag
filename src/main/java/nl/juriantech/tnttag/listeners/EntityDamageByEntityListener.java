@@ -22,9 +22,12 @@ public class EntityDamageByEntityListener implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (!(event.getEntity() instanceof Player victim) || !(event.getDamager() instanceof Player damager)) {
+        if (!(event.getEntity() instanceof Player) || !(event.getDamager() instanceof Player)) {
             return;
         }
+
+        Player victim = (Player) event.getEntity();
+        Player damager = (Player) event.getDamager();
 
         Arena damagerArena = plugin.getArenaManager().getPlayerArena(damager);
         Arena victimArena = plugin.getArenaManager().getPlayerArena(victim);
