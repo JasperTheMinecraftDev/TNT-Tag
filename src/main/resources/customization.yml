@@ -67,6 +67,8 @@ help-menu:
   - "&a/tnttag stats - Show your stats!"
   - "&a/tnttag top - Shows the top players!"
   - "&a/tnttag editor <arena> - Opens the arena editor."
+  - "&a/tnttag dump log - Dump your latest server log to share it with the developer."
+  - "&a/tnttag dump all - Create a dump from your server so we can quickly solve your issues, this is handled safely and securely. Nobody except our staff team can see them."
   - "&b=========TNT-Tag========="
 
 setup:
@@ -116,7 +118,7 @@ editor-gui:
   roundDurationLore: "&2&lSet the duration of each round."
   increment: "&2Click to increment"
   decrement: "&cClick to decrement"
-  hint: "&bClick the apply button to apply the made changes."
+  hint: "&bMost of the options allow you to shift-click, which will decrease or increase their value by 10!"
   settings-applied: "&2&lThe changed setting(s) were successfully applied."
   emptySlotMaterial: "GRAY_STAINED_GLASS_PANE"
 
@@ -147,6 +149,14 @@ party:
   joined-game: "&bYour party joined the game."
   too-much-players: "&cYour party has too much players to join this game!"
   not-the-leader: "&cYou are not the leader of this party!"
+
+dump-log:
+  failed: "&cAn error occurred while uploading the log, report the error under this message to the developer."
+  uploaded: "&2Your log has been uploaded, send this link to the developer: &6{link}"
+
+dump-all:
+  failed: "&cAn error occurred while sending the dump data to the server."
+  uploaded: "&2The dump has been uploaded, send this dump identifier to the developer: &6{identifier}"
 
 #Signs customization
 #Placeholders:

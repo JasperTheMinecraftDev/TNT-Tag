@@ -39,6 +39,7 @@ public class ArenaEditorGUI {
                         //minPlayers
                         contents.set(1, IntelligentItem.of(new ItemBuilder(Material.GRAY_DYE).displayName(ChatUtils.getRaw("editor-gui.decrement")).hideAttributes().build(), event -> {
                             int newAmount = arena.getMinPlayers() - 1;
+
                             if (newAmount <= 0) {
                                 ChatUtils.sendMessage(player, "general.negative-error");
                                 return;
@@ -108,6 +109,10 @@ public class ArenaEditorGUI {
                         //countdown
                         contents.set(5, IntelligentItem.of(new ItemBuilder(Material.GRAY_DYE).displayName(ChatUtils.getRaw("editor-gui.decrement")).hideAttributes().build(), event -> {
                             int newAmount = arena.getCountdown() - 1;
+                            if (event.isShiftClick()) {
+                                newAmount = arena.getCountdown() - 10;
+                            }
+
                             if (newAmount <= 0) {
                                 ChatUtils.sendMessage(player, "general.negative-error");
                                 return;
@@ -123,6 +128,10 @@ public class ArenaEditorGUI {
 
                         contents.set(23, IntelligentItem.of(new ItemBuilder(Material.LIME_DYE).displayName(ChatUtils.getRaw("editor-gui.increment")).hideAttributes().build(), event -> {
                             int newAmount = arena.getCountdown() + 1;
+                            if (event.isShiftClick()) {
+                                newAmount = arena.getCountdown() + 10;
+                            }
+
                             arena.setCountdown(newAmount);
                             arenaManager.saveArenaToFile(arena);
                             ChatUtils.sendMessage(player, "editor-gui.hint");
@@ -132,6 +141,10 @@ public class ArenaEditorGUI {
                         //roundDuration
                         contents.set(6, IntelligentItem.of(new ItemBuilder(Material.GRAY_DYE).displayName(ChatUtils.getRaw("editor-gui.decrement")).hideAttributes().build(), event -> {
                             int newAmount = arena.getRoundDuration() - 1;
+                            if (event.isShiftClick()) {
+                                newAmount = arena.getRoundDuration() - 10;
+                            }
+
                             if (newAmount <= 0) {
                                 ChatUtils.sendMessage(player, "general.negative-error");
                                 return;
@@ -146,6 +159,10 @@ public class ArenaEditorGUI {
 
                         contents.set(24, IntelligentItem.of(new ItemBuilder(Material.LIME_DYE).displayName(ChatUtils.getRaw("editor-gui.increment")).hideAttributes().build(), event -> {
                             int newAmount = arena.getRoundDuration() + 1;
+                            if (event.isShiftClick()) {
+                                newAmount = arena.getRoundDuration() + 10;
+                            }
+
                             arena.setRoundDuration(newAmount);
                             arenaManager.saveArenaToFile(arena);
                             ChatUtils.sendMessage(player, "editor-gui.hint");
