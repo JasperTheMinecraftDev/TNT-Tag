@@ -86,6 +86,7 @@ public class PlayerManager {
         setPlayerType(player, PlayerType.WAITING);
         gameManager.itemManager.giveLobbyItems(player);
         plugin.getLobbyManager().teleportToLobby(player);
+        player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
         players.remove(player);
         if (message) {
             ChatUtils.sendMessage(player, "player.leaved-arena");
