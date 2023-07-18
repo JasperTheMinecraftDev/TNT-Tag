@@ -48,8 +48,8 @@ public class ProtectionListener implements Listener {
     public void onPlayerDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
-            //If the player is in an arena, it will be handled in the EntityDamageByEntityListener.
-            if (plugin.getLobbyManager().playerIsInLobby(player) && !plugin.getArenaManager().playerIsInArena(player)) {
+
+            if (plugin.getLobbyManager().playerIsInLobby(player)) {
                 event.setCancelled(true);
             }
         }
