@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ItemManager {
 
@@ -28,27 +29,27 @@ public class ItemManager {
 
     public void giveGlobalLobbyItems(Player player) {
         clearInv(player);
-        for (InventoryItem item : globalLobbyItems.values()) {
-            if (item != null && (item.getPermission().equals("NONE") || player.hasPermission(item.getPermission()))) {
-                player.getInventory().addItem(item.getItem());
+        for (Map.Entry<Integer, InventoryItem> item : globalLobbyItems.entrySet()) {
+            if (item != null && (item.getValue().getPermission().equals("NONE") || player.hasPermission(item.getValue().getPermission()))) {
+                player.getInventory().setItem(item.getKey(), item.getValue().getItem());
             }
         }
     }
 
     public void giveWaitingItems(Player player) {
         clearInv(player);
-        for (InventoryItem item : waitingItems.values()) {
-            if (item != null && (item.getPermission().equals("NONE") || player.hasPermission(item.getPermission()))) {
-                player.getInventory().addItem(item.getItem());
+        for (Map.Entry<Integer, InventoryItem> item : waitingItems.entrySet()) {
+            if (item != null && (item.getValue().getPermission().equals("NONE") || player.hasPermission(item.getValue().getPermission()))) {
+                player.getInventory().setItem(item.getKey(), item.getValue().getItem());
             }
         }
     }
 
     public void giveGameItems(Player player) {
         clearInv(player);
-        for (InventoryItem item : gameItems.values()) {
-            if (item != null && (item.getPermission().equals("NONE") || player.hasPermission(item.getPermission()))) {
-                player.getInventory().addItem(item.getItem());
+        for (Map.Entry<Integer, InventoryItem> item : gameItems.entrySet()) {
+            if (item != null && (item.getValue().getPermission().equals("NONE") || player.hasPermission(item.getValue().getPermission()))) {
+                player.getInventory().setItem(item.getKey(), item.getValue().getItem());
             }
         }
     }
@@ -56,9 +57,9 @@ public class ItemManager {
     public void giveTaggerItems(Player tagger) {
         giveGameItems(tagger); // The inventory is already cleared here.
         tagger.getInventory().setHelmet(new ItemStack(Material.TNT, 1)); // This is forced.
-        for (InventoryItem item : taggerItems.values()) {
-            if (item != null && (item.getPermission().equals("NONE") || tagger.hasPermission(item.getPermission()))) {
-                tagger.getInventory().addItem(item.getItem());
+        for (Map.Entry<Integer, InventoryItem> item : taggerItems.entrySet()) {
+            if (item != null && (item.getValue().getPermission().equals("NONE") || tagger.hasPermission(item.getValue().getPermission()))) {
+                tagger.getInventory().setItem(item.getKey(), item.getValue().getItem());
             }
         }
     }
@@ -68,9 +69,15 @@ public class ItemManager {
     }
 
     public void load() {
-        for (String route : Tnttag.itemsfile.getRoutesAsStrings(false)) {
-            if (!route.startsWith("items.")) continue;
-            items.add(new InventoryItem(route, new ItemBuilder(XMaterial.valueOf(Tnttag.itemsfile.getString(route + ".material")).parseMaterial()).displayName(Tnttag.itemsfile.getString(route + ".display_name")).lore(Tnttag.itemsfile.getString(route + ".lore")).build(), Tnttag.itemsfile.getString(route + ".permission"), Tnttag.itemsfile.getString(route + ".command")));
+        for (String route : Tnttag.itemsfile.getRoutesAsStrings(true)) {
+            // If the route starts with "items." and has exactly one dot in it
+            if (route.startsWith("items.") && route.substring("items.".length()).indexOf('.') == -1) {
+                String name = route.replace("items.", "");
+                if (getItemByName(name) == null) {
+                    InventoryItem inventoryItem = new InventoryItem(name, new ItemBuilder(XMaterial.valueOf(Tnttag.itemsfile.getString(route + ".material")).parseMaterial()).displayName(Tnttag.itemsfile.getString(route + ".display_name")).lore(Tnttag.itemsfile.getString(route + ".lore")).build(), Tnttag.itemsfile.getString(route + ".permission"), Tnttag.itemsfile.getString(route + ".command"));
+                    items.add(inventoryItem);
+                }
+            }
         }
 
         loadItemsForSection("globalLobbyItems", globalLobbyItems);
@@ -92,7 +99,10 @@ public class ItemManager {
             InventoryItem inventoryItem = getItemByName(itemName);
 
             if (inventoryItem == null) {
-                plugin.getLogger().severe("Failed to find InventoryItem for " + sectionName + " itemString: " + itemString);
+                for (InventoryItem item : items) {
+                    System.out.println(item.getName());
+                }
+                plugin.getLogger().severe("Failed to find InventoryItem for " + sectionName + ", itemString: " + itemString);
             } else {
                 targetMap.put(slot, inventoryItem);
             }
