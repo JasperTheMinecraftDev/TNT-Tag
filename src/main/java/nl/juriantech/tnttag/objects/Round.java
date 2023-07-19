@@ -113,6 +113,7 @@ public class Round {
     public void updateCompass(Player player) {
         ItemStack compass = player.getInventory().getItem(7);
         Player nearestPlayer = getNearestSurvivor(player);
+
         if (compass != null && nearestPlayer != null && compass.getItemMeta() != null) {
             ItemMeta meta = compass.getItemMeta();
             meta.setDisplayName((ChatUtils.colorize("&6" + (int) player.getLocation().distance(nearestPlayer.getLocation()) + "m")));
@@ -128,14 +129,15 @@ public class Round {
     public Player getNearestSurvivor(Player player) {
         World world = player.getWorld();
         Location location = player.getLocation();
-        ArrayList<Player> playersInWorld = new ArrayList<>(world.getEntitiesByClass(Player.class));
-        if (playersInWorld.size() == 1) {
+        ArrayList<Player> playersInArena = new ArrayList<>(world.getEntitiesByClass(Player.class));
+        if (playersInArena.size() == 1) {
             return null;
         }
 
-        playersInWorld.remove(player);
-        playersInWorld.removeIf(p -> p != null && gameManager.playerManager.getPlayers().containsKey(p) && gameManager.playerManager.getPlayers().get(p).equals(PlayerType.SURVIVOR));
-        playersInWorld.sort(Comparator.comparingDouble(o -> o.getLocation().distanceSquared(location)));
-        return playersInWorld.isEmpty() ? null : playersInWorld.get(0);
+        playersInArena.remove(player);
+        playersInArena.removeIf(p -> !gameManager.playerManager.getPlayers().containsKey(p));
+        playersInArena.removeIf(p -> p != null && gameManager.playerManager.getPlayers().get(p).equals(PlayerType.TAGGER));
+        playersInArena.sort(Comparator.comparingDouble(o -> o.getLocation().distanceSquared(location)));
+        return playersInArena.isEmpty() ? null : playersInArena.get(0);
     }
 }
