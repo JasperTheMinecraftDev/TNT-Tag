@@ -1,29 +1,32 @@
 # Define the items with their respective item, display name, and lore.
-# Formatting: 'ITEM:DISPLAY_NAME:LORE:PERMISSION' - Use NONE as permission if you don't want the item to have one.
 items:
   join:
     material: "DIAMOND_AXE"
     display_name: "&bJoin"
     lore: "&bJoin an arena!"
     permission: "tnttag.gui.join"
+    command: "tt joingui"
 
   leave:
     material: "BARRIER"
     display_name: "&cLeave"
     lore: "&cLeave the arena."
     permission: "NONE"
+    command: "tt leave"
 
   radar:
     material: "COMPASS"
     display_name: "&8Radar"
     lore: "&8Find your enemies!"
     permission: "NONE"
+    command: "NONE"
 
   tnt:
     material: "TNT"
     display_name: "&cExplosive!"
     lore: "&cTag your enemies using this!"
     permission: "NONE"
+    command: "NONE"
 
 # Specify the items to be placed in the player's inventory slots during the global lobby phase.
 # Formatting: 'SLOT:ITEM'

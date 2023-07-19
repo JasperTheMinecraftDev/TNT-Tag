@@ -1,9 +1,7 @@
 package nl.juriantech.tnttag.managers;
 
-import com.cryptomorin.xseries.XMaterial;
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.objects.InventoryItem;
-import nl.juriantech.tnttag.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -11,13 +9,20 @@ import org.bukkit.inventory.ItemStack;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ItemManager {
 
+    private final Tnttag plugin;
+    private final ArrayList<InventoryItem> items = new ArrayList<>();
     private final HashMap<Integer, InventoryItem> globalLobbyItems = new HashMap<>();
     private final HashMap<Integer, InventoryItem> waitingItems = new HashMap<>();
     private final HashMap<Integer, InventoryItem> gameItems = new HashMap<>();
     private final HashMap<Integer, InventoryItem> taggerItems = new HashMap<>();
+
+    public ItemManager(Tnttag plugin) {
+        this.plugin = plugin;
+    }
 
     public void giveGlobalLobbyItems(Player player) {
         clearInv(player);
@@ -62,58 +67,34 @@ public class ItemManager {
     }
 
     public void load() {
-        ArrayList<InventoryItem> items = new ArrayList<>();
-        for (String route : Tnttag.itemsfile.getRoutesAsStrings(false)) {
-            if (!route.startsWith("items.")) continue;
-            items.add(new InventoryItem(route, new ItemBuilder(XMaterial.valueOf(Tnttag.itemsfile.getString(route.toString() + ".material")).parseMaterial()).displayName(Tnttag.itemsfile.getString(route.toString() + ".display_name")).lore(Tnttag.itemsfile.getString(route.toString() + ".lore")).build(), Tnttag.itemsfile.getString(route.toString() + ".permission")));
-        }
+        loadItemsForSection("globalLobbyItems", globalLobbyItems);
+        loadItemsForSection("waitingItems", waitingItems);
+        loadItemsForSection("gameItems", gameItems);
+        loadItemsForSection("taggerItems", taggerItems);
+    }
 
-        for (String itemString : Tnttag.itemsfile.getStringList("globalLobbyItems")) {
+    private void loadItemsForSection(String sectionName, HashMap<Integer, InventoryItem> targetMap) {
+        List<String> itemStrings = Tnttag.itemsfile.getStringList(sectionName);
+        for (String itemString : itemStrings) {
             String[] parts = itemString.split(":");
+            if (parts.length < 2) {
+                plugin.getLogger().severe("Invalid " + sectionName + " entry: " + itemString);
+                continue;
+            }
             int slot = Integer.parseInt(parts[0]);
-            InventoryItem inventoryItem = items.stream()
-                    .filter(inventoryItem1 -> inventoryItem1.getName().equals(parts[1]))
-                    .findFirst()
-                    .orElse(null);
+            String itemName = parts[1];
+            InventoryItem inventoryItem = getItemByName(itemName);
 
-            globalLobbyItems.put(slot, inventoryItem);
-        }
-
-        for (String itemString: Tnttag.itemsfile.getStringList("waitingItems")) {
-            String[] parts = itemString.split(":");
-            int slot = Integer.parseInt(parts[0]);
-            InventoryItem inventoryItem = items.stream()
-                    .filter(inventoryItem1 -> inventoryItem1.getName().equals(parts[1]))
-                    .findFirst()
-                    .orElse(null);
-
-            waitingItems.put(slot, inventoryItem);
-        }
-
-        for (String itemString: Tnttag.itemsfile.getStringList("gameItems")) {
-            String[] parts = itemString.split(":");
-            int slot = Integer.parseInt(parts[0]);
-            InventoryItem inventoryItem = items.stream()
-                    .filter(inventoryItem1 -> inventoryItem1.getName().equals(parts[1]))
-                    .findFirst()
-                    .orElse(null);
-
-            gameItems.put(slot, inventoryItem);
-        }
-
-        for (String itemString: Tnttag.itemsfile.getStringList("taggerItems")) {
-            String[] parts = itemString.split(":");
-            int slot = Integer.parseInt(parts[0]);
-            InventoryItem inventoryItem = items.stream()
-                    .filter(inventoryItem1 -> inventoryItem1.getName().equals(parts[1]))
-                    .findFirst()
-                    .orElse(null);
-
-            taggerItems.put(slot, inventoryItem);
+            if (inventoryItem == null) {
+                plugin.getLogger().severe("Failed to find InventoryItem for " + sectionName + " itemString: " + itemString);
+            } else {
+                targetMap.put(slot, inventoryItem);
+            }
         }
     }
 
     public void reload() {
+        items.clear();
         globalLobbyItems.clear();
         waitingItems.clear();
         gameItems.clear();
@@ -125,5 +106,16 @@ public class ItemManager {
             throw new RuntimeException(e);
         }
         load();
+    }
+
+    private InventoryItem getItemByName(String name) {
+        return items.stream()
+                .filter(item -> item.getName().equals(name))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public ArrayList<InventoryItem> getItems() {
+        return items;
     }
 }
