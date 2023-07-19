@@ -44,6 +44,8 @@ gameItems:
 
 # Ensure that the player has specific items (e.g., TNT and radar) to tag and find other players during the gameplay.
 # The tagger also receives the game items automatically.
+# The radar has to be in slot 7!
+
 taggerItems:
   - "0:tnt"   # TNT item in slot 0
   - "7:radar" # Radar item in slot 7
