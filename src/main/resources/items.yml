@@ -1,0 +1,46 @@
+# Define the items with their respective item, display name, and lore.
+# Formatting: 'ITEM:DISPLAY_NAME:LORE:PERMISSION' - Use NONE as permission if you don't want the item to have one.
+items:
+  join:
+    material: "DIAMOND_AXE"
+    display_name: "&bJoin"
+    lore: "&bJoin an arena!"
+    permission: "tnttag.gui.join"
+
+  leave:
+    material: "BARRIER"
+    display_name: "&cLeave"
+    lore: "&cLeave the arena."
+    permission: "NONE"
+
+  radar:
+    material: "COMPASS"
+    display_name: "&8Radar"
+    lore: "&8Find your enemies!"
+    permission: "NONE"
+
+  tnt:
+    material: "TNT"
+    display_name: "&cExplosive!"
+    lore: "&cTag your enemies using this!"
+    permission: "NONE"
+
+# Specify the items to be placed in the player's inventory slots during the global lobby phase.
+# Formatting: 'SLOT:ITEM'
+globalLobbyItems:
+  - "0:join" # Join item in slot 0
+  - "8:leave" # Leave item in slot 8
+
+# Specify the items to be placed in the player's inventory slots during the waiting phase.
+waitingItems:
+  - "8:leave" # Leave item in slot 8
+
+# Specify the items to be placed in the player's inventory slots during the game phase.
+gameItems:
+  - "8:leave" # Leave item in slot 8
+
+# Ensure that the player has specific items (e.g., TNT and radar) to tag and find other players during the gameplay.
+# The tagger also receives the game items automatically.
+taggerItems:
+  - "0:tnt"   # TNT item in slot 0
+  - "7:radar" # Radar item in slot 7

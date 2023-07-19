@@ -144,6 +144,7 @@ public class TnttagCommand {
         Tnttag.customizationfile.reload();
         Tnttag.configfile.reload();
         arenaManager.reload();
+        plugin.getItemManager().reload();
 
         ChatUtils.sendMessage(player, "commands.files-reloaded");
     }

@@ -72,7 +72,7 @@ public class GameManager {
 
                 for (Player player : playerManager.getPlayers().keySet()) {
                     playerManager.setPlayerType(player, PlayerType.SURVIVOR);
-                    itemManager.giveWaitingAndGameItems(player);
+                    itemManager.giveGameItems(player);
                 }
 
                 playerManager.sendStartMessage();

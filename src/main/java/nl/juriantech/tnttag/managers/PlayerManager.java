@@ -68,7 +68,7 @@ public class PlayerManager {
         Bukkit.getPluginManager().callEvent(event);
 
         players.put(player, PlayerType.WAITING);
-        gameManager.itemManager.giveWaitingAndGameItems(player);
+        gameManager.itemManager.giveWaitingItems(player);
         teleportToLobby(player);
         ChatUtils.sendMessage(player, "player.joined-arena");
         broadcast(ChatUtils.getRaw("arena.player-joined").replace("{player}", player.getName()));
@@ -131,7 +131,7 @@ public class PlayerManager {
         //If the player was a tagger before.
         if (players.get(player).equals(PlayerType.TAGGER)) {
             givePotionEffects(player);
-            gameManager.itemManager.giveWaitingAndGameItems(player);
+            gameManager.itemManager.giveGameItems(player);
             ChatUtils.sendMessage(player, "player.tagger-removed");
             ChatUtils.sendTitle(player, "titles.untagged", 20L, 20L, 20L);
 

@@ -122,12 +122,6 @@ editor-gui:
   settings-applied: "&2&lThe changed setting(s) were successfully applied."
   emptySlotMaterial: "GRAY_STAINED_GLASS_PANE"
 
-#Formatting: 'ITEM:DISPLAYNAME:LORE'
-items:
-  join: "DIAMOND_AXE:&bJoin:&bJoin an arena!"
-  leave: "BARRIER:&cLeave:&cLeave the arena."
-  radar: "COMPASS:&8Radar:&8Find your enemies!"
-
 titles:
   countdown: "&b{seconds}s"
   round-start: "&6The round started!"

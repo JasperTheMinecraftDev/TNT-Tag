@@ -26,7 +26,7 @@ public class Tnttag extends JavaPlugin {
 
     private final Logger logger = Bukkit.getLogger();
     private ArenaManager arenaManager;
-    public static YamlDocument arenasfile, customizationfile, configfile, playerdatafile, signsdatafile;
+    public static YamlDocument arenasfile, customizationfile, configfile, playerdatafile, signsdatafile, itemsfile;
     private UpdateChecker updateChecker;
     private SignManager signManager;
     private InventoryManager inventoryManager;
@@ -78,6 +78,7 @@ public class Tnttag extends JavaPlugin {
         this.arenaManager = new ArenaManager(this);
         this.signManager = new SignManager(this);
         this.itemManager = new ItemManager();
+        this.itemManager.load();
         this.lobbyManager = new LobbyManager(this);
         this.dumpManager = new DumpManager(this);
     }
@@ -110,6 +111,11 @@ public class Tnttag extends JavaPlugin {
         }
         try {
             signsdatafile = YamlDocument.create(new File(getDataFolder(), "signs.yml"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            itemsfile = YamlDocument.create(new File(getDataFolder(), "items.yml"), getResource("items.yml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -149,6 +155,7 @@ public class Tnttag extends JavaPlugin {
         arenaManager.saveArenasToFile();
         logger.severe("TNT-Tag has been disabled!");
     }
+
 
     public ArenaManager getArenaManager() {
         return arenaManager;
