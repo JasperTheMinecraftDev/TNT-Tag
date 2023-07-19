@@ -1,7 +1,6 @@
 package nl.juriantech.tnttag.managers;
 
 import com.cryptomorin.xseries.XMaterial;
-import dev.dejvokep.boostedyaml.route.Route;
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.objects.InventoryItem;
 import nl.juriantech.tnttag.utils.ItemBuilder;
@@ -64,11 +63,12 @@ public class ItemManager {
 
     public void load() {
         ArrayList<InventoryItem> items = new ArrayList<>();
-        for (Route route : Tnttag.itemsfile.getSection("items").getRoutes(false)) {
-            items.add(new InventoryItem(route.toString(), new ItemBuilder(XMaterial.valueOf(Tnttag.itemsfile.getString(route.toString() + ".material")).parseMaterial()).displayName(Tnttag.itemsfile.getString(route.toString() + ".display_name")).lore(Tnttag.itemsfile.getString(route.toString() + ".lore")).build(), Tnttag.itemsfile.getString(route.toString() + ".permission")));
+        for (String route : Tnttag.itemsfile.getRoutesAsStrings(false)) {
+            if (!route.startsWith("items.")) continue;
+            items.add(new InventoryItem(route, new ItemBuilder(XMaterial.valueOf(Tnttag.itemsfile.getString(route.toString() + ".material")).parseMaterial()).displayName(Tnttag.itemsfile.getString(route.toString() + ".display_name")).lore(Tnttag.itemsfile.getString(route.toString() + ".lore")).build(), Tnttag.itemsfile.getString(route.toString() + ".permission")));
         }
 
-        for (String itemString: Tnttag.itemsfile.getStringList("globalLobbyItems")) {
+        for (String itemString : Tnttag.itemsfile.getStringList("globalLobbyItems")) {
             String[] parts = itemString.split(":");
             int slot = Integer.parseInt(parts[0]);
             InventoryItem inventoryItem = items.stream()
