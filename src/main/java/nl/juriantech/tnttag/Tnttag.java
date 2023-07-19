@@ -21,6 +21,8 @@ import revxrsal.commands.bukkit.BukkitCommandHandler;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Tnttag extends JavaPlugin {
 
@@ -38,6 +40,16 @@ public class Tnttag extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        String version = Bukkit.getVersion();
+        String minecraftVersion = getMinecraftVersion(version);
+
+        // Check if the server version is 1.12.2 or below
+        if (minecraftVersion != null && isVersionBefore("1.12.3", minecraftVersion)) {
+            getLogger().severe("TNT-Tag is not compatible with Minecraft 1.12.2 or lower and you're running " + minecraftVersion + ". Disabling...");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
         new SetupCommandHandler(this);
         updateChecker = new UpdateChecker(this);
         updateChecker.check();
@@ -156,6 +168,34 @@ public class Tnttag extends JavaPlugin {
         logger.severe("TNT-Tag has been disabled!");
     }
 
+    // Helper method to extract Minecraft version from version string
+    private String getMinecraftVersion(String versionString) {
+        Pattern pattern = Pattern.compile("MC: (\\d+\\.\\d+\\.\\d+)");
+        Matcher matcher = pattern.matcher(versionString);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return null;
+    }
+
+    private boolean isVersionBefore(String targetVersion, String currentVersion) {
+        String[] targetParts = targetVersion.split("\\.");
+        String[] currentParts = currentVersion.split("\\.");
+
+        for (int i = 0; i < targetParts.length && i < currentParts.length; i++) {
+            int targetPart = Integer.parseInt(targetParts[i]);
+            int currentPart = Integer.parseInt(currentParts[i]);
+
+            if (currentPart < targetPart) {
+                return true;
+            } else if (currentPart > targetPart) {
+                return false;
+            }
+            // If the parts are equal, continue to the next part
+        }
+
+        return false; // The versions are equal or the current version is greater
+    }
 
     public ArenaManager getArenaManager() {
         return arenaManager;
