@@ -11,6 +11,7 @@ import org.bukkit.*;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -113,8 +114,10 @@ public class Round {
         ItemStack compass = player.getInventory().getItem(7);
         Player nearestPlayer = getNearestSurvivor(player);
 
-        if (compass != null && nearestPlayer != null) {
-            // Set the compass target to the location of the nearest player
+        if (compass != null && nearestPlayer != null && compass.getItemMeta() != null) {
+            ItemMeta meta = compass.getItemMeta();
+            meta.setDisplayName((int) player.getLocation().distance(nearestPlayer.getLocation()) + "m");
+            compass.setItemMeta(meta);
             player.setCompassTarget(nearestPlayer.getLocation());
         }
     }
