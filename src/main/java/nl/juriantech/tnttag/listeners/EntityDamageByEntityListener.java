@@ -43,7 +43,11 @@ public class EntityDamageByEntityListener implements Listener {
 
             // Check if the damager is not a tagger
             if (damagerType != PlayerType.TAGGER) {
-                event.setCancelled(true);
+                if (!Tnttag.configfile.getBoolean("game-combat")) {
+                    event.setCancelled(true);
+                } else if (gameManager.isRunning()) {
+                    event.setDamage(0);
+                }
                 return;
             }
 
@@ -62,12 +66,6 @@ public class EntityDamageByEntityListener implements Listener {
 
             victim.playSound(victim.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.tagged").toUpperCase()), 1, 1);
             damager.playSound(damager.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.untagged").toUpperCase()), 1, 1);
-        } else {
-            if (!Tnttag.configfile.getBoolean("game-combat")) {
-                event.setCancelled(true);
-            } else if (gameManager.isRunning()) {
-                event.setDamage(0);
-            }
         }
     }
 
