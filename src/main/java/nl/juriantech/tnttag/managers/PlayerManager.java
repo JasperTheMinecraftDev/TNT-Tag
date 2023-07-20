@@ -150,6 +150,7 @@ public class PlayerManager {
                 }
 
                 setType(player, PlayerType.SURVIVOR);
+                givePotionEffects(player);
                 break;
             case TAGGER:
                 if (players.get(player) != PlayerType.SURVIVOR) return; //Safety check.
@@ -212,7 +213,10 @@ public class PlayerManager {
     }
 
     public void givePotionEffects(Player player) {
-        player.getActivePotionEffects().clear();
+        List<PotionEffect> activeEffects = new ArrayList<>(player.getActivePotionEffects());
+        activeEffects.forEach(activePotionEffect -> player.removePotionEffect(activePotionEffect.getType()));
+
+
         for (String potionEffect : gameManager.arena.getPotionEffects()) {
             String[] parts = potionEffect.split(":");
             if (parts[0] == null || parts[1] == null || parts[2] == null) {

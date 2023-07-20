@@ -6,6 +6,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlayerInformation {
 
     private final Player player;
@@ -32,9 +35,10 @@ public class PlayerInformation {
     }
 
     public void restore() {
-        for (PotionEffect effect : player.getActivePotionEffects()) {
-            player.removePotionEffect(effect.getType());
-        }
+        List<PotionEffect> activeEffects = new ArrayList<>(player.getActivePotionEffects());
+        activeEffects.forEach(activePotionEffect -> player.removePotionEffect(activePotionEffect.getType()));
+
+
         player.getInventory().clear();
         player.getInventory().setContents(inventory);
         player.getInventory().setArmorContents(armor);
