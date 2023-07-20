@@ -29,6 +29,7 @@ player:
   tagged: "&cYou are tagged by {tagger}, tag someone else before you explode!"
   tagger-removed: "&8Well done! You are not the tagger anymore, run!!"
   already-in-game: "&cLeave this arena first!"
+  already-in-lobby: "&cYou are already in the lobby."
   global-lobby-not-set: "&cThe global lobby is not set, this is required. Use /tt setlobby to do this."
 
 commands:

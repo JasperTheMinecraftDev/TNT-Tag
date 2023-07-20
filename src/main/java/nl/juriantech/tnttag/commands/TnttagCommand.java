@@ -52,6 +52,9 @@ public class TnttagCommand {
     public void onJoin(Player player, @Optional String arenaName) {
         if (!plugin.getLobbyManager().playerIsInLobby(player)) {
             if (!plugin.getLobbyManager().enterLobby(player)) return;
+        } else if (arenaName == null) {
+            ChatUtils.sendMessage(player, "player.already-in-lobby");
+            return;
         }
 
         if (arenaName != null) {
