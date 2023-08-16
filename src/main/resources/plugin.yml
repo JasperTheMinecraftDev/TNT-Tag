@@ -1,7 +1,7 @@
 name: Tnttag
 version: 8.0
 main: nl.juriantech.tnttag.Tnttag
-softdepend: [PlaceholderAPI, PartyAndFriends]
+softdepend: [PlaceholderAPI, PartyAndFriends, TAB]
 api-version: 1.13
 authors: [ Jurian ]
 description: A TNT-Tag minigame!

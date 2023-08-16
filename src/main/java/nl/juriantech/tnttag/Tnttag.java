@@ -7,6 +7,7 @@ import nl.juriantech.tnttag.commands.TnttagCommand;
 import nl.juriantech.tnttag.handlers.SetupCommandHandler;
 import nl.juriantech.tnttag.hooks.PartyAndFriendsHook;
 import nl.juriantech.tnttag.hooks.PlaceholderAPIExpansion;
+import nl.juriantech.tnttag.hooks.TabHook;
 import nl.juriantech.tnttag.listeners.*;
 import nl.juriantech.tnttag.managers.*;
 import io.github.rysefoxx.inventory.plugin.pagination.InventoryManager;
@@ -37,6 +38,7 @@ public class Tnttag extends JavaPlugin {
     private LobbyManager lobbyManager;
     private ItemManager itemManager;
     private DumpManager dumpManager;
+    private TabHook tabHook;
 
     @Override
     public void onEnable() {
@@ -60,16 +62,23 @@ public class Tnttag extends JavaPlugin {
         listeners();
         commands();
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            logger.info("[TNT-Tag] PlaceholderAPI detected, enabling hooks.");
+            logger.info("[TNT-Tag] PlaceholderAPI detected, enabling the hook.");
             new PlaceholderAPIExpansion(this).register();
             logger.info("[TNT-Tag] PlaceholderAPI hooks enabled.");
         }
 
         if (Bukkit.getPluginManager().getPlugin("PartyAndFriends") != null) {
-            logger.info("[TNT-Tag] PartyAndFriends detected, enabling hooks.");
+            logger.info("[TNT-Tag] PartyAndFriends detected, enabling the hook.");
             this.partyAndFriendsHook = new PartyAndFriendsHook();
             logger.info("[TNT-Tag] PartyAndFriends hooks enabled.");
         }
+
+        if (Bukkit.getPluginManager().getPlugin("TAB") != null) {
+            logger.info("[TNT-Tag] TAB detected, enabling the hook.");
+            this.tabHook = new TabHook();
+            logger.info("[TNT-Tag] TAB hooks enabled.");
+        }
+
         api = new API(this);
         logger.warning("TNT-Tag has been enabled!");
         new BukkitRunnable() {
@@ -223,5 +232,9 @@ public class Tnttag extends JavaPlugin {
 
     public DumpManager getDumpManager() {
         return dumpManager;
+    }
+
+    public TabHook getTabHook() {
+        return tabHook;
     }
 }
