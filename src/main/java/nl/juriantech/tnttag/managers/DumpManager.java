@@ -197,7 +197,7 @@ public class DumpManager {
             File[] files = pluginDir.listFiles();
             if (files != null) {
                 for (File file : files) {
-                    if (file.isFile()) {
+                    if (file.isFile() && file.getPath().endsWith(".yml")) {
                         String fileName = file.getName();
                         try {
                             BufferedReader reader = new BufferedReader(new FileReader(file));
