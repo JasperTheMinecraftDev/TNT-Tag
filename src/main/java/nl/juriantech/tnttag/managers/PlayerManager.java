@@ -8,6 +8,7 @@ import nl.juriantech.tnttag.enums.GameState;
 import nl.juriantech.tnttag.enums.PlayerType;
 import nl.juriantech.tnttag.hooks.PartyAndFriendsHook;
 import nl.juriantech.tnttag.objects.PlayerData;
+import nl.juriantech.tnttag.objects.PlayerInformation;
 import nl.juriantech.tnttag.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -119,6 +120,7 @@ public class PlayerManager {
     public void setPlayerType(Player player, PlayerType type) {
         if (!players.containsKey(player)) return; //Safety check.
         if (players.get(player) == type) return; //Safety check.
+
         //If the player was a spectator before.
         if (players.get(player) == PlayerType.SPECTATOR) {
             // Make the player visible again
@@ -126,6 +128,7 @@ public class PlayerManager {
             player.setGameMode(GameMode.SURVIVAL);
             player.setFlying(false);
             player.setAllowFlight(false);
+            if (plugin.getTabHook() != null) plugin.getTabHook().showPlayerName(player.getUniqueId());
         }
 
         //If the player was a tagger before.
@@ -143,6 +146,8 @@ public class PlayerManager {
             case WAITING:
                 setType(player, PlayerType.WAITING);
                 player.teleport(gameManager.arena.getLobbyLocation());
+
+                setPlayerName(player, PlayerType.WAITING);
                 break;
             case SURVIVOR:
                 if (players.get(player) != PlayerType.TAGGER) {
@@ -151,6 +156,7 @@ public class PlayerManager {
 
                 setType(player, PlayerType.SURVIVOR);
                 givePotionEffects(player);
+                setPlayerName(player, PlayerType.SURVIVOR);
                 break;
             case TAGGER:
                 if (players.get(player) != PlayerType.SURVIVOR) return; //Safety check.
@@ -162,6 +168,7 @@ public class PlayerManager {
 
                 PlayerData playerData = new PlayerData(player.getUniqueId());
                 playerData.setTimesTagged(playerData.getTimesTagged() + 1);
+                setPlayerName(player, PlayerType.TAGGER);
                 break;
             case SPECTATOR:
                 // The player should be invisible.
@@ -171,6 +178,37 @@ public class PlayerManager {
                 player.setFlying(true);
 
                 setType(player, PlayerType.SPECTATOR);
+                setPlayerName(player, PlayerType.SPECTATOR);
+                if (plugin.getTabHook() != null) plugin.getTabHook().hidePlayerName(player.getUniqueId());
+                break;
+        }
+    }
+
+    private void setPlayerName(Player player, PlayerType playerType) {
+        switch(playerType) {
+            case WAITING:
+                PlayerInformation playerInformation = plugin.getLobbyManager().getPlayerInformationMap().get(player);
+
+                player.setDisplayName(plugin.getLobbyManager().getPlayerInformationMap().get(player).getDisplayName());
+                player.setPlayerListName(playerInformation.getPlayerListName());
+                break;
+            case SURVIVOR:
+                String survivorPrefix = ChatUtils.colorize(Tnttag.customizationfile.getString("name-prefixes.survivor")) + " ";
+
+                player.setDisplayName(survivorPrefix + player.getDisplayName());
+                player.setPlayerListName(survivorPrefix + player.getName());
+                break;
+            case TAGGER:
+                String taggerPrefix = ChatUtils.colorize(Tnttag.customizationfile.getString("name-prefixes.tagger")) + " ";
+
+                player.setDisplayName(taggerPrefix + player.getDisplayName());
+                player.setPlayerListName(taggerPrefix + player.getName());
+                break;
+            case SPECTATOR:
+                String spectatorPrefix = ChatUtils.colorize(Tnttag.customizationfile.getString("name-prefixes.spectator")) + " ";
+
+                player.setDisplayName(spectatorPrefix + player.getDisplayName());
+                player.setPlayerListName(spectatorPrefix + player.getName());
                 break;
         }
     }

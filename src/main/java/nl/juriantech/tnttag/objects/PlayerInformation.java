@@ -18,6 +18,8 @@ public class PlayerInformation {
     private final float exp;
     private final GameMode gameMode;
     private final int foodLevel;
+    private final String displayName;
+    private final String playerListName;
 
     public PlayerInformation(Player player) {
         this.player = player;
@@ -27,6 +29,8 @@ public class PlayerInformation {
         this.exp = player.getExp();
         this.gameMode = player.getGameMode();
         this.foodLevel = player.getFoodLevel();
+        this.displayName = player.getDisplayName();
+        this.playerListName = player.getPlayerListName();
 
         player.getInventory().clear();
         player.setExp(0);
@@ -38,7 +42,6 @@ public class PlayerInformation {
         List<PotionEffect> activeEffects = new ArrayList<>(player.getActivePotionEffects());
         activeEffects.forEach(activePotionEffect -> player.removePotionEffect(activePotionEffect.getType()));
 
-
         player.getInventory().clear();
         player.getInventory().setContents(inventory);
         player.getInventory().setArmorContents(armor);
@@ -47,9 +50,19 @@ public class PlayerInformation {
         player.setGameMode(gameMode);
         player.teleport(oldLocation);
         player.setFoodLevel(foodLevel);
+        player.setDisplayName(displayName);
+        player.setPlayerListName(playerListName);
     }
 
     public Player getPlayer() {
         return player;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getPlayerListName() {
+        return playerListName;
     }
 }

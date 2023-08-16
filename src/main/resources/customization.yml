@@ -199,3 +199,10 @@ sounds:
   round-end: "entity_generic_explode"
   tagged: "entity_arrow_hit_player"
   untagged: "entity_player_levelup"
+
+# Can't be longer as 25 characters TOTAL(so including the player name), keep it as short as possible.
+# Both for the chat and TAB.
+name-prefixes:
+  survivor: "&2[S]"
+  tagger: "&c&l[T]"
+  spectator: "&8[S]"
