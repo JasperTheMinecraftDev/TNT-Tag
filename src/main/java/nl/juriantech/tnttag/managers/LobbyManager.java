@@ -75,4 +75,8 @@ public class LobbyManager {
         globalLobbyLocation.setYaw(Float.parseFloat(parts[4]));
         globalLobbyLocation.setPitch(Float.parseFloat(parts[5]));
     }
+
+    public HashMap<Player, PlayerInformation> getPlayerInformationMap() {
+        return playerInformationMap;
+    }
 }
