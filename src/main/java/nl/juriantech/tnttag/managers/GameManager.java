@@ -118,7 +118,7 @@ public class GameManager {
 
     public void startRound() {
         playerManager.teleportToStart();
-        playerManager.pickPlayers();
+        playerManager.pickPlayers(Tnttag.configfile.getBoolean("use-taggers-percentage"));
         this.round = new Round(plugin, this);
         this.round.start();
         playerManager.broadcast(ChatUtils.getRaw("arena.tagger-released"));

@@ -276,7 +276,7 @@ public class PlayerManager {
         }
     }
 
-    public void pickPlayers() {
+    public void pickPlayers(boolean pickPercentage) {
         List<Player> playersList = new ArrayList<>();
         for (Map.Entry<Player, PlayerType> entry : players.entrySet()) {
             if (entry.getValue() == PlayerType.SPECTATOR) continue;
@@ -285,19 +285,28 @@ public class PlayerManager {
 
         List<Player> taggers = new ArrayList<>();
 
-        // Remove the percentage sign and convert to a double
-        double taggerPercentage = Double.parseDouble(Tnttag.configfile.getString("taggers-percentage").replace("%", "")) / 100.0;
-        int numTaggers = (int) Math.round(playersList.size() * taggerPercentage);
+        if (pickPercentage) {
+            // Remove the percentage sign and convert to a double
+            double taggerPercentage = Double.parseDouble(Tnttag.configfile.getString("taggers-percentage").replace("%", "")) / 100.0;
+            int numTaggers = (int) Math.round(playersList.size() * taggerPercentage);
 
-        // Shuffle the players list to introduce randomness
-        Collections.shuffle(playersList);
+            // Shuffle the players list to introduce randomness
+            Collections.shuffle(playersList);
 
-        for (int i = 0; i < numTaggers; i++) {
-            Player player = playersList.get(i);
-            taggers.add(player);
-            setType(player, PlayerType.TAGGER);
-            ChatUtils.sendMessage(player, "player.is-tagger");
-            gameManager.itemManager.giveTaggerItems(player);
+            for (int i = 0; i < numTaggers; i++) {
+                Player player = playersList.get(i);
+                taggers.add(player);
+                setType(player, PlayerType.TAGGER);
+                ChatUtils.sendMessage(player, "player.is-tagger");
+                gameManager.itemManager.giveTaggerItems(player);
+            }
+        } else {
+            // Pick a single player as the tagger
+            Player randomTagger = playersList.get(new Random().nextInt(playersList.size()));
+            taggers.add(randomTagger);
+            setType(randomTagger, PlayerType.TAGGER);
+            ChatUtils.sendMessage(randomTagger, "player.is-tagger");
+            gameManager.itemManager.giveTaggerItems(randomTagger);
         }
 
         for (Player p : players.keySet()) {
