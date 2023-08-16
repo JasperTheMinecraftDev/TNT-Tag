@@ -7,6 +7,10 @@ import org.bukkit.OfflinePlayer;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.UUID;
+
 public class PlaceholderAPIExpansion extends PlaceholderExpansion {
 
     private final Tnttag plugin;
@@ -53,6 +57,48 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
 
         if(params.equalsIgnoreCase("tags")){
             return String.valueOf(playerData.getTags());
+        }
+
+        if (params.startsWith("top_wins_")) {
+            int position = Integer.parseInt(params.substring("top_wins_".length()));
+            TreeMap<UUID, Integer> winsData = Tnttag.getAPI().getWinsData();
+
+            int counter = 0;
+            for (Map.Entry<UUID, Integer> entry : winsData.entrySet()) {
+                counter++;
+                if (counter == position) {
+                    return String.valueOf(entry.getKey());
+                }
+            }
+            return "N/A"; // No data available
+        }
+
+        if (params.startsWith("top_timestagged_")) {
+            int position = Integer.parseInt(params.substring("top_timestagged_".length()));
+            TreeMap<UUID, Integer> timesTaggedData = Tnttag.getAPI().getTimesTaggedData();
+
+            int counter = 0;
+            for (Map.Entry<UUID, Integer> entry : timesTaggedData.entrySet()) {
+                counter++;
+                if (counter == position) {
+                    return String.valueOf(entry.getKey());
+                }
+            }
+            return "N/A"; // No data available
+        }
+
+        if (params.startsWith("top_tags_")) {
+            int position = Integer.parseInt(params.substring("top_tags_".length()));
+            TreeMap<UUID, Integer> tagsData = Tnttag.getAPI().getTagsData();
+
+            int counter = 0;
+            for (Map.Entry<UUID, Integer> entry : tagsData.entrySet()) {
+                counter++;
+                if (counter == position) {
+                    return String.valueOf(entry.getKey());
+                }
+            }
+            return "N/A"; // No data available
         }
 
         if(params.startsWith("arena_")){
