@@ -9,10 +9,8 @@ import org.bukkit.OfflinePlayer;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.TreeMap;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class PlaceholderAPIExpansion extends PlaceholderExpansion {
 
@@ -66,40 +64,54 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
             int position = Integer.parseInt(params.substring("top_wins_".length()));
             TreeMap<UUID, Integer> winsData = Tnttag.getAPI().getWinsData();
 
-            int counter = 0;
-            for (Map.Entry<UUID, Integer> entry : winsData.entrySet()) {
-                counter++;
-                if (counter == position) {
-                    return ChatUtils.colorize(Tnttag.customizationfile.getString("top-placeholder-formatting.wins").replace("%player%", Objects.requireNonNull(Bukkit.getOfflinePlayer(entry.getKey()).getName())).replace("%amount%", String.valueOf(entry.getValue())));
-                }
+            List<Map.Entry<UUID, Integer>> sortedEntries = winsData.entrySet().stream()
+                    .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue())) // Sort in descending order
+                    .collect(Collectors.toList());
+
+            if (position >= 1 && position <= sortedEntries.size()) {
+                Map.Entry<UUID, Integer> entry = sortedEntries.get(position - 1);
+                return ChatUtils.colorize(Tnttag.customizationfile.getString("top-placeholder-formatting.wins")
+                        .replace("%player%", Objects.requireNonNull(Bukkit.getOfflinePlayer(entry.getKey()).getName()))
+                        .replace("%amount%", String.valueOf(entry.getValue())));
             }
-            return "N/A"; // No data available
+
+            return "N/A"; // No data available or invalid position
         }
 
         if (params.startsWith("top_timestagged_")) {
             int position = Integer.parseInt(params.substring("top_timestagged_".length()));
             TreeMap<UUID, Integer> timesTaggedData = Tnttag.getAPI().getTimesTaggedData();
 
-            int counter = 0;
-            for (Map.Entry<UUID, Integer> entry : timesTaggedData.entrySet()) {
-                counter++;
-                if (counter == position) {
-                    return ChatUtils.colorize(Tnttag.customizationfile.getString("top-placeholder-formatting.timestagged").replace("%player%", Objects.requireNonNull(Bukkit.getOfflinePlayer(entry.getKey()).getName())).replace("%amount%", String.valueOf(entry.getValue())));                }
+            List<Map.Entry<UUID, Integer>> sortedEntries = timesTaggedData.entrySet().stream()
+                    .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue())) // Sort in descending order
+                    .collect(Collectors.toList());
+
+            if (position >= 1 && position <= sortedEntries.size()) {
+                Map.Entry<UUID, Integer> entry = sortedEntries.get(position - 1);
+                return ChatUtils.colorize(Tnttag.customizationfile.getString("top-placeholder-formatting.timestagged")
+                        .replace("%player%", Objects.requireNonNull(Bukkit.getOfflinePlayer(entry.getKey()).getName()))
+                        .replace("%amount%", String.valueOf(entry.getValue())));
             }
-            return "N/A"; // No data available
+
+            return "N/A"; // No data available or invalid position
         }
 
         if (params.startsWith("top_tags_")) {
             int position = Integer.parseInt(params.substring("top_tags_".length()));
             TreeMap<UUID, Integer> tagsData = Tnttag.getAPI().getTagsData();
 
-            int counter = 0;
-            for (Map.Entry<UUID, Integer> entry : tagsData.entrySet()) {
-                counter++;
-                if (counter == position) {
-                    return ChatUtils.colorize(Tnttag.customizationfile.getString("top-placeholder-formatting.tags").replace("%player%", Objects.requireNonNull(Bukkit.getOfflinePlayer(entry.getKey()).getName())).replace("%amount%", String.valueOf(entry.getValue())));                }
+            List<Map.Entry<UUID, Integer>> sortedEntries = tagsData.entrySet().stream()
+                    .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue())) // Sort in descending order
+                    .collect(Collectors.toList());
+
+            if (position >= 1 && position <= sortedEntries.size()) {
+                Map.Entry<UUID, Integer> entry = sortedEntries.get(position - 1);
+                return ChatUtils.colorize(Tnttag.customizationfile.getString("top-placeholder-formatting.tags")
+                        .replace("%player%", Objects.requireNonNull(Bukkit.getOfflinePlayer(entry.getKey()).getName()))
+                        .replace("%amount%", String.valueOf(entry.getValue())));
             }
-            return "N/A"; // No data available
+
+            return "N/A"; // No data available or invalid position
         }
 
         if(params.startsWith("arena_")){
