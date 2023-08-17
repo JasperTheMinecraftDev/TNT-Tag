@@ -33,6 +33,11 @@ public class EntityDamageByEntityListener implements Listener {
         Arena victimArena = plugin.getArenaManager().getPlayerArena(victim);
 
         if (victimArena != null && damagerArena == victimArena) {
+            if (damagerArena.getGameManager().playerManager.getPlayerType(damager) == PlayerType.SPECTATOR || victimArena.getGameManager().playerManager.getPlayerType(victim) == PlayerType.SPECTATOR) {
+                event.setCancelled(true);
+                return;
+            }
+
             GameManager gameManager = damagerArena.getGameManager();
 
 
