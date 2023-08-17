@@ -1,5 +1,7 @@
 package nl.juriantech.tnttag;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import dev.dejvokep.boostedyaml.YamlDocument;
 import nl.juriantech.tnttag.api.API;
 import nl.juriantech.tnttag.checkers.UpdateChecker;
@@ -80,6 +82,7 @@ public class Tnttag extends JavaPlugin {
         }
 
         api = new API(this);
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         logger.warning("TNT-Tag has been enabled!");
         new BukkitRunnable() {
             @Override
@@ -162,6 +165,7 @@ public class Tnttag extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new InventoryClickListener(this), this);
         getServer().getPluginManager().registerEvents(new SignListener(this), this);
         getServer().getPluginManager().registerEvents(new ItemListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
     }
 
     @Override
@@ -204,6 +208,14 @@ public class Tnttag extends JavaPlugin {
         }
 
         return false; // The versions are equal or the current version is greater
+    }
+
+    public void connectToServer(Player player, String serverName) {
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("Connect");
+        out.writeUTF(serverName);
+
+        player.sendPluginMessage(this, "BungeeCord", out.toByteArray());
     }
 
     public ArenaManager getArenaManager() {

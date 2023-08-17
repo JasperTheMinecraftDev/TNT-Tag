@@ -8,10 +8,16 @@ round-finish-commands:
 arena-finish-commands:
   #- eco add %winner% 1000
 
-# Automatically open the arena gui when joining an arena
-open-arena-gui-on-join: true
+# This will result in:
+# 1. Players instantly joining TNT-Tag once they get into the server.
+# 2. Players being unable to leave TNT-Tag, they will instead be connected to your lobby server once they try to leave.
 
-use-taggers-percentage: true # Set to true if you want to use the percentage, set it to false if you only want one tagger.
+bungee-mode:
+  enabled: false
+  lobby-server: "lobby" # The name of your lobby server.
+
+# Set to true if you want to use the percentage, set it to false if you only want one tagger.
+use-taggers-percentage: true
 
 # The amount of people that will be the tagger in a round.
 taggers-percentage: "40%"

@@ -89,7 +89,13 @@ public class TnttagCommand {
         }
 
         if (plugin.getLobbyManager().playerIsInLobby(player)) {
-            plugin.getLobbyManager().leaveLobby(player);
+            if (Tnttag.configfile.getBoolean("bungee-mode.enabled")) {
+                //The leaveLobby(player) method will automatically be executed once they actually leave, otherwise they can keep being in the server
+                //if the lobby is offline.
+                plugin.connectToServer(player, Tnttag.configfile.getString("bungee-mode.lobby-server"));
+            } else {
+                plugin.getLobbyManager().leaveLobby(player);
+            }
         }
     }
 
