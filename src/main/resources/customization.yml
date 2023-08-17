@@ -206,3 +206,9 @@ name-prefixes:
   survivor: "&2[S]"
   tagger: "&c&l[T]"
   spectator: "&8[S]"
+
+# The formatting of the top placeholders.
+top-placeholder-formatting:
+  wins: "&6★ &f%player% &8- &b%amount% wins"
+  timestagged: "&6★ &f%player% &8- &b%amount% times tagged"
+  tags: "&6★ &f%player% &8- &b%amount% tags"

@@ -3,11 +3,14 @@ package nl.juriantech.tnttag.hooks;
 import nl.juriantech.tnttag.Arena;
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.objects.PlayerData;
+import nl.juriantech.tnttag.utils.ChatUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 import java.util.UUID;
 
@@ -67,7 +70,7 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
             for (Map.Entry<UUID, Integer> entry : winsData.entrySet()) {
                 counter++;
                 if (counter == position) {
-                    return String.valueOf(entry.getKey());
+                    return ChatUtils.colorize(Tnttag.customizationfile.getString("top-placeholder-formatting.wins").replace("%player%", Objects.requireNonNull(Bukkit.getOfflinePlayer(entry.getKey()).getName())).replace("%amount%", String.valueOf(entry.getValue())));
                 }
             }
             return "N/A"; // No data available
@@ -81,8 +84,7 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
             for (Map.Entry<UUID, Integer> entry : timesTaggedData.entrySet()) {
                 counter++;
                 if (counter == position) {
-                    return String.valueOf(entry.getKey());
-                }
+                    return ChatUtils.colorize(Tnttag.customizationfile.getString("top-placeholder-formatting.timestagged").replace("%player%", Objects.requireNonNull(Bukkit.getOfflinePlayer(entry.getKey()).getName())).replace("%amount%", String.valueOf(entry.getValue())));                }
             }
             return "N/A"; // No data available
         }
@@ -95,8 +97,7 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
             for (Map.Entry<UUID, Integer> entry : tagsData.entrySet()) {
                 counter++;
                 if (counter == position) {
-                    return String.valueOf(entry.getKey());
-                }
+                    return ChatUtils.colorize(Tnttag.customizationfile.getString("top-placeholder-formatting.tags").replace("%player%", Objects.requireNonNull(Bukkit.getOfflinePlayer(entry.getKey()).getName())).replace("%amount%", String.valueOf(entry.getValue())));                }
             }
             return "N/A"; // No data available
         }
