@@ -224,6 +224,8 @@ public class PlayerManager {
         message = message.replace("{minPlayers}", String.valueOf(gameManager.arena.getMinPlayers()));
         message = message.replace("{maxPlayers}", String.valueOf(gameManager.arena.getMaxPlayers()));
 
+        if (message.equals("")) return;
+
         for (Player player : players.keySet()) {
             player.sendMessage(ChatUtils.colorize(message));
         }
