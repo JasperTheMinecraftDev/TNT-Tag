@@ -5,7 +5,6 @@ import com.google.common.io.ByteStreams;
 import dev.dejvokep.boostedyaml.YamlDocument;
 import nl.juriantech.tnttag.api.API;
 import nl.juriantech.tnttag.checkers.UpdateChecker;
-import nl.juriantech.tnttag.commands.TnttagCommand;
 import nl.juriantech.tnttag.handlers.SetupCommandHandler;
 import nl.juriantech.tnttag.hooks.PartyAndFriendsHook;
 import nl.juriantech.tnttag.hooks.PlaceholderAPIExpansion;
@@ -14,6 +13,7 @@ import nl.juriantech.tnttag.listeners.*;
 import nl.juriantech.tnttag.managers.*;
 import io.github.rysefoxx.inventory.plugin.pagination.InventoryManager;
 import nl.juriantech.tnttag.runnables.SignUpdateRunnable;
+import nl.juriantech.tnttag.subcommands.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -62,7 +62,7 @@ public class Tnttag extends JavaPlugin {
         managers();
         runnables();
         listeners();
-        commands();
+        subcommands();
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             logger.info("[TNT-Tag] PlaceholderAPI detected, enabling the hook.");
             new PlaceholderAPIExpansion(this).register();
@@ -152,9 +152,23 @@ public class Tnttag extends JavaPlugin {
         }.runTaskLater(this, 20);
     }
 
-    private void commands() {
+    private void subcommands() {
         BukkitCommandHandler handler = BukkitCommandHandler.create(this);
-        handler.register(new TnttagCommand(this));
+        handler.register(new CreateSubCommand(this));
+        handler.register(new DeleteSubCommand(this));
+        handler.register(new DumpSubCommand(this));
+        handler.register(new EditorSubCommand(this));
+        handler.register(new HelpSubCommand());
+        handler.register(new InfoSubCommand(this));
+        handler.register(new JoinGUISubCommand(this));
+        handler.register(new JoinSubCommand(this));
+        handler.register(new LeaveSubCommand(this));
+        handler.register(new ListSubCommand(this));
+        handler.register(new ReloadSubCommand(this));
+        handler.register(new SetLobbySubCommand(this));
+        handler.register(new StartSubCommand(this));
+        handler.register(new StatsSubCommand(this));
+        handler.register(new TopSubCommand(this));
     }
 
     private void listeners() {
