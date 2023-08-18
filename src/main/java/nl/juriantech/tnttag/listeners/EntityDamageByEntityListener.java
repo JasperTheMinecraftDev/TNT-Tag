@@ -12,9 +12,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class EntityDamageByEntityListener implements Listener {
 
     private final Tnttag plugin;
+    private final Map<Player, Long> cooldowns = new HashMap<>();
 
     public EntityDamageByEntityListener(Tnttag plugin) {
         this.plugin = plugin;
@@ -57,6 +61,19 @@ public class EntityDamageByEntityListener implements Listener {
                 PlayerType victimType = gameManager.playerManager.getPlayerType(victim);
                 if (victimType == PlayerType.TAGGER) return;
 
+                if (Tnttag.configfile.getBoolean("cooldown.enabled")) {
+                    long currentMilliSeconds = System.currentTimeMillis();
+
+                    if (cooldowns.containsKey(damager) && currentMilliSeconds - cooldowns.get(damager) < (Tnttag.configfile.getInt("cooldown.duration") * 1000)) {
+                        ChatUtils.sendCustomMessage(damager, Tnttag.customizationfile.getString("player.cooldown")
+                                .replace("%seconds%", String.format("%.1f", (currentMilliSeconds - (float) cooldowns.get(damager) / 1000))));
+                        event.setCancelled(true);
+                        return;
+                    }
+
+                    cooldowns.put(damager, currentMilliSeconds);
+
+                }
                 event.setDamage(0);
 
                 // Switch player types if the damager is a tagger and the victim is a survivor

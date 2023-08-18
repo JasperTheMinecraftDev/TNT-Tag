@@ -22,8 +22,6 @@ public class SignManager {
     private final ArrayList<LeaveSign> leaveSigns;
     private final ArrayList<TopSign> topSigns;
     public static final String SIGN_PREFIX = ChatColor.GOLD + "[" + ChatColor.RED + "Tnttag" + ChatColor.GOLD + "]";
-
-
     public SignManager(Tnttag plugin) {
         this.plugin = plugin;
         this.joinSigns = new ArrayList<>();
