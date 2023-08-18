@@ -7,7 +7,6 @@ import nl.juriantech.tnttag.signs.JoinSign;
 import nl.juriantech.tnttag.signs.LeaveSign;
 import nl.juriantech.tnttag.signs.SignInterface;
 import nl.juriantech.tnttag.signs.TopSign;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Sign;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -21,7 +20,7 @@ public class SignManager {
     private final ArrayList<JoinSign> joinSigns;
     private final ArrayList<LeaveSign> leaveSigns;
     private final ArrayList<TopSign> topSigns;
-    public static final String SIGN_PREFIX = ChatColor.GOLD + "[" + ChatColor.RED + "Tnttag" + ChatColor.GOLD + "]";
+
     public SignManager(Tnttag plugin) {
         this.plugin = plugin;
         this.joinSigns = new ArrayList<>();
