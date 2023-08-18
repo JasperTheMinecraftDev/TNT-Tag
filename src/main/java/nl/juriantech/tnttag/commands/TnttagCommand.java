@@ -50,6 +50,11 @@ public class TnttagCommand {
     @Subcommand("join")
     @CommandPermission("tnttag.join")
     public void onJoin(Player player, @Optional String arenaName) {
+        if (arenaName == null && !Tnttag.configfile.getBoolean("global-lobby")) {
+            player.sendMessage(ChatUtils.colorize(Tnttag.customizationfile.getString("general.specify-arena")));
+            return;
+        }
+
         if (!plugin.getLobbyManager().playerIsInLobby(player)) {
             if (!plugin.getLobbyManager().enterLobby(player)) return;
         } else if (arenaName == null) {

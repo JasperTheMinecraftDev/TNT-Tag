@@ -85,13 +85,19 @@ public class PlayerManager {
         Bukkit.getPluginManager().callEvent(event);
 
         setPlayerType(player, PlayerType.WAITING);
-        gameManager.itemManager.giveGlobalLobbyItems(player);
-        plugin.getLobbyManager().teleportToLobby(player);
+
         player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
         players.remove(player);
         if (message) {
             ChatUtils.sendMessage(player, "player.leaved-arena");
             broadcast(ChatUtils.getRaw("arena.player-leaved").replace("{player}", player.getName()));
+        }
+
+        if (Tnttag.configfile.getBoolean("global-lobby")) {
+            gameManager.itemManager.giveGlobalLobbyItems(player);
+            plugin.getLobbyManager().teleportToLobby(player);
+        } else {
+            plugin.getLobbyManager().leaveLobby(player);
         }
 
         if (gameManager.startRunnable != null && !gameManager.startRunnable.isCancelled() && players.size() < gameManager.arena.getMinPlayers()) {

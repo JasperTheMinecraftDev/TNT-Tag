@@ -47,3 +47,7 @@ player-teleport-threshold: 5
 
 # If everyone can hit each other in the game, this can be a fun thing that also prevents people from camping in one place.
 game-combat: true
+
+# If set to false, the global lobby will be skipped. So players will instantly leave the TNT-Tag mode when they want to leave an arena.
+# Players won't be able to join it aswell if this is disabled.
+global-lobby: true

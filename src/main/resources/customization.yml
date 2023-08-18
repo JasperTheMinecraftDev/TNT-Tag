@@ -4,6 +4,7 @@ general:
   not-enough-stats: "&cThere are not enough stats to do this at the moment."
   no-permission: "&cYou don't have permission to do this!"
   negative-error: "&cThe number is negative or zero, this is not allowed!"
+  specify-arena: "&cYou have to specify an arena because the lobby is disabled."
 
 arena:
   player-joined: "&3Player {player} joined the arena! &5({currentPlayers}/{maxPlayers})"
