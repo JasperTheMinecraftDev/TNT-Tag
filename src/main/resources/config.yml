@@ -15,6 +15,8 @@ arena-finish-commands:
 bungee-mode:
   enabled: false
   lobby-server: "lobby" # The name of your lobby server.
+  enter-arena-instantly: false # Only enable this if you only have one arena, it will let players enter that arena directly.
+  restart-command: "restart" # Your server will be automatically restarted after an arena ends if "enter-arena-instantly" is set to true.
 
 # Set to true if you want to use the percentage, set it to false if you only want one tagger.
 use-taggers-percentage: true

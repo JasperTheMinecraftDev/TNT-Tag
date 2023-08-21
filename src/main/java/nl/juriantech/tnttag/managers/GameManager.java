@@ -111,6 +111,9 @@ public class GameManager {
 
                 setGameState(GameState.IDLE);
                 this.startRunnable = null;
+
+                String restartCommand = Tnttag.configfile.getString("bungee-mode.restart-command");
+                if (Tnttag.configfile.getBoolean("bungee-mode.enabled") && Tnttag.configfile.getBoolean("bungee-mode.enter-arena-instantly") && restartCommand != null) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), restartCommand);
                 break;
             default:
                 throw new IllegalStateException("Unexpected GameState value received: " + state);
