@@ -107,7 +107,7 @@ public class PlayerManager {
             return;
         }
 
-        if (players.size() == 0) gameManager.stop();
+        if (getPlayerCount() == 0) gameManager.stop();
         if (players.size() == 1 && gameManager.state == GameState.INGAME) {
             if (message) {
                 broadcast(ChatUtils.getRaw("arena.last-player-leaved").replace("{player}", player.getName()));
@@ -197,24 +197,28 @@ public class PlayerManager {
 
                 player.setDisplayName(plugin.getLobbyManager().getPlayerInformationMap().get(player).getDisplayName());
                 player.setPlayerListName(playerInformation.getPlayerListName());
+                if (plugin.getTabHook() != null) plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), playerInformation.getTabPrefix());
                 break;
             case SURVIVOR:
                 String survivorPrefix = ChatUtils.colorize(Tnttag.customizationfile.getString("name-prefixes.survivor")) + " ";
 
                 player.setDisplayName(survivorPrefix + player.getDisplayName());
                 player.setPlayerListName(survivorPrefix + player.getName());
+                if (plugin.getTabHook() != null) plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), survivorPrefix);
                 break;
             case TAGGER:
                 String taggerPrefix = ChatUtils.colorize(Tnttag.customizationfile.getString("name-prefixes.tagger")) + " ";
 
                 player.setDisplayName(taggerPrefix + player.getDisplayName());
                 player.setPlayerListName(taggerPrefix + player.getName());
+                if (plugin.getTabHook() != null) plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), taggerPrefix);
                 break;
             case SPECTATOR:
                 String spectatorPrefix = ChatUtils.colorize(Tnttag.customizationfile.getString("name-prefixes.spectator")) + " ";
 
                 player.setDisplayName(spectatorPrefix + player.getDisplayName());
                 player.setPlayerListName(spectatorPrefix + player.getName());
+                if (plugin.getTabHook() != null) plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), spectatorPrefix);
                 break;
         }
     }
@@ -224,7 +228,7 @@ public class PlayerManager {
         message = message.replace("{minPlayers}", String.valueOf(gameManager.arena.getMinPlayers()));
         message = message.replace("{maxPlayers}", String.valueOf(gameManager.arena.getMaxPlayers()));
 
-        if (message.equals("")) return;
+        if (message.isEmpty()) return;
 
         for (Player player : players.keySet()) {
             player.sendMessage(ChatUtils.colorize(message));

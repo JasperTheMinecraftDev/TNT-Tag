@@ -79,6 +79,7 @@ public class GameManager {
                 startRound();
                 break;
             case ENDING:
+                this.state = GameState.ENDING;
                 if (round != null) round.end();
 
                 ArrayList<Player> winners = new ArrayList<>();
@@ -102,9 +103,9 @@ public class GameManager {
                             playerManager.broadcast(ChatUtils.getRaw("arena.returning-to-lobby"));
                             winners.add(player);
                         }
-                        playerManager.removePlayer(player, false);
                     }
 
+                playersCopy.forEach((player, playerType) -> playerManager.removePlayer(player, false));
                 ArenaEndingEvent arenaEndingEvent = new ArenaEndingEvent(arena.getName(), playerManager.getPlayers(), winners);
                 Bukkit.getPluginManager().callEvent(arenaEndingEvent);
 
