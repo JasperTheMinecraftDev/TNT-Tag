@@ -10,10 +10,12 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class LeaveListener implements Listener {
 
+    private final Tnttag plugin;
     private final ArenaManager arenaManager;
     private final LobbyManager lobbyManager;
 
     public LeaveListener(Tnttag plugin) {
+        this.plugin = plugin;
         this.arenaManager = plugin.getArenaManager();
         this.lobbyManager = plugin.getLobbyManager();
     }
@@ -22,6 +24,7 @@ public class LeaveListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
+        plugin.getEntityDamageByEntityListener().cooldowns.remove(player);
         if (arenaManager.playerIsInArena(player)) {
             arenaManager.getPlayerArena(player).getGameManager().playerManager.removePlayer(player, true);
         }

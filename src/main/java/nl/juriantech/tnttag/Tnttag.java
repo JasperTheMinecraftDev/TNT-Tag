@@ -41,6 +41,7 @@ public class Tnttag extends JavaPlugin {
     private ItemManager itemManager;
     private DumpManager dumpManager;
     private TabHook tabHook;
+    private EntityDamageByEntityListener entityDamageByEntityListener;
 
     @Override
     public void onEnable() {
@@ -173,7 +174,8 @@ public class Tnttag extends JavaPlugin {
 
     private void listeners() {
         getServer().getPluginManager().registerEvents(new ProtectionListener(this), this);
-        getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(this), this);
+        entityDamageByEntityListener = new EntityDamageByEntityListener(this);
+        getServer().getPluginManager().registerEvents(entityDamageByEntityListener, this);
         getServer().getPluginManager().registerEvents(updateChecker, this);
         getServer().getPluginManager().registerEvents(new LeaveListener(this), this);
         getServer().getPluginManager().registerEvents(new InventoryClickListener(this), this);
@@ -262,5 +264,9 @@ public class Tnttag extends JavaPlugin {
 
     public TabHook getTabHook() {
         return tabHook;
+    }
+
+    public EntityDamageByEntityListener getEntityDamageByEntityListener() {
+        return entityDamageByEntityListener;
     }
 }

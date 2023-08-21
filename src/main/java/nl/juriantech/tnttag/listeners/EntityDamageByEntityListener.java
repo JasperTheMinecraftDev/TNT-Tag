@@ -18,7 +18,7 @@ import java.util.Map;
 public class EntityDamageByEntityListener implements Listener {
 
     private final Tnttag plugin;
-    private final Map<Player, Long> cooldowns = new HashMap<>();
+    public final Map<Player, Long> cooldowns = new HashMap<>();
 
     public EntityDamageByEntityListener(Tnttag plugin) {
         this.plugin = plugin;
@@ -63,17 +63,20 @@ public class EntityDamageByEntityListener implements Listener {
 
                 if (Tnttag.configfile.getBoolean("cooldown.enabled")) {
                     long currentMilliSeconds = System.currentTimeMillis();
+                    long cooldownEnd = cooldowns.getOrDefault(damager, 0L) + (Tnttag.configfile.getInt("cooldown.duration") * 1000);
 
-                    if (cooldowns.containsKey(damager) && currentMilliSeconds - cooldowns.get(damager) < (Tnttag.configfile.getInt("cooldown.duration") * 1000)) {
+                    if (cooldownEnd > currentMilliSeconds) {
+                        long secondsRemaining = (cooldownEnd - currentMilliSeconds) / 1000;
+
                         ChatUtils.sendCustomMessage(damager, Tnttag.customizationfile.getString("player.cooldown")
-                                .replace("%seconds%", String.format("%.1f", (currentMilliSeconds - (float) cooldowns.get(damager) / 1000))));
+                                .replace("%seconds%", String.valueOf(secondsRemaining)));
                         event.setCancelled(true);
                         return;
                     }
 
                     cooldowns.put(damager, currentMilliSeconds);
-
                 }
+
                 event.setDamage(0);
 
                 // Switch player types if the damager is a tagger and the victim is a survivor
