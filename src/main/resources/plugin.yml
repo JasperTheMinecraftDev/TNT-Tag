@@ -5,4 +5,3 @@ softdepend: [PlaceholderAPI, PartyAndFriends, TAB]
 api-version: 1.13
 authors: [ JasperTheDev ]
 description: A TNT-Tag minigame!
-website: juriantech.nl
