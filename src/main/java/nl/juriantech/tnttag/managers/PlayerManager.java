@@ -194,11 +194,10 @@ public class PlayerManager {
     }
 
     private void setPlayerName(Player player, PlayerType playerType) {
+        PlayerInformation playerInformation = plugin.getLobbyManager().getPlayerInformationMap().get(player);
         switch(playerType) {
             case WAITING:
-                PlayerInformation playerInformation = plugin.getLobbyManager().getPlayerInformationMap().get(player);
-
-                player.setDisplayName(plugin.getLobbyManager().getPlayerInformationMap().get(player).getDisplayName());
+                player.setDisplayName(playerInformation.getDisplayName());
                 player.setPlayerListName(playerInformation.getPlayerListName());
                 if (plugin.getTabHook() != null) {
                     plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), playerInformation.getTabPrefix());
@@ -210,32 +209,32 @@ public class PlayerManager {
             case SURVIVOR:
                 String survivorPrefix = ChatUtils.colorize(Tnttag.customizationfile.getString("name-prefixes.survivor")) + " ";
 
-                player.setDisplayName(survivorPrefix + player.getDisplayName());
-                player.setPlayerListName(survivorPrefix + player.getName());
+                player.setDisplayName(survivorPrefix + playerInformation.getDisplayName());
+                player.setPlayerListName(survivorPrefix + playerInformation.getPlayerListName());
                 if (plugin.getTabHook() != null) {
                     plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), survivorPrefix);
                 } else {
-                    player.setCustomName(survivorPrefix + player.getCustomName());
+                    player.setCustomName(survivorPrefix + playerInformation.getCustomName());
                     player.setCustomNameVisible(true);
                 }
                 break;
             case TAGGER:
                 String taggerPrefix = ChatUtils.colorize(Tnttag.customizationfile.getString("name-prefixes.tagger")) + " ";
 
-                player.setDisplayName(taggerPrefix + player.getDisplayName());
-                player.setPlayerListName(taggerPrefix + player.getName());
+                player.setDisplayName(taggerPrefix + playerInformation.getDisplayName());
+                player.setPlayerListName(taggerPrefix + playerInformation.getPlayerListName());
                 if (plugin.getTabHook() != null) {
                     plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), taggerPrefix);
                 } else {
-                    player.setCustomName(taggerPrefix + player.getCustomName());
+                    player.setCustomName(taggerPrefix + playerInformation.getCustomName());
                     player.setCustomNameVisible(true);
                 }
                 break;
             case SPECTATOR:
                 String spectatorPrefix = ChatUtils.colorize(Tnttag.customizationfile.getString("name-prefixes.spectator")) + " ";
 
-                player.setDisplayName(spectatorPrefix + player.getDisplayName());
-                player.setPlayerListName(spectatorPrefix + player.getName());
+                player.setDisplayName(spectatorPrefix + playerInformation.getDisplayName());
+                player.setPlayerListName(spectatorPrefix + playerInformation.getPlayerListName());
                 if (plugin.getTabHook() != null) {
                     plugin.getTabHook().hidePlayerName(player.getUniqueId());
                 } else {
