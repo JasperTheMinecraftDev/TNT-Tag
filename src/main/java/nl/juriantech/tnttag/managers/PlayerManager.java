@@ -331,6 +331,7 @@ public class PlayerManager {
                 Player player = playersList.get(i);
                 taggers.add(player);
                 setType(player, PlayerType.TAGGER);
+                setPlayerName(player, PlayerType.TAGGER);
                 ChatUtils.sendMessage(player, "player.is-tagger");
                 gameManager.itemManager.giveTaggerItems(player);
             }
@@ -339,6 +340,7 @@ public class PlayerManager {
             Player randomTagger = playersList.get(new Random().nextInt(playersList.size()));
             taggers.add(randomTagger);
             setType(randomTagger, PlayerType.TAGGER);
+            setPlayerName(randomTagger, PlayerType.TAGGER);
             ChatUtils.sendMessage(randomTagger, "player.is-tagger");
             gameManager.itemManager.giveTaggerItems(randomTagger);
         }
