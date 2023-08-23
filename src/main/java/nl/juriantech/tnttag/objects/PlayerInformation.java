@@ -22,7 +22,6 @@ public class PlayerInformation {
     private final String displayName;
     private final String playerListName;
     private String tabPrefix;
-    private String customName;
 
     public PlayerInformation(Tnttag plugin, Player player) {
         this.player = player;
@@ -36,8 +35,6 @@ public class PlayerInformation {
         this.playerListName = player.getPlayerListName();
         if (plugin.getTabHook() != null) {
             tabPrefix = plugin.getTabHook().getPlayerPrefix(player.getUniqueId());
-        } else {
-            this.customName = player.getCustomName();
         }
 
         player.getInventory().clear();
@@ -76,9 +73,5 @@ public class PlayerInformation {
 
     public String getTabPrefix() {
         return tabPrefix;
-    }
-
-    public String getCustomName() {
-        return customName;
     }
 }
