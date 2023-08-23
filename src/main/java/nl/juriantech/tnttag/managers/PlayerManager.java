@@ -201,9 +201,6 @@ public class PlayerManager {
                 player.setPlayerListName(playerInformation.getPlayerListName());
                 if (plugin.getTabHook() != null) {
                     plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), playerInformation.getTabPrefix());
-                } else {
-                    player.setCustomName(playerInformation.getCustomName());
-                    player.setCustomNameVisible(true);
                 }
                 break;
             case SURVIVOR:
@@ -213,9 +210,6 @@ public class PlayerManager {
                 player.setPlayerListName(survivorPrefix + playerInformation.getPlayerListName());
                 if (plugin.getTabHook() != null) {
                     plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), survivorPrefix);
-                } else {
-                    player.setCustomName(survivorPrefix + playerInformation.getCustomName());
-                    player.setCustomNameVisible(true);
                 }
                 break;
             case TAGGER:
@@ -225,9 +219,6 @@ public class PlayerManager {
                 player.setPlayerListName(taggerPrefix + playerInformation.getPlayerListName());
                 if (plugin.getTabHook() != null) {
                     plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), taggerPrefix);
-                } else {
-                    player.setCustomName(taggerPrefix + playerInformation.getCustomName());
-                    player.setCustomNameVisible(true);
                 }
                 break;
             case SPECTATOR:
@@ -237,8 +228,6 @@ public class PlayerManager {
                 player.setPlayerListName(spectatorPrefix + playerInformation.getPlayerListName());
                 if (plugin.getTabHook() != null) {
                     plugin.getTabHook().hidePlayerName(player.getUniqueId());
-                } else {
-                    player.setCustomNameVisible(false);
                 }
                 break;
         }
