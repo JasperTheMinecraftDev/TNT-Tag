@@ -2,6 +2,7 @@ package nl.juriantech.tnttag.managers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -78,7 +79,7 @@ public class ArenaManager {
             Bukkit.getLogger().severe("[Tnt-tag] Error: arenas file is null, could not load arenas.");
             return;
         }
-        if (arenaObjects.size() > 0) arenaObjects.clear();
+        if (!arenaObjects.isEmpty()) arenaObjects.clear();
         for (String route : arenasFile.getRoutesAsStrings(false)) {
             arenas++;
             String startLocWorldName = arenasFile.getString(route + ".startLocation.world");
@@ -160,7 +161,7 @@ public class ArenaManager {
         for (Arena arena : arenaObjects) {
             GameManager manager = arena.getGameManager();
             PlayerManager playerManager = manager.playerManager;
-            for (Player player : playerManager.getPlayers().keySet()) {
+            for (Player player : new HashMap<>(playerManager.getPlayers()).keySet()) {
                 playerManager.removePlayer(player, true);
             }
         }
