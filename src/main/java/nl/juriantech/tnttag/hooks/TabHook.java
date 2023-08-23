@@ -13,21 +13,25 @@ public class TabHook {
         this.tabAPI = TabAPI.getInstance();
     }
     public void hidePlayerName(UUID playerUUID) {
-        if (tabAPI.getNameTagManager() == null) return;
-
-        tabAPI.getNameTagManager().hideNameTag(Objects.requireNonNull(tabAPI.getPlayer(playerUUID)));
+        if (tabAPI.getNameTagManager() != null) {
+            tabAPI.getNameTagManager().hideNameTag(Objects.requireNonNull(tabAPI.getPlayer(playerUUID)));
+        }
     }
 
     public void showPlayerName(UUID playerUUID) {
-        if (tabAPI.getNameTagManager() == null) return;
-
-        tabAPI.getNameTagManager().showNameTag(Objects.requireNonNull(tabAPI.getPlayer(playerUUID)));
+        if (tabAPI.getNameTagManager() != null) {
+            tabAPI.getNameTagManager().showNameTag(Objects.requireNonNull(tabAPI.getPlayer(playerUUID)));
+        }
     }
 
     public void setPlayerPrefix(UUID playerUUID, String prefix) {
-        if (tabAPI.getNameTagManager() == null) return;
+        if (tabAPI.getNameTagManager() != null) {
+            tabAPI.getNameTagManager().setPrefix(Objects.requireNonNull(tabAPI.getPlayer(playerUUID)), prefix);
+        }
 
-        tabAPI.getNameTagManager().setPrefix(Objects.requireNonNull(tabAPI.getPlayer(playerUUID)), prefix);
+        if (tabAPI.getTabListFormatManager() != null) {
+            tabAPI.getTabListFormatManager().setPrefix(Objects.requireNonNull(tabAPI.getPlayer(playerUUID)), prefix);
+        }
     }
 
     public String getPlayerPrefix(UUID playerUUID) {

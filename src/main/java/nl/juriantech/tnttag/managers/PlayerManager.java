@@ -204,6 +204,7 @@ public class PlayerManager {
                     plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), playerInformation.getTabPrefix());
                 } else {
                     player.setCustomName(playerInformation.getCustomName());
+                    player.setCustomNameVisible(true);
                 }
                 break;
             case SURVIVOR:
@@ -215,6 +216,7 @@ public class PlayerManager {
                     plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), survivorPrefix);
                 } else {
                     player.setCustomName(survivorPrefix + player.getCustomName());
+                    player.setCustomNameVisible(true);
                 }
                 break;
             case TAGGER:
@@ -226,6 +228,7 @@ public class PlayerManager {
                     plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), taggerPrefix);
                 } else {
                     player.setCustomName(taggerPrefix + player.getCustomName());
+                    player.setCustomNameVisible(true);
                 }
                 break;
             case SPECTATOR:
