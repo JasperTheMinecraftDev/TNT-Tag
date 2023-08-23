@@ -23,4 +23,16 @@ public class TabHook {
 
         tabAPI.getNameTagManager().showNameTag(Objects.requireNonNull(tabAPI.getPlayer(playerUUID)));
     }
+
+    public void setPlayerPrefix(UUID playerUUID, String prefix) {
+        if (tabAPI.getNameTagManager() == null) return;
+
+        tabAPI.getNameTagManager().setPrefix(Objects.requireNonNull(tabAPI.getPlayer(playerUUID)), prefix);
+    }
+
+    public String getPlayerPrefix(UUID playerUUID) {
+        if (tabAPI.getNameTagManager() == null) return null;
+
+        return tabAPI.getNameTagManager().getCustomPrefix(Objects.requireNonNull(tabAPI.getPlayer(playerUUID)));
+    }
 }

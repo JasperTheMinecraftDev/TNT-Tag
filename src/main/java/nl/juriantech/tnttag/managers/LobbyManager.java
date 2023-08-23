@@ -14,12 +14,14 @@ import java.util.HashMap;
 
 public class LobbyManager {
 
+    private final Tnttag plugin;
     private final ItemManager itemManager;
     private final ArrayList<Player> players = new ArrayList<>();
     private final HashMap<Player, PlayerInformation> playerInformationMap;
     private Location globalLobbyLocation;
 
     public LobbyManager(Tnttag plugin) {
+        this.plugin = plugin;
         this.itemManager = plugin.getItemManager();
         this.playerInformationMap = new HashMap<>();
 
@@ -38,7 +40,7 @@ public class LobbyManager {
 
         players.add(player);
         // This should be done first because the PlayerInformation constructor clears the inventory too.
-        playerInformationMap.put(player, new PlayerInformation(player));
+        playerInformationMap.put(player, new PlayerInformation(plugin, player));
         itemManager.giveGlobalLobbyItems(player);
         ChatUtils.sendMessage(player, "player.joined-lobby");
         player.playSound(player.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.lobby-join").toUpperCase()), 1, 1);

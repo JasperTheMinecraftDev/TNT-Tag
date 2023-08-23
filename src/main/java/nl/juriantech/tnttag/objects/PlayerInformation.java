@@ -1,5 +1,6 @@
 package nl.juriantech.tnttag.objects;
 
+import nl.juriantech.tnttag.Tnttag;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -20,8 +21,10 @@ public class PlayerInformation {
     private final int foodLevel;
     private final String displayName;
     private final String playerListName;
+    private String tabPrefix;
+    private String customName;
 
-    public PlayerInformation(Player player) {
+    public PlayerInformation(Tnttag plugin, Player player) {
         this.player = player;
         this.oldLocation = player.getLocation();
         this.inventory = player.getInventory().getContents();
@@ -31,6 +34,11 @@ public class PlayerInformation {
         this.foodLevel = player.getFoodLevel();
         this.displayName = player.getDisplayName();
         this.playerListName = player.getPlayerListName();
+        if (plugin.getTabHook() != null) {
+            tabPrefix = plugin.getTabHook().getPlayerPrefix(player.getUniqueId());
+        } else {
+            this.customName = player.getCustomName();
+        }
 
         player.getInventory().clear();
         player.setExp(0);
@@ -64,5 +72,13 @@ public class PlayerInformation {
 
     public String getPlayerListName() {
         return playerListName;
+    }
+
+    public String getTabPrefix() {
+        return tabPrefix;
+    }
+
+    public String getCustomName() {
+        return customName;
     }
 }
