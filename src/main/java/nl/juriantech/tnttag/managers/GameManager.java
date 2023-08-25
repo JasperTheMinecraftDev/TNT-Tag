@@ -15,6 +15,7 @@ import nl.juriantech.tnttag.utils.ParticleUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -100,20 +101,26 @@ public class GameManager {
 
                             ParticleUtils.Firework(player.getLocation(), 0);
                             playerManager.broadcast(ChatUtils.getRaw("arena.player-win").replace("{player}", player.getName()));
-                            playerManager.broadcast(ChatUtils.getRaw("arena.returning-to-lobby"));
+                            playerManager.broadcast(ChatUtils.getRaw("arena.returning-to-lobby").replace("%seconds%", String.valueOf(Tnttag.configfile.getInt("delay.after-game"))));
                             winners.add(player);
                         }
                     }
 
-                playersCopy.forEach((player, playerType) -> playerManager.removePlayer(player, false));
-                ArenaEndingEvent arenaEndingEvent = new ArenaEndingEvent(arena.getName(), playerManager.getPlayers(), winners);
-                Bukkit.getPluginManager().callEvent(arenaEndingEvent);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
 
-                setGameState(GameState.IDLE);
-                this.startRunnable = null;
+                        playersCopy.forEach((player, playerType) -> playerManager.removePlayer(player, false));
+                        ArenaEndingEvent arenaEndingEvent = new ArenaEndingEvent(arena.getName(), playerManager.getPlayers(), winners);
+                        Bukkit.getPluginManager().callEvent(arenaEndingEvent);
 
-                String restartCommand = Tnttag.configfile.getString("bungee-mode.restart-command");
-                if (Tnttag.configfile.getBoolean("bungee-mode.enabled") && Tnttag.configfile.getBoolean("bungee-mode.enter-arena-instantly") && restartCommand != null) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), restartCommand);
+                        setGameState(GameState.IDLE);
+                        startRunnable = null;
+
+                        String restartCommand = Tnttag.configfile.getString("bungee-mode.restart-command");
+                        if (Tnttag.configfile.getBoolean("bungee-mode.enabled") && Tnttag.configfile.getBoolean("bungee-mode.enter-arena-instantly") && restartCommand != null) Bukkit.dispatchCommand(Bukkit.getConsoleSender(), restartCommand);
+                    }
+                }.runTaskLater(plugin, Tnttag.configfile.getInt("delay.after-game") * 20);
                 break;
             default:
                 throw new IllegalStateException("Unexpected GameState value received: " + state);

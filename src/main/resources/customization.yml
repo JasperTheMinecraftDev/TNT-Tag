@@ -14,10 +14,11 @@ arena:
   tagger-released: "&cBeware! The &4TAGGER &cis released!!"
   player-blew-up: "&cThe player {player} didn't survive and blew up!"
   round-ended: "&2The round ended!"
+  new-round-starting: "&2An new round is starting in %seconds% seconds!"
   player-win: "&2The player {player} won the game!"
   last-player-leaved: "&3The last survivor/tagger leaved, stopping the game."
   active: "&3This arena is currently started, please wait until it is ended."
-  returning-to-lobby: "&bReturning to the lobby..."
+  returning-to-lobby: "&bReturning to the lobby in %seconds% seconds..."
 
 player:
   joined-lobby: "&3You joined the lobby!"

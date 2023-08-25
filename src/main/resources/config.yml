@@ -55,6 +55,10 @@ cooldown:
   enabled: true
   duration: 2.0
 
+# The delay in seconds between starting a new round and teleporting back to the global lobby after a game.
+delay:
+  new-round: "3"
+  after-game: "5"
 # If set to false, the global lobby will be skipped. So players will instantly leave the TNT-Tag mode when they want to leave an arena.
 # Players won't be able to join it aswell if this is disabled.
 global-lobby: true
