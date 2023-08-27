@@ -109,7 +109,6 @@ public class GameManager {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-
                         playersCopy.forEach((player, playerType) -> playerManager.removePlayer(player, false));
                         ArenaEndingEvent arenaEndingEvent = new ArenaEndingEvent(arena.getName(), playerManager.getPlayers(), winners);
                         Bukkit.getPluginManager().callEvent(arenaEndingEvent);

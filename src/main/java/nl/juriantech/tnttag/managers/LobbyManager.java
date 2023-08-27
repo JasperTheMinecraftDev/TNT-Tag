@@ -24,13 +24,11 @@ public class LobbyManager {
         this.plugin = plugin;
         this.itemManager = plugin.getItemManager();
         this.playerInformationMap = new HashMap<>();
-
-        if (Tnttag.configfile.getString("globalLobby") != null) {
-            load();
-        }
     }
 
     public boolean enterLobby(Player player) {
+        System.out.println(globalLobbyLocation != null);
+        System.out.println(Tnttag.configfile.getString("globalLobby"));
         if (globalLobbyLocation == null) {
             ChatUtils.sendMessage(player, "player.global-lobby-not-set");
             return false;

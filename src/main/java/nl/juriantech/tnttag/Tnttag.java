@@ -149,6 +149,9 @@ public class Tnttag extends JavaPlugin {
             @Override
             public void run() {
                 arenaManager.loadArenasFromFile();
+                if (Tnttag.configfile.getString("globalLobby") != null) {
+                    lobbyManager.load();
+                }
             }
         }.runTaskLater(this, 20);
     }
