@@ -29,7 +29,7 @@ public class ItemBuilder {
 
     private String name;
     private boolean hideAttributes;
-    private List<String> lore = new ArrayList<>();
+    private final List<String> lore = new ArrayList<>();
     private UUID skullOwner;
 
     /**
@@ -59,6 +59,8 @@ public class ItemBuilder {
      * @return This ItemBuilder
      */
     public ItemBuilder displayName(String name) {
+        if (name.isEmpty()) return this;
+
         this.name = ChatUtils.colorize(name);
         return this;
     }
@@ -84,6 +86,8 @@ public class ItemBuilder {
      * @return This ItemBuilder
      */
     public ItemBuilder lore(String lore) {
+        if (lore.isEmpty()) return this;
+
         String[] lores = lore.split("\n");
         for(String splitLore : lores) {
             this.lore.add(ChatUtils.colorize(splitLore));

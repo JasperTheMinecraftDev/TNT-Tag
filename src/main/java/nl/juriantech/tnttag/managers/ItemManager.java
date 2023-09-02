@@ -99,9 +99,6 @@ public class ItemManager {
             InventoryItem inventoryItem = getItemByName(itemName);
 
             if (inventoryItem == null) {
-                for (InventoryItem item : items) {
-                    System.out.println(item.getName());
-                }
                 plugin.getLogger().severe("Failed to find InventoryItem for " + sectionName + ", itemString: " + itemString);
             } else {
                 targetMap.put(slot, inventoryItem);
