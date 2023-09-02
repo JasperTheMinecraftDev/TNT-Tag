@@ -227,6 +227,7 @@ public class PlayerManager {
                 player.setDisplayName(spectatorPrefix + playerInformation.getDisplayName());
                 player.setPlayerListName(spectatorPrefix + playerInformation.getPlayerListName());
                 if (plugin.getTabHook() != null) {
+                    plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), spectatorPrefix);
                     plugin.getTabHook().hidePlayerName(player.getUniqueId());
                 }
                 break;
