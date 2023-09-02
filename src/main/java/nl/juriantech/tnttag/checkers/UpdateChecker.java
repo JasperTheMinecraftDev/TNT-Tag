@@ -28,14 +28,16 @@ public class UpdateChecker implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (player.hasPermission("tnttag.update"))
+        if (player.hasPermission("tnttag.update")) {
             check();
-        if (isAvailable) {
+            if (isAvailable) {
                 player.sendMessage(ChatUtils.colorize("&b================&cTNT-Tag&b================"));
                 player.sendMessage(ChatUtils.colorize("&fNew version available: &b" + onlineVersion));
                 player.sendMessage(ChatUtils.colorize("&fCurrent version: &b" + localVersion));
+                player.sendMessage(ChatUtils.colorize("&cAlways read the changelog, updates may be breaking!"));
                 player.sendMessage(ChatUtils.colorize("&b========================================"));
             }
+        }
     }
 
     public void check() {
