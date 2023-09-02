@@ -2,11 +2,13 @@ package nl.juriantech.tnttag.hooks;
 
 import nl.juriantech.tnttag.Arena;
 import nl.juriantech.tnttag.Tnttag;
+import nl.juriantech.tnttag.enums.PlayerType;
 import nl.juriantech.tnttag.objects.PlayerData;
 import nl.juriantech.tnttag.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -45,103 +47,96 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
 
     @Override
     public String onRequest(OfflinePlayer player, @NotNull String params) {
-        if (player.getPlayer() == null) return "Error occurred: player is null.";
+        if (player.getPlayer() == null) {
+            return "Error occurred: player is null.";
+        }
 
         PlayerData playerData = new PlayerData(player.getPlayer().getUniqueId());
-        if(params.equalsIgnoreCase("wins")){
+
+        if (params.equalsIgnoreCase("wins")) {
             return String.valueOf(playerData.getWins());
         }
 
-        if(params.equalsIgnoreCase("timestagged")){
+        if (params.equalsIgnoreCase("timestagged")) {
             return String.valueOf(playerData.getTimesTagged());
         }
 
-        if(params.equalsIgnoreCase("tags")){
+        if (params.equalsIgnoreCase("tags")) {
             return String.valueOf(playerData.getTags());
         }
 
-        if (params.startsWith("top_wins_")) {
-            int position = Integer.parseInt(params.substring("top_wins_".length()));
-            TreeMap<UUID, Integer> winsData = Tnttag.getAPI().getWinsData();
+        if (params.startsWith("top_wins_") || params.startsWith("top_timestagged_") || params.startsWith("top_tags_")) {
+            String[] parts = params.split("_");
+            if (parts.length == 2) {
+                int position = Integer.parseInt(parts[1]);
+                TreeMap<UUID, Integer> data = null;
 
-            List<Map.Entry<UUID, Integer>> sortedEntries = winsData.entrySet().stream()
-                    .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue())) // Sort in descending order
-                    .collect(Collectors.toList());
+                if (params.startsWith("top_wins_")) {
+                    data = Tnttag.getAPI().getWinsData();
+                } else if (params.startsWith("top_timestagged_")) {
+                    data = Tnttag.getAPI().getTimesTaggedData();
+                } else if (params.startsWith("top_tags_")) {
+                    data = Tnttag.getAPI().getTagsData();
+                }
 
-            if (position >= 1 && position <= sortedEntries.size()) {
-                Map.Entry<UUID, Integer> entry = sortedEntries.get(position - 1);
-                return ChatUtils.colorize(Tnttag.customizationfile.getString("top-placeholder-formatting.wins")
-                        .replace("%player%", Objects.requireNonNull(Bukkit.getOfflinePlayer(entry.getKey()).getName()))
-                        .replace("%amount%", String.valueOf(entry.getValue())));
+                if (data != null) {
+                    List<Map.Entry<UUID, Integer>> sortedEntries = data.entrySet().stream()
+                            .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue()))
+                            .collect(Collectors.toList());
+
+                    if (position >= 1 && position <= sortedEntries.size()) {
+                        Map.Entry<UUID, Integer> entry = sortedEntries.get(position - 1);
+                        String placeholderType = params.startsWith("top_wins_") ? "wins" :
+                                params.startsWith("top_timestagged_") ? "timestagged" : "tags";
+                        return ChatUtils.colorize(Tnttag.customizationfile.getString("top-placeholder-formatting." + placeholderType)
+                                .replace("%player%", Objects.requireNonNull(Bukkit.getOfflinePlayer(entry.getKey()).getName()))
+                                .replace("%amount%", String.valueOf(entry.getValue())));
+                    }
+
+                    return "N/A";
+                }
             }
-
-            return "N/A"; // No data available or invalid position
         }
 
-        if (params.startsWith("top_timestagged_")) {
-            int position = Integer.parseInt(params.substring("top_timestagged_".length()));
-            TreeMap<UUID, Integer> timesTaggedData = Tnttag.getAPI().getTimesTaggedData();
-
-            List<Map.Entry<UUID, Integer>> sortedEntries = timesTaggedData.entrySet().stream()
-                    .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue())) // Sort in descending order
-                    .collect(Collectors.toList());
-
-            if (position >= 1 && position <= sortedEntries.size()) {
-                Map.Entry<UUID, Integer> entry = sortedEntries.get(position - 1);
-                return ChatUtils.colorize(Tnttag.customizationfile.getString("top-placeholder-formatting.timestagged")
-                        .replace("%player%", Objects.requireNonNull(Bukkit.getOfflinePlayer(entry.getKey()).getName()))
-                        .replace("%amount%", String.valueOf(entry.getValue())));
-            }
-
-            return "N/A"; // No data available or invalid position
-        }
-
-        if (params.startsWith("top_tags_")) {
-            int position = Integer.parseInt(params.substring("top_tags_".length()));
-            TreeMap<UUID, Integer> tagsData = Tnttag.getAPI().getTagsData();
-
-            List<Map.Entry<UUID, Integer>> sortedEntries = tagsData.entrySet().stream()
-                    .sorted((entry1, entry2) -> Integer.compare(entry2.getValue(), entry1.getValue())) // Sort in descending order
-                    .collect(Collectors.toList());
-
-            if (position >= 1 && position <= sortedEntries.size()) {
-                Map.Entry<UUID, Integer> entry = sortedEntries.get(position - 1);
-                return ChatUtils.colorize(Tnttag.customizationfile.getString("top-placeholder-formatting.tags")
-                        .replace("%player%", Objects.requireNonNull(Bukkit.getOfflinePlayer(entry.getKey()).getName()))
-                        .replace("%amount%", String.valueOf(entry.getValue())));
-            }
-
-            return "N/A"; // No data available or invalid position
-        }
-
-        if(params.startsWith("arena_")){
-            // Split the placeholder into its components
+        if (params.startsWith("arena_")) {
             String[] parts = params.split("_");
             if (parts.length == 2) {
                 String arenaName = parts[0];
                 String type = parts[1];
 
                 Arena arena = plugin.getArenaManager().getArena(arenaName);
-                if (arena == null) return "Invalid arena";
-
-                if (type.equals("currentPlayers")) {
-                    return String.valueOf(arena.getGameManager().playerManager.getPlayerCount());
+                if (arena == null) {
+                    return "Invalid arena";
                 }
 
-                if (type.equals("minPlayers")) {
-                    return String.valueOf(arena.getMinPlayers());
+                switch (type) {
+                    case "currentPlayers":
+                        return String.valueOf(arena.getGameManager().playerManager.getPlayerCount());
+                    case "minPlayers":
+                        return String.valueOf(arena.getMinPlayers());
+                    case "maxPlayers":
+                        return String.valueOf(arena.getMaxPlayers());
+                    case "survivors":
+                    case "spectators":
+                        if (!arena.getGameManager().isRunning()) {
+                            return String.valueOf(0);
+                        }
+                        int count = 0;
+                        for (Map.Entry<Player, PlayerType> entry : arena.getGameManager().playerManager.getPlayers().entrySet()) {
+                            if ((type.equals("survivors") && entry.getValue().equals(PlayerType.SURVIVOR)) ||
+                                    (type.equals("spectators") && entry.getValue().equals(PlayerType.SPECTATOR))) {
+                                count++;
+                            }
+                        }
+                        return String.valueOf(count);
+                    case "state":
+                        return String.valueOf(arena.getGameManager().state);
+                    default:
+                        return "Invalid type";
                 }
-
-                if (type.equals("maxPlayers")) {
-                    return String.valueOf(arena.getMaxPlayers());
-                }
-
-                if (type.equals("state")) {
-                    return String.valueOf(arena.getGameManager().state);
-                }
-                return "Invalid type";
             }
         }
+
         return null; // Placeholder is unknown by the Expansion
     }
 }
