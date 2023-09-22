@@ -100,9 +100,9 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
 
         if (params.startsWith("arena_")) {
             String[] parts = params.split("_");
-            if (parts.length == 2) {
-                String arenaName = parts[0];
-                String type = parts[1];
+            if (parts.length == 3) {
+                String arenaName = parts[1];
+                String type = parts[2];
 
                 Arena arena = plugin.getArenaManager().getArena(arenaName);
                 if (arena == null) {
@@ -117,13 +117,15 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
                     case "maxPlayers":
                         return String.valueOf(arena.getMaxPlayers());
                     case "survivors":
+                    case "taggers":
                     case "spectators":
                         if (!arena.getGameManager().isRunning()) {
                             return String.valueOf(0);
                         }
                         int count = 0;
                         for (Map.Entry<Player, PlayerType> entry : arena.getGameManager().playerManager.getPlayers().entrySet()) {
-                            if ((type.equals("survivors") && entry.getValue().equals(PlayerType.SURVIVOR)) ||
+                            if ((type.equals("survivors") && entry.getValue().equals(PlayerType.SURVIVOR))  ||
+                                    (type.equals("taggers") && entry.getValue().equals(PlayerType.TAGGER)) ||
                                     (type.equals("spectators") && entry.getValue().equals(PlayerType.SPECTATOR))) {
                                 count++;
                             }

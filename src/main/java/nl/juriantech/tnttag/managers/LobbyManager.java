@@ -27,8 +27,6 @@ public class LobbyManager {
     }
 
     public boolean enterLobby(Player player) {
-        System.out.println(globalLobbyLocation != null);
-        System.out.println(Tnttag.configfile.getString("globalLobby"));
         if (globalLobbyLocation == null) {
             ChatUtils.sendMessage(player, "player.global-lobby-not-set");
             return false;
