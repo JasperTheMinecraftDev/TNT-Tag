@@ -102,6 +102,7 @@ public class GameManager {
                             ParticleUtils.Firework(player.getLocation(), 0);
                             playerManager.broadcast(ChatUtils.getRaw("arena.player-win").replace("{player}", player.getName()));
                             playerManager.broadcast(ChatUtils.getRaw("arena.returning-to-lobby").replace("%seconds%", String.valueOf(Tnttag.configfile.getInt("delay.after-game"))));
+                            ChatUtils.sendTitle(player, "titles.win", 20L, 20L, 20L);
                             winners.add(player);
                         }
                     }

@@ -15,28 +15,28 @@ public class ChatUtils {
     }
 
     public static void sendMessage(final Player player, final String path) {
-        if (isEmptyMessage(Tnttag.customizationfile.getString(path))) return;
+        if (Tnttag.customizationfile.getString(path).isEmpty()) return;
         PlayerData playerData = new PlayerData(player.getUniqueId());
         String message = Tnttag.customizationfile.getString(path).replace("{player}", player.getName()).replace("{wins}", String.valueOf(playerData.getWins())).replace("{timestagged}", String.valueOf(playerData.getTimesTagged())).replace("{tags}", String.valueOf(playerData.getTags()));
         player.sendMessage(colorize(message));
     }
 
     public static void sendMessage(final Arena arena, final Player player, final String path) {
-        if (isEmptyMessage(Tnttag.customizationfile.getString(path))) return;
+        if (Tnttag.customizationfile.getString(path).isEmpty()) return;
 
         String message = Tnttag.customizationfile.getString(path).replace("{player}", player.getName()).replace("{arena}", arena.getName());
         player.sendMessage(colorize(message));
     }
     public static void sendTitle(final Player player, final String path, long fadeIn, long stay, long fadeOut) {
-        if (isEmptyMessage(Tnttag.customizationfile.getString(path))) return;
+        if (Tnttag.customizationfile.getString(path).isEmpty()) return;
 
         player.sendTitle(colorize(Tnttag.customizationfile.getString(path)), "", (int) fadeIn, (int) stay, (int) fadeOut);
     }
 
     public static void sendTitle(final Player player, final String path, long fadeIn, long stay, long fadeOut, int seconds) {
-        if (isEmptyMessage(Tnttag.customizationfile.getString(path))) return;
+        if (Tnttag.customizationfile.getString(path).isEmpty()) return;
 
-        player.sendTitle(colorize(Tnttag.customizationfile.getString(path)).replace("{seconds}", String.valueOf(seconds)), "", (int) fadeIn, (int) stay, (int) fadeOut);
+        player.sendTitle(colorize(Tnttag.customizationfile.getString(path + ".subtitle")).replace("{seconds}", String.valueOf(seconds)), colorize(Tnttag.customizationfile.getString(path + ".subtitle")), (int) fadeIn, (int) stay, (int) fadeOut);
     }
 
     public static void sendActionBarMessage(final Player player, final String message) {
@@ -47,10 +47,6 @@ public class ChatUtils {
         if (msg == null) return;
         String message = msg.replace("{player}", player.getName());
         player.sendMessage(colorize(message));
-    }
-
-    public static boolean isEmptyMessage(String message) {
-        return message.equals("");
     }
 
     public static String getRaw(String path) {

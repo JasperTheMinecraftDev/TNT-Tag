@@ -98,6 +98,7 @@ public class Round {
                 Bukkit.getPluginManager().callEvent(event);
                 player.getWorld().createExplosion(player.getLocation(), 0.5F, false, false);
                 gameManager.playerManager.broadcast(ChatUtils.getRaw("arena.player-blew-up").replace("{player}", player.getName()));
+                ChatUtils.sendTitle(player, "titles.lose", 20L, 20L, 20L);
                 player.getInventory().setHelmet(new ItemStack(Material.AIR, 1));
                 player.getInventory().setItem(0, new ItemStack(Material.AIR, 1));
 

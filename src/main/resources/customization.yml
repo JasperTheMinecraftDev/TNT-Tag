@@ -128,11 +128,27 @@ editor-gui:
   emptySlotMaterial: "GRAY_STAINED_GLASS_PANE"
 
 titles:
-  countdown: "&b{seconds}s"
-  round-start: "&6The round started!"
-  tagged: "&cYou are tagged!"
-  untagged: "&2RUN!!"
-  round-end: "&cThe round ended!"
+  countdown:
+    title: "&b{seconds}s"
+    subtitle: ""
+  round-start:
+    title: "&6The round started!"
+    subtitle: ""
+  tagged:
+    title: "&cYou are tagged!"
+    subtitle: "&7Try to tag others!"
+  untagged:
+    title: "&2RUN!!"
+    subtitle: "&7Escape and survive!"
+  round-end:
+    title: "&cThe round ended!"
+    subtitle: ""
+  win:
+    title: "&aYou Won!"
+    subtitle: "&7Congratulations!"
+  lose:
+    title: "&cYou Lost!"
+    subtitle: "&7Better luck next time!"
 
 state:
   IDLE: "&8Idle"

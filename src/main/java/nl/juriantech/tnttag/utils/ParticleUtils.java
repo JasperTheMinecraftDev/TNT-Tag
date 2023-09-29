@@ -8,6 +8,8 @@ import org.bukkit.entity.Firework;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.util.BlockIterator;
 
+import java.util.Objects;
+
 public class ParticleUtils {
 
     public static void Firework(Location loc, int power) {
@@ -19,7 +21,8 @@ public class ParticleUtils {
             if (blocktoadd.getBlock().getType() != Material.AIR) {
                 break;
             }
-            Firework firework = (Firework) world.spawnEntity(loc, EntityType.FIREWORK);
+
+            Firework firework = (Firework) Objects.requireNonNull(world).spawnEntity(loc, EntityType.FIREWORK);
             FireworkMeta fireworkMeta = firework.getFireworkMeta();
             fireworkMeta.setPower(power);
             firework.setFireworkMeta(fireworkMeta);
