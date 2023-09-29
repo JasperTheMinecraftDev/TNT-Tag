@@ -48,7 +48,15 @@ public class JoinSubCommand {
                 return;
             }
 
-            arena.getGameManager().playerManager.addPlayer(player);
+            if (!arena.getGameManager().isRunning()) {
+                if (arena.getGameManager().playerManager.getPlayers().size() < arena.getMaxPlayers()) {
+                    arena.getGameManager().playerManager.addPlayer(player);
+                } else {
+                    ChatUtils.sendMessage(player, "arena.full");
+                }
+            } else {
+                ChatUtils.sendMessage(player, "arena.active");
+            }
         }
     }
 }
