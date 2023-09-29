@@ -17,7 +17,8 @@ arena:
   new-round-starting: "&2An new round is starting in %seconds% seconds!"
   player-win: "&2The player {player} won the game!"
   last-player-leaved: "&3The last survivor/tagger leaved, stopping the game."
-  active: "&3This arena is currently started, please wait until it is ended."
+  active: "&3Sorry, this arena is currently started. Please wait until it is ended."
+  full: "&3Sorry, this arena is currently full. Please try joining another arena or wait for a spot to become available."
   returning-to-lobby: "&bReturning to the lobby in %seconds% seconds..."
 
 player:
