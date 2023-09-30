@@ -42,6 +42,7 @@ public class Tnttag extends JavaPlugin {
     private DumpManager dumpManager;
     private TabHook tabHook;
     private EntityDamageByEntityListener entityDamageByEntityListener;
+    private PlaceholderAPIExpansion placeholderAPIExpansion;
 
     @Override
     public void onEnable() {
@@ -66,7 +67,8 @@ public class Tnttag extends JavaPlugin {
         subcommands();
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             logger.info("[TNT-Tag] PlaceholderAPI detected, enabling the hook.");
-            new PlaceholderAPIExpansion(this).register();
+            placeholderAPIExpansion = new PlaceholderAPIExpansion(this);
+            placeholderAPIExpansion.register();
             logger.info("[TNT-Tag] PlaceholderAPI hooks enabled.");
         }
 
@@ -78,7 +80,7 @@ public class Tnttag extends JavaPlugin {
 
         if (Bukkit.getPluginManager().getPlugin("TAB") != null) {
             logger.info("[TNT-Tag] TAB detected, enabling the hook.");
-            this.tabHook = new TabHook();
+            this.tabHook = new TabHook(this);
             logger.info("[TNT-Tag] TAB hooks enabled.");
         }
 
@@ -268,6 +270,10 @@ public class Tnttag extends JavaPlugin {
 
     public TabHook getTabHook() {
         return tabHook;
+    }
+
+    public PlaceholderAPIExpansion getPlaceholderAPIExpansion() {
+        return placeholderAPIExpansion;
     }
 
     public EntityDamageByEntityListener getEntityDamageByEntityListener() {

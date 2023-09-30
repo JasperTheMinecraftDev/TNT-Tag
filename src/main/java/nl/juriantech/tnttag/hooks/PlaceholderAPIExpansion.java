@@ -1,5 +1,6 @@
 package nl.juriantech.tnttag.hooks;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import nl.juriantech.tnttag.Arena;
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.enums.PlayerType;
@@ -140,5 +141,9 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
         }
 
         return null; // Placeholder is unknown by the Expansion
+    }
+
+    public String parse(Player player, String str) {
+        return PlaceholderAPI.setPlaceholders(player, str);
     }
 }
