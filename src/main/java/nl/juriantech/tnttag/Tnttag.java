@@ -173,6 +173,7 @@ public class Tnttag extends JavaPlugin {
         handler.register(new StartSubCommand(this));
         handler.register(new StatsSubCommand(this));
         handler.register(new TopSubCommand(this));
+        handler.register(new RandomJoinSubCommand(this));
     }
 
     private void listeners() {
