@@ -40,7 +40,7 @@ public class ArenaSelector {
                         for (Arena arena : arenaObjects) {
                             String displayName = ChatUtils.colorize(ChatUtils.getRaw("join-gui.arenaTitle").replace("{name}", arena.getName()).replace("{state}", arena.getGameManager().state.toString()));
                             contents.set(slot, IntelligentItem.of(new ItemBuilder(XMaterial.valueOf(ChatUtils.getRaw("join-gui.arenaMaterial")).parseMaterial()).displayName(displayName).lore(ChatUtils.getRaw("join-gui.arenaLore")).hideAttributes().build(), event -> {
-                                player.performCommand("tnttag join " + arena.getName());
+                                plugin.getJoinSubCommand().onJoin(player, arena.getName());
                                 player.closeInventory();
                             }));
                             slot++;

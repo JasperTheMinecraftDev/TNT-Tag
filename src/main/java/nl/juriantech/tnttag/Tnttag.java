@@ -43,6 +43,7 @@ public class Tnttag extends JavaPlugin {
     private TabHook tabHook;
     private EntityDamageByEntityListener entityDamageByEntityListener;
     private PlaceholderAPIExpansion placeholderAPIExpansion;
+    private JoinSubCommand joinSubCommand;
 
     @Override
     public void onEnable() {
@@ -167,7 +168,8 @@ public class Tnttag extends JavaPlugin {
         handler.register(new HelpSubCommand());
         handler.register(new InfoSubCommand(this));
         handler.register(new JoinGUISubCommand(this));
-        handler.register(new JoinSubCommand(this));
+        joinSubCommand = new JoinSubCommand(this);
+        handler.register(joinSubCommand);
         handler.register(new LeaveSubCommand(this));
         handler.register(new ListSubCommand(this));
         handler.register(new ReloadSubCommand(this));
@@ -278,5 +280,9 @@ public class Tnttag extends JavaPlugin {
 
     public EntityDamageByEntityListener getEntityDamageByEntityListener() {
         return entityDamageByEntityListener;
+    }
+
+    public JoinSubCommand getJoinSubCommand() {
+        return joinSubCommand;
     }
 }
