@@ -232,3 +232,4 @@ top-placeholder-formatting:
   wins: "&6★ &f%player% &8- &b%amount% wins"
   timestagged: "&6★ &f%player% &8- &b%amount% times tagged"
   tags: "&6★ &f%player% &8- &b%amount% tags"
+  winstreak: "&6&6★ &f%player% &8- winstreak from &b%amount% wins!"

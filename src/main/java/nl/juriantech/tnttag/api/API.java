@@ -81,8 +81,8 @@ public class API {
         TreeMap<UUID, Integer> timesTaggedData = new TreeMap<>();
         for (String route : Tnttag.playerdatafile.getRoutesAsStrings(false)) {
             if (Tnttag.playerdatafile.getInt(route + ".timestagged") != null) {
-                int kills = Tnttag.playerdatafile.getInt(route + ".timestagged");
-                timesTaggedData.put(UUID.fromString(route), kills);
+                int timesTagged = Tnttag.playerdatafile.getInt(route + ".timestagged");
+                timesTaggedData.put(UUID.fromString(route), timesTagged);
             }
         }
         return timesTaggedData;
@@ -92,10 +92,21 @@ public class API {
         TreeMap<UUID, Integer> tagsData = new TreeMap<>();
         for (String route : Tnttag.playerdatafile.getRoutesAsStrings(false)) {
             if (Tnttag.playerdatafile.getInt(route + ".tags") != null) {
-                int deaths = Tnttag.playerdatafile.getInt(route + ".tags");
-                tagsData.put(UUID.fromString(route), deaths);
+                int tags = Tnttag.playerdatafile.getInt(route + ".tags");
+                tagsData.put(UUID.fromString(route), tags);
             }
         }
         return tagsData;
+    }
+
+    public TreeMap<UUID, Integer> getWinstreakData() {
+        TreeMap<UUID, Integer> winstreakData = new TreeMap<>();
+        for (String route : Tnttag.playerdatafile.getRoutesAsStrings(false)) {
+            if (Tnttag.playerdatafile.getInt(route + ".winstreak") != null) {
+                int winstreak = Tnttag.playerdatafile.getInt(route + ".winstreak");
+                winstreakData.put(UUID.fromString(route), winstreak);
+            }
+        }
+        return winstreakData;
     }
 }

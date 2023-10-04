@@ -82,6 +82,8 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
                     data = Tnttag.getAPI().getTimesTaggedData();
                 } else if (params.startsWith("top_tags_")) {
                     data = Tnttag.getAPI().getTagsData();
+                } else if (params.startsWith("top_winstreak_")) {
+                    data = Tnttag.getAPI().getWinstreakData();
                 }
 
                 if (data != null) {
@@ -92,7 +94,9 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
                     if (position >= 1 && position <= sortedEntries.size()) {
                         Map.Entry<UUID, Integer> entry = sortedEntries.get(position - 1);
                         String placeholderType = params.startsWith("top_wins_") ? "wins" :
-                                params.startsWith("top_timestagged_") ? "timestagged" : "tags";
+                                params.startsWith("top_timestagged_") ? "timestagged" :
+                                        params.startsWith("top_winstreak_") ? "winstreak" : "tags";
+
                         return ChatUtils.colorize(Tnttag.customizationfile.getString("top-placeholder-formatting." + placeholderType)
                                 .replace("%player%", Objects.requireNonNull(Bukkit.getOfflinePlayer(entry.getKey()).getName()))
                                 .replace("%amount%", String.valueOf(entry.getValue())));
