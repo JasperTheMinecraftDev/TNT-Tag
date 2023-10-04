@@ -98,6 +98,7 @@ public class GameManager {
                             PlayerData playerData = new PlayerData(player.getUniqueId());
                             int oldWins = playerData.getWins();
                             playerData.setWins(oldWins + 1);
+                            playerData.setWinstreak(playerData.getWinstreak() + 1);
 
                             ParticleUtils.Firework(player.getLocation(), 0);
                             playerManager.broadcast(ChatUtils.getRaw("arena.player-win").replace("{player}", player.getName()));

@@ -66,6 +66,10 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
             return String.valueOf(playerData.getTags());
         }
 
+        if (params.equalsIgnoreCase("winstreak")) {
+            return String.valueOf(playerData.getWinstreak());
+        }
+
         if (params.startsWith("top_wins_") || params.startsWith("top_timestagged_") || params.startsWith("top_tags_")) {
             String[] parts = params.split("_");
             if (parts.length == 2) {

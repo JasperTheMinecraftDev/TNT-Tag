@@ -49,6 +49,18 @@ public class PlayerData {
         return Tnttag.playerdatafile.getInt(uuid + ".tags");
     }
 
+    public void setWinstreak(int winstreak) {
+        Tnttag.playerdatafile.set(uuid + ".winstreak", winstreak);
+        savePlayerDataFile();
+    }
+
+    public Integer getWinstreak() {
+        if (Tnttag.playerdatafile.getInt(uuid + ".winstreak") == null) {
+            return 0;
+        }
+        return Tnttag.playerdatafile.getInt(uuid + ".winstreak");
+    }
+
     private void savePlayerDataFile() {
         try {
             Tnttag.playerdatafile.save();

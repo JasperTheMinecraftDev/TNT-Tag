@@ -84,6 +84,13 @@ public class PlayerManager {
         PlayerLeaveArenaEvent event = new PlayerLeaveArenaEvent(player, gameManager.arena.getName());
         Bukkit.getPluginManager().callEvent(event);
 
+        if (players.get(player) != PlayerType.SURVIVOR) {
+            // The player lost his winstreak, we process that here to ensure that they can't bypass it by leaving while the game still lasts.
+            // Incrementing the winstreak is done in the GameManager.
+            PlayerData playerData = new PlayerData(player.getUniqueId());
+            playerData.setWinstreak(0);
+        }
+
         setPlayerType(player, PlayerType.WAITING);
 
         player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
