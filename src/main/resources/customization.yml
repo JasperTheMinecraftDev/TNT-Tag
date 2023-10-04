@@ -75,7 +75,7 @@ help-menu:
   - "&a/tnttag editor <arena> - Opens the arena editor."
   - "&a/tnttag dump log - Dump your latest server log to share it with the developer."
   - "&a/tnttag dump all - Create a dump from your server so we can quickly solve your issues, this is handled safely and securely. Nobody except our staff team can see them."
-  - "&a/tnttag start (arena) [forced] - Skip the countdown or force the start of an arena."
+  - "&a/tnttag start (arena) [forced] - Start the countdown or force the start of an arena."
   - "&b=========TNT-Tag========="
 
 setup:
