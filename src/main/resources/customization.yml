@@ -62,10 +62,11 @@ info-command:
 help-menu:
   - "&b=========TNT-Tag========="
   - "&a/tnttag help - Shows you this menu!"
-  - "&a/tnttag join <arena> - Join the specified arena!"
+  - "&a/tnttag join (arena) - Join the specified arena!"
+  - "&a/tnttag autojoin (arena) - Randomly join an arena."
   - "&a/tnttag joingui - Shows you a nice GUI to join arenas!"
   - "&a/tnttag leave - Leave the arena that you're in."
-  - "&a/tnttag create <args> - Create an arena, you can find more information on the spigot page."
+  - "&a/tnttag create - Create an arena, you can find more information on the spigot page."
   - "&a/tnttag delete <arena> - Delete the specified arena."
   - "&a/tnttag list - List all the available TNT-Tag arena's!"
   - "&a/tnttag reload - Reload the plugin."
@@ -74,6 +75,7 @@ help-menu:
   - "&a/tnttag editor <arena> - Opens the arena editor."
   - "&a/tnttag dump log - Dump your latest server log to share it with the developer."
   - "&a/tnttag dump all - Create a dump from your server so we can quickly solve your issues, this is handled safely and securely. Nobody except our staff team can see them."
+  - "&a/tnttag start (arena) [forced] - Skip the countdown or force the start of an arena."
   - "&b=========TNT-Tag========="
 
 setup:
