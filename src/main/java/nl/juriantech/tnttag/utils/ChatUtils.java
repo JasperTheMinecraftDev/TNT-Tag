@@ -36,7 +36,7 @@ public class ChatUtils {
     public static void sendTitle(final Player player, final String path, long fadeIn, long stay, long fadeOut, int seconds) {
         if (Tnttag.customizationfile.getString(path).isEmpty()) return;
 
-        player.sendTitle(colorize(Tnttag.customizationfile.getString(path + ".subtitle")).replace("{seconds}", String.valueOf(seconds)), colorize(Tnttag.customizationfile.getString(path + ".subtitle")), (int) fadeIn, (int) stay, (int) fadeOut);
+        player.sendTitle(colorize(Tnttag.customizationfile.getString(path + ".title")).replace("{seconds}", String.valueOf(seconds)), colorize(Tnttag.customizationfile.getString(path + ".subtitle")), (int) fadeIn, (int) stay, (int) fadeOut);
     }
 
     public static void sendActionBarMessage(final Player player, final String message) {
