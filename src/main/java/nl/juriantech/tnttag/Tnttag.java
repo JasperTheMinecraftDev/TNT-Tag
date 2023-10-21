@@ -163,6 +163,17 @@ public class Tnttag extends JavaPlugin {
 
     private void subcommands() {
         BukkitCommandHandler handler = BukkitCommandHandler.create(this);
+
+        // Arena name resolver
+        handler.registerValueResolver(Arena.class, context -> {
+            String input = context.popForParameter();
+            Arena arena = arenaManager.getArena(input);
+            if (arena == null) {
+                throw new CommandErrorException(ChatUtils.colorize(ChatUtils.getRaw("commands.invalid-arena")));
+            }
+            return arena;
+        });
+
         handler.register(new CreateSubCommand(this));
         handler.register(new DeleteSubCommand(this));
         handler.register(new DumpSubCommand(this));
@@ -180,17 +191,6 @@ public class Tnttag extends JavaPlugin {
         handler.register(new StatsSubCommand(this));
         handler.register(new TopSubCommand(this));
         handler.register(new RandomJoinSubCommand(this));
-
-        // Arena name resolver
-        handler.registerValueResolver(Arena.class, context -> {
-            String input = context.popForParameter();
-            Arena arena = arenaManager.getArena(input);
-            if (arena == null) {
-                ChatUtils.sendMessage(context.actor(), "commands.invalid-arena");
-                throw new CommandErrorException("Invalid arena name");
-            }
-            return arena;
-        });
     }
 
     private void listeners() {
