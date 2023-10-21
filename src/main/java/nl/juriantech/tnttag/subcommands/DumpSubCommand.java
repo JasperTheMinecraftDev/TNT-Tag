@@ -12,7 +12,7 @@ import revxrsal.commands.bukkit.annotation.CommandPermission;
 import java.util.HashMap;
 import java.util.Map;
 
-@Command("tnttag|tt")
+@Command({"tnttag", "tt"})
 public class DumpSubCommand {
 
     private final Tnttag plugin;
