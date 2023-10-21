@@ -2,7 +2,6 @@ package nl.juriantech.tnttag.subcommands;
 
 import nl.juriantech.tnttag.Arena;
 import nl.juriantech.tnttag.Tnttag;
-import nl.juriantech.tnttag.handlers.SetupCommandHandler;
 import nl.juriantech.tnttag.managers.ArenaManager;
 import nl.juriantech.tnttag.utils.ChatUtils;
 import org.bukkit.entity.Player;
@@ -25,13 +24,8 @@ public class DeleteSubCommand {
 
     @Subcommand("delete")
     @CommandPermission("tnttag.delete")
-    public void onDelete(Player player, String arenaName) throws IOException {
-        Arena arena = arenaManager.getArena(arenaName);
-        if (arena != null) {
-            arenaManager.deleteArena(arenaName);
-            ChatUtils.sendMessage(arena, player, "commands.arena-deleted");
-        } else {
-            ChatUtils.sendMessage(player, "commands.invalid-arena");
-        }
+    public void onDelete(Player player, Arena arena) throws IOException {
+        arenaManager.deleteArena(arena.getName());
+        ChatUtils.sendMessage(arena, player, "commands.arena-deleted");
     }
 }

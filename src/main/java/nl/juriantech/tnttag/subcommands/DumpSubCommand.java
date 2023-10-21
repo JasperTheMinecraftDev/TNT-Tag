@@ -2,7 +2,6 @@ package nl.juriantech.tnttag.subcommands;
 
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.utils.ChatUtils;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import revxrsal.commands.annotation.Command;

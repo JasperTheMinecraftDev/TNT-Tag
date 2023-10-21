@@ -14,6 +14,7 @@ import nl.juriantech.tnttag.managers.*;
 import io.github.rysefoxx.inventory.plugin.pagination.InventoryManager;
 import nl.juriantech.tnttag.runnables.SignUpdateRunnable;
 import nl.juriantech.tnttag.subcommands.*;
+import nl.juriantech.tnttag.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -178,6 +179,16 @@ public class Tnttag extends JavaPlugin {
         handler.register(new StatsSubCommand(this));
         handler.register(new TopSubCommand(this));
         handler.register(new RandomJoinSubCommand(this));
+
+        // Arena name resolver
+        handler.registerValueResolver(Arena.class, context -> {
+            String input = context.popForParameter();
+            Arena arena = arenaManager.getArena(input);
+            if (arena == null) {
+                ChatUtils.sendMessage(context.actor(), "commands.invalid-arena");
+            }
+            return arena;
+        });
     }
 
     private void listeners() {
