@@ -21,6 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitScheduler;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
+import revxrsal.commands.exception.CommandErrorException;
 
 import java.io.File;
 import java.io.IOException;
@@ -186,6 +187,7 @@ public class Tnttag extends JavaPlugin {
             Arena arena = arenaManager.getArena(input);
             if (arena == null) {
                 ChatUtils.sendMessage(context.actor(), "commands.invalid-arena");
+                throw new CommandErrorException("Invalid arena name");
             }
             return arena;
         });
