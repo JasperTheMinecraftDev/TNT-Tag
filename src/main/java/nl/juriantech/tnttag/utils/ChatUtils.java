@@ -30,7 +30,7 @@ public class ChatUtils {
     public static void sendTitle(final Player player, final String path, long fadeIn, long stay, long fadeOut) {
         if (Tnttag.customizationfile.getString(path).isEmpty()) return;
 
-        player.sendTitle(colorize(Tnttag.customizationfile.getString(path)), "", (int) fadeIn, (int) stay, (int) fadeOut);
+        player.sendTitle(colorize(Tnttag.customizationfile.getString(path + ".title")), colorize(Tnttag.customizationfile.getString(path + ".subtitle")), (int) fadeIn, (int) stay, (int) fadeOut);
     }
 
     public static void sendTitle(final Player player, final String path, long fadeIn, long stay, long fadeOut, int seconds) {
