@@ -38,8 +38,8 @@ public class DumpSubCommand {
             removeEntry(player);
         } else {
             addEntry(player);
-            ChatUtils.sendMessage(player, "&cWarning: This command should only be used if requested by the developer.");
-            ChatUtils.sendMessage(player, "&bExecute this command again within 10 seconds to proceed.");
+            ChatUtils.sendMessage(player, "commands.dump-warning");
+            ChatUtils.sendMessage(player, "commands.dump-confirmation");
         }
     }
 
@@ -51,8 +51,8 @@ public class DumpSubCommand {
             removeEntry(player);
         } else {
             addEntry(player);
-            ChatUtils.sendMessage(player, "&cWarning: This command should only be used if requested by the developer.");
-            ChatUtils.sendMessage(player, "&bExecute this command again within 10 seconds to proceed.");
+            ChatUtils.sendMessage(player, "commands.dump-warning");
+            ChatUtils.sendMessage(player, "commands.dump-confirmation");
         }
     }
 
