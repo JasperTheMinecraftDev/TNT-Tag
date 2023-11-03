@@ -1,5 +1,5 @@
 name: Tnttag
-version: 9.0
+version: 9.1
 main: nl.juriantech.tnttag.Tnttag
 softdepend: [PlaceholderAPI, PartyAndFriends, TAB]
 api-version: 1.13
