@@ -49,6 +49,8 @@ commands:
   arena-started: "&2The arena is started successfully."
   global-lobby-set: "&2The global lobby is set to your location."
   arena-is-running: "&cYou can't edit this arena while is running, because it will cause errors."
+  dump-warning: "&cWarning: This command should only be used if requested by the developer."
+  dump-confirmation: "&bExecute this command again within 10 seconds to proceed."
 
 info-command:
   - "&b=========TNT-Tag========="

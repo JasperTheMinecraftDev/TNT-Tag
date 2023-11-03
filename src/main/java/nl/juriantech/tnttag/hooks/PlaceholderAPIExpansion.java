@@ -72,8 +72,8 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
 
         if (params.startsWith("top_wins_") || params.startsWith("top_timestagged_") || params.startsWith("top_tags_")) {
             String[] parts = params.split("_");
-            if (parts.length == 2) {
-                int position = Integer.parseInt(parts[1]);
+            if (parts.length == 3) {
+                int position = Integer.parseInt(parts[2]);
                 TreeMap<UUID, Integer> data = null;
 
                 if (params.startsWith("top_wins_")) {
