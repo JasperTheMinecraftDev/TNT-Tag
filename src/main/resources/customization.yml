@@ -211,7 +211,7 @@ top-sign:
     WINS: "&aWins"
     TIMESTAGGED: "&cTimes tagged"
     TAGS: "&bTags got"
-  no-data: "NOBODY" #Value of {playere} if there's no data for the stat type yet, don't use color codes here.
+  no-data: "NOBODY" #Value of {player} if there's no data for the stat type yet, don't use color codes here.
 
 #You can find sounds at: https://helpch.at/docs/1.13/index.html?org/bukkit/Sound.html
 #The sound names are case-insensitive.
