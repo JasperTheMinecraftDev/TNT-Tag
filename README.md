@@ -22,4 +22,4 @@ Please read it carefully before using any part of the code or distributing it.
 
 [Spigot page](https://www.spigotmc.org/resources/tnt-tag.105832/)<br>
 [Documentation repository](https://github.com/JasperTheMinecraftDev/TTDocs)<br>
-[Development builds](https://teamcity.juriantech.nl)
+[Development builds](https://teamcity.juriantech.nl/guestAuth/buildConfiguration/TntTag_Build/3?mode=builds&hideProblemsFromDependencies=false&hideTestsFromDependencies=false&buildTab=artifacts)
