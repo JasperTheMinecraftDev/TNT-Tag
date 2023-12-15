@@ -17,16 +17,19 @@ import java.util.stream.Collectors;
 
 public class TopSign implements SignInterface {
 
-    private final Tnttag plugin;
     private final Location loc;
     private final int position;
     private final StatType statType;
+    private final List<String> signLines;
+    private final String formattedStatType;
 
-    public TopSign(Tnttag plugin, Location loc, int position, StatType statType) {
-        this.plugin = plugin;
+    public TopSign(Location loc, int position, StatType statType) {
         this.loc = loc;
         this.position = position;
         this.statType = statType;
+
+        this.signLines = Tnttag.customizationfile.getStringList("lines");
+        this.formattedStatType = Tnttag.customizationfile.getString("types." + statType.toString());
     }
 
     @Override
@@ -43,7 +46,7 @@ public class TopSign implements SignInterface {
 
         Sign sign = (Sign) block.getState();
         API api = Tnttag.getAPI();
-        TreeMap<UUID, Integer> data = null;
+        TreeMap<UUID, Integer> data;
 
         switch (statType) {
             case WINS:
@@ -58,7 +61,6 @@ public class TopSign implements SignInterface {
             default:
                 return;
         }
-
 
         List<Map.Entry<UUID, Integer>> topTenPlayers = data.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
@@ -76,13 +78,13 @@ public class TopSign implements SignInterface {
         }
 
         for (int i = 0; i <= 3; i++) {
-            sign.setLine(i, ChatUtils.colorize(
-                    Tnttag.customizationfile.getStringList("top-sign.lines").get(i)
-                            .replace("{top_type}", Tnttag.customizationfile.getString("top-sign.types." + statType.toString()))
-                            .replace("{top_position}", String.valueOf(position))
-                            .replace("{player}", playerName)
-                    )
-            );
+            String line = signLines.get(i);
+
+            line = line.replace("{top_type}", formattedStatType)
+                    .replace("{top_position}", String.valueOf(position))
+                    .replace("{player}", playerName);
+
+            sign.setLine(i, ChatUtils.colorize(line));
         }
 
         sign.update(true);
@@ -90,18 +92,18 @@ public class TopSign implements SignInterface {
 
     @Override
     public String toString() {
-        return SimpleLocation.fromLocation(loc).toString() + ";" + position + ";" + statType.toString();
+        return SimpleLocation.fromLocation(loc) + ";" + position + ";" + statType.toString();
     }
 
-    public static TopSign fromString(Tnttag plugin, String str) {
+    public static TopSign fromString(String str) {
         String[] parts = str.split(";");
 
         if (parts.length == 3) {
-            Location location = SimpleLocation.fromString(parts[0]).toLocation();
+            Location location = Objects.requireNonNull(SimpleLocation.fromString(parts[0])).toLocation();
             int position = Integer.parseInt(parts[1]);
             StatType statType = StatType.valueOf(parts[2]);
 
-            return new TopSign(plugin, location, position, statType);
+            return new TopSign(location, position, statType);
         }
 
         return null;
