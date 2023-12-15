@@ -118,37 +118,55 @@ public class Tnttag extends JavaPlugin {
         this.inventoryManager.invoke();
     }
 
+    private void loadYamlDocuments(String[] fileNames) {
+        for (String fileName : fileNames) {
+            try {
+                File file = new File(getDataFolder(), fileName + ".yml");
+                YamlDocument yamlDocument = YamlDocument.create(file, getResource(fileName + ".yml"));
+
+                switch (fileName) {
+                    case "arenas":
+                        arenasfile = yamlDocument;
+                        break;
+                    case "customization":
+                        customizationfile = yamlDocument;
+                        break;
+                    case "config":
+                        configfile = yamlDocument;
+                        break;
+                    case "playerdata":
+                        playerdatafile = yamlDocument;
+                        break;
+                    case "signsdata":
+                        signsdatafile = yamlDocument;
+                        break;
+                    case "items":
+                        itemsfile = yamlDocument;
+                        break;
+                    default:
+                        break;
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private YamlDocument loadFile(String fileName) {
+        try {
+            return YamlDocument.create(new File(getDataFolder(), fileName), getResource(fileName));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private void files() {
-        try {
-            arenasfile = YamlDocument.create(new File(getDataFolder(), "arenas.yml"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            customizationfile = YamlDocument.create(new File(getDataFolder(), "customization.yml"), getResource("customization.yml"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            configfile = YamlDocument.create(new File(getDataFolder(), "config.yml"), getResource("config.yml"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            playerdatafile = YamlDocument.create(new File(getDataFolder(), "playerdata.yml"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            signsdatafile = YamlDocument.create(new File(getDataFolder(), "signs.yml"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            itemsfile = YamlDocument.create(new File(getDataFolder(), "items.yml"), getResource("items.yml"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        arenasfile = loadFile("arenas.yml");
+        customizationfile = loadFile("customization.yml");
+        configfile = loadFile("config.yml");
+        playerdatafile = loadFile("playerdata.yml");
+        signsdatafile = loadFile("signs.yml");
+        itemsfile = loadFile("items.yml");
+
         // We use a runnable, so it loads after the worlds.
         new BukkitRunnable() {
             @Override
