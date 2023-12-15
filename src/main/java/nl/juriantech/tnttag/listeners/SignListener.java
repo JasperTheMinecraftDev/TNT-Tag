@@ -107,7 +107,7 @@ public class SignListener implements Listener {
                     return;
                 }
 
-                signManager.addTopSign(new TopSign(plugin, event.getBlock().getLocation(), Integer.parseInt(lines[3]), StatType.valueOf(lines[2].toUpperCase())));
+                signManager.addTopSign(new TopSign(event.getBlock().getLocation(), Integer.parseInt(lines[3]), StatType.valueOf(lines[2].toUpperCase())));
         }
     }
 }

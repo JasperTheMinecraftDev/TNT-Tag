@@ -193,7 +193,7 @@ public class SignManager {
         }
 
         for (String str : signsDataFile.getStringList("topSigns")) {
-            topSigns.add(TopSign.fromString(plugin, str));
+            topSigns.add(TopSign.fromString(str));
         }
     }
 }
