@@ -8,16 +8,22 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+import java.util.Objects;
+
 public class JoinSign implements SignInterface {
 
     private final Tnttag plugin;
     private final String arena;
     private final Location loc;
+    private final List<String> signLines;
 
     public JoinSign(Tnttag plugin, String arena, Location loc) {
         this.plugin = plugin;
         this.arena = arena;
         this.loc = loc;
+
+        this.signLines = Tnttag.customizationfile.getStringList("join-sign.lines");
     }
 
     @Override
@@ -43,7 +49,7 @@ public class JoinSign implements SignInterface {
 
         for (int i = 0; i <= 3; i++) {
             sign.setLine(i, ChatUtils.colorize(
-                    Tnttag.customizationfile.getStringList("join-sign.lines").get(i)
+                    signLines.get(i)
                             .replace("{arena}", this.arena)
                             .replace("{state}", arena.getGameManager().getCustomizedState())
                             .replace("{current_players}", String.valueOf(currentPlayers))
@@ -57,7 +63,7 @@ public class JoinSign implements SignInterface {
 
     @Override
     public String toString() {
-        return arena + ";" + SimpleLocation.fromLocation(loc).toString();
+        return arena + ";" + SimpleLocation.fromLocation(loc);
     }
 
     public static JoinSign fromString(Tnttag plugin, String str) {
@@ -65,7 +71,7 @@ public class JoinSign implements SignInterface {
 
         if (parts.length == 2) {
             String arena = parts[0];
-            Location location = SimpleLocation.fromString(parts[1]).toLocation();
+            Location location = Objects.requireNonNull(SimpleLocation.fromString(parts[1])).toLocation();
             return new JoinSign(plugin, arena, location);
         }
 

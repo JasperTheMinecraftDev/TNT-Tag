@@ -7,12 +7,17 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+import java.util.Objects;
+
 public class LeaveSign implements SignInterface {
 
     private final Location loc;
+    private final List<String> signLines;
 
-    public LeaveSign(Tnttag plugin, Location loc) {
+    public LeaveSign(Location loc) {
         this.loc = loc;
+        this.signLines = Tnttag.customizationfile.getStringList("leave-sign.lines");
     }
 
     @Override
@@ -30,7 +35,7 @@ public class LeaveSign implements SignInterface {
         org.bukkit.block.Sign sign = (org.bukkit.block.Sign) block.getState();
 
         for (int i = 0; i <= 3; i++) {
-            sign.setLine(i, ChatUtils.colorize(Tnttag.customizationfile.getStringList("leave-sign.lines").get(i)));
+            sign.setLine(i, ChatUtils.colorize(signLines.get(i)));
         }
 
         sign.update(true);
@@ -41,9 +46,9 @@ public class LeaveSign implements SignInterface {
         return SimpleLocation.fromLocation(loc).toString();
     }
 
-    public static LeaveSign fromString(Tnttag plugin, String str) {
-        Location location = SimpleLocation.fromString(str).toLocation();
-        return new LeaveSign(plugin, location);
+    public static LeaveSign fromString(String str) {
+        Location location = Objects.requireNonNull(SimpleLocation.fromString(str)).toLocation();
+        return new LeaveSign(location);
     }
 
     @Override

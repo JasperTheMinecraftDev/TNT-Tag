@@ -28,8 +28,8 @@ public class TopSign implements SignInterface {
         this.position = position;
         this.statType = statType;
 
-        this.signLines = Tnttag.customizationfile.getStringList("lines");
-        this.formattedStatType = Tnttag.customizationfile.getString("types." + statType.toString());
+        this.signLines = Tnttag.customizationfile.getStringList("top-sign.lines");
+        this.formattedStatType = Tnttag.customizationfile.getString("top-sign.types." + statType.toString());
     }
 
     @Override
@@ -78,13 +78,10 @@ public class TopSign implements SignInterface {
         }
 
         for (int i = 0; i <= 3; i++) {
-            String line = signLines.get(i);
-
-            line = line.replace("{top_type}", formattedStatType)
+            sign.setLine(i, ChatUtils.colorize(signLines.get(i)
+                    .replace("{top_type}", formattedStatType)
                     .replace("{top_position}", String.valueOf(position))
-                    .replace("{player}", playerName);
-
-            sign.setLine(i, ChatUtils.colorize(line));
+                    .replace("{player}", playerName)));
         }
 
         sign.update(true);

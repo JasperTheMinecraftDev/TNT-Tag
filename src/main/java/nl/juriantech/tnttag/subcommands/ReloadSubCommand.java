@@ -1,8 +1,6 @@
 package nl.juriantech.tnttag.subcommands;
 
-import nl.juriantech.tnttag.Arena;
 import nl.juriantech.tnttag.Tnttag;
-import nl.juriantech.tnttag.handlers.SetupCommandHandler;
 import nl.juriantech.tnttag.managers.ArenaManager;
 import nl.juriantech.tnttag.utils.ChatUtils;
 import org.bukkit.entity.Player;

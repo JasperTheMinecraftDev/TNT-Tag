@@ -94,7 +94,7 @@ public class SignListener implements Listener {
                 signManager.addJoinSign(new JoinSign(plugin, lines[2], event.getBlock().getLocation()));
                 break;
             case LEAVE:
-                signManager.addLeaveSign(new LeaveSign(plugin, event.getBlock().getLocation()));
+                signManager.addLeaveSign(new LeaveSign(event.getBlock().getLocation()));
                 break;
             case TOP:
                 if (Arrays.stream(StatType.values()).filter(statType -> statType.toString().equals(lines[2].toUpperCase()))

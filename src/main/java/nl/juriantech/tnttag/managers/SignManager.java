@@ -189,7 +189,7 @@ public class SignManager {
 
 
         for (String str : signsDataFile.getStringList("leaveSigns")) {
-            leaveSigns.add(LeaveSign.fromString(plugin, str));
+            leaveSigns.add(LeaveSign.fromString(str));
         }
 
         for (String str : signsDataFile.getStringList("topSigns")) {
