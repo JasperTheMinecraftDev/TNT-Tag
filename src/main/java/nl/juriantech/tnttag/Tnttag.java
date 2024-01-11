@@ -118,40 +118,6 @@ public class Tnttag extends JavaPlugin {
         this.inventoryManager.invoke();
     }
 
-    private void loadYamlDocuments(String[] fileNames) {
-        for (String fileName : fileNames) {
-            try {
-                File file = new File(getDataFolder(), fileName + ".yml");
-                YamlDocument yamlDocument = YamlDocument.create(file, getResource(fileName + ".yml"));
-
-                switch (fileName) {
-                    case "arenas":
-                        arenasfile = yamlDocument;
-                        break;
-                    case "customization":
-                        customizationfile = yamlDocument;
-                        break;
-                    case "config":
-                        configfile = yamlDocument;
-                        break;
-                    case "playerdata":
-                        playerdatafile = yamlDocument;
-                        break;
-                    case "signsdata":
-                        signsdatafile = yamlDocument;
-                        break;
-                    case "items":
-                        itemsfile = yamlDocument;
-                        break;
-                    default:
-                        break;
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
     private YamlDocument loadFile(String fileName) {
         try {
             return YamlDocument.create(new File(getDataFolder(), fileName), getResource(fileName));
@@ -159,6 +125,7 @@ public class Tnttag extends JavaPlugin {
             throw new RuntimeException(e);
         }
     }
+
     private void files() {
         arenasfile = loadFile("arenas.yml");
         customizationfile = loadFile("customization.yml");
