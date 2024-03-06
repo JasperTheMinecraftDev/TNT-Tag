@@ -28,6 +28,7 @@ public class JoinSign implements SignInterface {
 
     @Override
     public void onClick(Player player) {
+        player.getInventory().setHeldItemSlot(0);
         player.performCommand("tnttag join " + arena);
     }
 
