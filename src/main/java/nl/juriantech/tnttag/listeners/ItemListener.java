@@ -47,7 +47,7 @@ public class ItemListener implements Listener {
 
         if (isCustomItem(itemInHand)) {
             String command = getCommandForCustomItem(itemInHand);
-            if (command != null && !command.isEmpty()) {
+            if (command != null && !command.isEmpty() && !command.equals("NONE")) {
                 player.performCommand(command);
                 event.setCancelled(true);
             }
