@@ -30,6 +30,7 @@ public class TabHook {
     }
 
     public void setPlayerPrefix(UUID playerUUID, String prefix) {
+        if (prefix == null) return;
         if (plugin.getPlaceholderAPIExpansion() != null) prefix = plugin.getPlaceholderAPIExpansion().parse(Bukkit.getPlayer(playerUUID), prefix);
 
         if (tabAPI.getNameTagManager() != null) {
