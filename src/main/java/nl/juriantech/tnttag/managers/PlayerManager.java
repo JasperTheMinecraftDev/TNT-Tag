@@ -121,6 +121,13 @@ public class PlayerManager {
             }
             gameManager.stop();
         }
+
+        if (players.entrySet().stream().noneMatch(p -> p.getValue() == PlayerType.TAGGER)) {
+            if (message) {
+                broadcast(ChatUtils.getRaw("arena.last-player-leaved").replace("{player}", player.getName()));
+            }
+            gameManager.stop();
+        }
     }
 
     public boolean isIn(Player player) {
