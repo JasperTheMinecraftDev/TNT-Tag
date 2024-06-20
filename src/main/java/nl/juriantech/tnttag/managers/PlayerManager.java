@@ -115,7 +115,7 @@ public class PlayerManager {
         }
 
         if (getPlayerCount() == 0) gameManager.stop();
-        if (players.size() == 1 && gameManager.state == GameState.INGAME) {
+        if (getPlayerCount() == 1 && gameManager.state == GameState.INGAME) {
             if (message) {
                 broadcast(ChatUtils.getRaw("arena.last-player-leaved").replace("{player}", player.getName()));
             }
