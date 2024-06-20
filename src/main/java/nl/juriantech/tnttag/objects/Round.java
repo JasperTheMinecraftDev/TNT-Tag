@@ -56,7 +56,7 @@ public class Round {
                 if (roundDuration == 0) {
                     cancel();
                     end();
-                    if (gameManager.playerManager.getPlayerCount() == 1) {
+                    if (gameManager.playerManager.getPlayerCount() <= 1) {
                         gameManager.setGameState(GameState.ENDING);
                     } else {
                         //Start a new round
@@ -103,6 +103,7 @@ public class Round {
                 player.getInventory().setItem(0, new ItemStack(Material.AIR, 1));
 
                 gameManager.playerManager.setPlayerType(player, PlayerType.SPECTATOR);
+
                 ChatUtils.sendMessage(player, "player.lost-game");
                 continue;
             }
