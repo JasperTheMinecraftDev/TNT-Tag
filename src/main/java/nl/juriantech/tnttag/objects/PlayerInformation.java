@@ -57,6 +57,8 @@ public class PlayerInformation {
         player.setFoodLevel(foodLevel);
         player.setDisplayName(displayName);
         player.setPlayerListName(playerListName);
+
+        System.out.println("Restored, exp level vwas: " + exp);
     }
 
     public Player getPlayer() {
