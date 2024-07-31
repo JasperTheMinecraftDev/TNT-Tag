@@ -39,14 +39,14 @@ public class GameManager {
     }
 
     public void start() {
-        setGameState(GameState.STARTING);
+        setGameState(GameState.STARTING, false);
     }
 
     public void stop() {
-        setGameState(GameState.ENDING);
+        setGameState(GameState.ENDING, false);
     }
 
-    public void setGameState(GameState state) {
+    public void setGameState(GameState state, boolean forceWinForTagger) {
         if (this.state.equals(GameState.INGAME) && state.equals(GameState.STARTING)) return; //Safety check.
         if (this.state == state) return; //Safety check.
 
@@ -81,7 +81,7 @@ public class GameManager {
                 break;
             case ENDING:
                 this.state = GameState.ENDING;
-                if (round != null) round.end();
+                if (round != null) round.end(forceWinForTagger);
 
                 ArrayList<Player> winners = new ArrayList<>();
 

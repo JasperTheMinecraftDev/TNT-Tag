@@ -55,9 +55,9 @@ public class Round {
 
                 if (roundDuration == 0) {
                     cancel();
-                    end();
+                    end(false);
                     if (gameManager.playerManager.getPlayers().values().stream().noneMatch(playerType -> playerType == PlayerType.SURVIVOR)) {
-                        gameManager.setGameState(GameState.ENDING);
+                        gameManager.setGameState(GameState.ENDING, false);
                     } else {
                         //Start a new round
                         gameManager.playerManager.broadcast(ChatUtils.getRaw("arena.new-round-starting").replace("%seconds%", String.valueOf(Tnttag.configfile.getInt("delay.new-round") * 20)));
@@ -71,7 +71,7 @@ public class Round {
                 } else if (roundDuration < 0) {
                     //The game has crashed due to an error
                     cancel();
-                    end();
+                    end(false);
                     Bukkit.getLogger().severe("This round is on a crashed state. Something has caused an error and made the round unable to continue. Stopping game...");
                     Bukkit.getLogger().severe("Please report the stacktrace above to our discord!");
                 }
@@ -79,7 +79,7 @@ public class Round {
         }.runTaskTimer(plugin, 20L, 20L);
     }
 
-    public void end() {
+    public void end(boolean forceWinForTagger) {
         gameManager.playerManager.broadcast(ChatUtils.getRaw("arena.round-ended"));
         for (Map.Entry<Player, PlayerType> entry : gameManager.playerManager.getPlayers().entrySet()) {
             Player player = entry.getKey();
@@ -94,17 +94,21 @@ public class Round {
                     Bukkit.dispatchCommand(console, cmd.replace("%player%", player.getName()));
                 }
 
-                PlayerLostRoundEvent event = new PlayerLostRoundEvent(player, gameManager.arena.getName());
-                Bukkit.getPluginManager().callEvent(event);
-                player.getWorld().createExplosion(player.getLocation(), 0.5F, false, false);
-                gameManager.playerManager.broadcast(ChatUtils.getRaw("arena.player-blew-up").replace("{player}", player.getName()));
-                ChatUtils.sendTitle(player, "titles.lose", 20L, 20L, 20L);
+                if (!forceWinForTagger) {
+                    PlayerLostRoundEvent event = new PlayerLostRoundEvent(player, gameManager.arena.getName());
+                    Bukkit.getPluginManager().callEvent(event);
+                    player.getWorld().createExplosion(player.getLocation(), 0.5F, false, false);
+                    gameManager.playerManager.broadcast(ChatUtils.getRaw("arena.player-blew-up").replace("{player}", player.getName()));
+                    ChatUtils.sendTitle(player, "titles.lose", 20L, 20L, 20L);
+                }
+
                 player.getInventory().setHelmet(new ItemStack(Material.AIR, 1));
                 player.getInventory().setItem(0, new ItemStack(Material.AIR, 1));
 
+
                 gameManager.playerManager.setPlayerType(player, PlayerType.SPECTATOR);
 
-                ChatUtils.sendMessage(player, "player.lost-game");
+                if (!forceWinForTagger) ChatUtils.sendMessage(player, "player.lost-game");
                 continue;
             }
 

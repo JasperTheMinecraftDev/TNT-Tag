@@ -110,7 +110,7 @@ public class PlayerManager {
         if (gameManager.startRunnable != null && !gameManager.startRunnable.isCancelled() && players.size() < gameManager.arena.getMinPlayers()) {
             gameManager.startRunnable.cancel();
             broadcast(ChatUtils.getRaw("arena.countdown-stopped").replace("{player}", player.getName()));
-            gameManager.setGameState(GameState.IDLE);
+            gameManager.setGameState(GameState.IDLE, false);
             return;
         }
 
@@ -119,7 +119,7 @@ public class PlayerManager {
             if (message) {
                 broadcast(ChatUtils.getRaw("arena.last-player-leaved").replace("{player}", player.getName()));
             }
-            gameManager.stop();
+            gameManager.setGameState(GameState.INGAME, true);
         }
 
         if (players.entrySet().stream().noneMatch(p -> p.getValue() == PlayerType.TAGGER)) {
