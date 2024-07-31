@@ -115,7 +115,7 @@ public class GameManager {
                         ArenaEndingEvent arenaEndingEvent = new ArenaEndingEvent(arena.getName(), playerManager.getPlayers(), winners);
                         Bukkit.getPluginManager().callEvent(arenaEndingEvent);
 
-                        setGameState(GameState.IDLE);
+                        setGameState(GameState.IDLE, false);
                         startRunnable = null;
 
                         String restartCommand = Tnttag.configfile.getString("bungee-mode.restart-command");
