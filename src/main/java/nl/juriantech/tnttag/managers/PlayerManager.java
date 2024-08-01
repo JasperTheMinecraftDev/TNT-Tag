@@ -119,7 +119,7 @@ public class PlayerManager {
             if (message) {
                 broadcast(ChatUtils.getRaw("arena.last-player-leaved").replace("{player}", player.getName()));
             }
-            gameManager.setGameState(GameState.INGAME, true);
+            gameManager.setGameState(GameState.ENDING, true);
         }
 
         if (players.entrySet().stream().noneMatch(p -> p.getValue() == PlayerType.TAGGER)) {
