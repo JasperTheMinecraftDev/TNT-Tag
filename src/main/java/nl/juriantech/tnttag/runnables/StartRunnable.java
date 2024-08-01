@@ -30,17 +30,20 @@ public class StartRunnable extends BukkitRunnable {
     public void run() {
         if (timeLeft <= 0) {
             cancel();
-            gameManager.setGameState(GameState.INGAME);
+            gameManager.setGameState(GameState.INGAME, false);
             return;
         }
 
         if (timesToBroadcast.contains(timeLeft)) {
             gameManager.playerManager.broadcast(ChatUtils.getRaw("arena.countdown-message").replace("{seconds}", String.valueOf(timeLeft)));
             for (Player player : gameManager.playerManager.getPlayers().keySet()) {
-                player.setLevel(timeLeft);
                 player.playSound(player.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.countdown").toUpperCase()), 1, 1);
                 ChatUtils.sendTitle(player, "titles.countdown", 20, 20, 20, timeLeft);
             }
+        }
+
+        for (Player player : gameManager.playerManager.getPlayers().keySet()) {
+            player.setLevel(timeLeft);
         }
 
         timeLeft--;

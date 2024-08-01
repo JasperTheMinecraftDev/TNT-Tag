@@ -30,7 +30,7 @@ public class StartSubCommand {
         }
 
         if (forced) {
-            arena.getGameManager().setGameState(GameState.INGAME);
+            arena.getGameManager().setGameState(GameState.INGAME, false);
         } else {
             arena.getGameManager().start();
         }
