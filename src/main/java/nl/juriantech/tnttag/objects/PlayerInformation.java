@@ -28,7 +28,7 @@ public class PlayerInformation {
         this.oldLocation = player.getLocation();
         this.inventory = player.getInventory().getContents();
         this.armor = player.getInventory().getArmorContents();
-        this.exp = player.getExp();
+        this.exp = player.getTotalExperience();
         this.gameMode = player.getGameMode();
         this.foodLevel = player.getFoodLevel();
         this.displayName = player.getDisplayName();
