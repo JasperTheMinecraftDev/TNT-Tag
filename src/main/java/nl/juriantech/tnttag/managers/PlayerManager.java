@@ -103,6 +103,8 @@ public class PlayerManager {
         if (Tnttag.configfile.getBoolean("global-lobby")) {
             gameManager.itemManager.giveGlobalLobbyItems(player);
             plugin.getLobbyManager().teleportToLobby(player);
+            player.setTotalExperience(0);
+            player.setExp(0);
         } else {
             plugin.getLobbyManager().leaveLobby(player);
         }
