@@ -16,7 +16,7 @@ public class PlayerInformation {
     private final Location oldLocation;
     private final ItemStack[] inventory;
     private final ItemStack[] armor;
-    private final float exp;
+    private final int totalExperience;
     private final GameMode gameMode;
     private final int foodLevel;
     private final String displayName;
@@ -28,7 +28,7 @@ public class PlayerInformation {
         this.oldLocation = player.getLocation();
         this.inventory = player.getInventory().getContents();
         this.armor = player.getInventory().getArmorContents();
-        this.exp = player.getTotalExperience();
+        this.totalExperience = player.getTotalExperience();
         this.gameMode = player.getGameMode();
         this.foodLevel = player.getFoodLevel();
         this.displayName = player.getDisplayName();
@@ -50,7 +50,7 @@ public class PlayerInformation {
         player.getInventory().clear();
         player.getInventory().setContents(inventory);
         player.getInventory().setArmorContents(armor);
-        player.setExp(exp);
+        player.setTotalExperience(totalExperience);
         player.teleport(oldLocation);
         player.setGameMode(gameMode);
         player.teleport(oldLocation);
@@ -58,7 +58,7 @@ public class PlayerInformation {
         player.setDisplayName(displayName);
         player.setPlayerListName(playerListName);
 
-        System.out.println("Restored, exp level vwas: " + exp);
+        System.out.println("Restored, exp level vwas: " + totalExperience);
     }
 
     public Player getPlayer() {
