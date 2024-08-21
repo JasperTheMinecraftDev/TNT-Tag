@@ -51,6 +51,8 @@ commands:
   arena-is-running: "&cYou can't edit this arena while is running, because it will cause errors."
   dump-warning: "&cWarning: This command should only be used if requested by the developer."
   dump-confirmation: "&bExecute this command again within 10 seconds to proceed."
+  forcejoin:
+    success: "&6You successfully forced everyone to join the arena."
 
 info-command:
   - "&b=========TNT-Tag========="
