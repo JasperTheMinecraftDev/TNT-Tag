@@ -48,6 +48,7 @@ public class ForceJoinSubCommand {
             }
         }
 
+
         // Force join all players online
         for (Player target : plugin.getServer().getOnlinePlayers()) {
             if (arenaName == null) {
@@ -55,7 +56,7 @@ public class ForceJoinSubCommand {
                     plugin.getLobbyManager().enterLobby(target);
                 }
             } else {
-                if (!arenaManager.playerIsInArena(target)) {
+                if (!arenaManager.playerIsInArena(target) && !target.hasPermission("tnttag.bypass-forcejoin")) {
                     arena.getGameManager().playerManager.addPlayer(target);
                 }
             }
