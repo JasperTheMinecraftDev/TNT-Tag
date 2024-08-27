@@ -56,7 +56,7 @@ public class Round {
                 if (roundDuration == 0) {
                     cancel();
                     end(false);
-                    if (gameManager.playerManager.getPlayers().values().stream().noneMatch(playerType -> playerType == PlayerType.SURVIVOR)) {
+                    if (gameManager.playerManager.getPlayerCount() == 1) {
                         gameManager.setGameState(GameState.ENDING, false);
                     } else {
                         //Start a new round
