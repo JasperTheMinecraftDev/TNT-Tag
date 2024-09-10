@@ -35,6 +35,9 @@ public class PlayerInformation {
         this.playerListName = player.getPlayerListName();
         if (plugin.getTabHook() != null) {
             tabPrefix = plugin.getTabHook().getPlayerPrefix(player.getUniqueId());
+            if (tabPrefix == null) { // If the user didn't have a prefix.
+                tabPrefix = "";
+            }
         }
 
         player.getInventory().clear();
