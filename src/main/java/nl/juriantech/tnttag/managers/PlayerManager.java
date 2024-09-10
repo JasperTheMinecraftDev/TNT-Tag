@@ -84,11 +84,19 @@ public class PlayerManager {
         PlayerLeaveArenaEvent event = new PlayerLeaveArenaEvent(player, gameManager.arena.getName());
         Bukkit.getPluginManager().callEvent(event);
 
+        PlayerInformation playerInformation = plugin.getLobbyManager().getPlayerInformationMap().get(player);
+
         if (players.get(player) != PlayerType.SURVIVOR) {
             // The player lost his winstreak, we process that here to ensure that they can't bypass it by leaving while the game still lasts.
             // Incrementing the winstreak is done in the GameManager.
             PlayerData playerData = new PlayerData(player.getUniqueId());
             playerData.setWinstreak(0);
+        }
+
+        if (plugin.getTabHook() != null) {
+            String prefix = playerInformation.getTabPrefix();
+            plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), prefix);
+            player.sendMessage("Your TAB prefix was restored with: " + prefix);
         }
 
         setPlayerType(player, PlayerType.WAITING);
