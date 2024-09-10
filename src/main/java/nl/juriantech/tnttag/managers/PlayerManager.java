@@ -96,7 +96,6 @@ public class PlayerManager {
         if (plugin.getTabHook() != null) {
             String prefix = playerInformation.getTabPrefix();
             plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), prefix);
-            player.sendMessage("Your TAB prefix was restored with: " + prefix);
         }
 
         setPlayerType(player, PlayerType.WAITING);
