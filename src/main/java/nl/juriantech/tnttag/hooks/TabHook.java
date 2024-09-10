@@ -45,6 +45,8 @@ public class TabHook {
     public String getPlayerPrefix(UUID playerUUID) {
         if (tabAPI.getNameTagManager() == null) return null;
 
+        Bukkit.getPlayer(playerUUID).sendMessage("Original prefix: " + tabAPI.getNameTagManager().getOriginalPrefix(Objects.requireNonNull(tabAPI.getPlayer(playerUUID))));
+        Bukkit.getPlayer(playerUUID).sendMessage("Custom prefix: " + tabAPI.getNameTagManager().getCustomPrefix(Objects.requireNonNull(tabAPI.getPlayer(playerUUID))));
         return tabAPI.getNameTagManager().getCustomPrefix(Objects.requireNonNull(tabAPI.getPlayer(playerUUID)));
     }
 }
