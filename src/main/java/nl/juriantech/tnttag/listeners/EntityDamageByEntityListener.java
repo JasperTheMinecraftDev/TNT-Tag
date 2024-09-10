@@ -83,7 +83,7 @@ public class EntityDamageByEntityListener implements Listener {
                 gameManager.playerManager.setPlayerType(damager, PlayerType.SURVIVOR);
                 gameManager.playerManager.setPlayerType(victim, PlayerType.TAGGER);
 
-                ChatUtils.sendCustomMessage(victim, ChatUtils.getRaw("player.tagged").replace("{tagger}", damager.getName()));
+                if (!ChatUtils.getRaw("player.tagged").isEmpty()) ChatUtils.sendCustomMessage(victim, ChatUtils.getRaw("player.tagged").replace("{tagger}", damager.getName()));
 
                 victim.playSound(victim.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.tagged").toUpperCase()), 1, 1);
                 damager.playSound(damager.getLocation(), Sound.valueOf(ChatUtils.getRaw("sounds.untagged").toUpperCase()), 1, 1);
