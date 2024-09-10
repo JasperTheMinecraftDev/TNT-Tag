@@ -165,6 +165,7 @@ state:
 actionBarMessages:
   tagger: "&cYou are the tagger!"
   survivor: "&2You are a survivor, RUN!"
+  spectator: "&8You are currently spectating."
 
 party:
   joined-game: "&bYour party joined the game."

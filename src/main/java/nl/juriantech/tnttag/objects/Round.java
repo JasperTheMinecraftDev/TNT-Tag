@@ -50,6 +50,8 @@ public class Round {
                         ChatUtils.sendActionBarMessage(player, ChatUtils.getRaw("actionBarMessages.tagger"));
                     } else if (gameManager.playerManager.getPlayers().get(player) == PlayerType.SURVIVOR) {
                         ChatUtils.sendActionBarMessage(player, ChatUtils.getRaw("actionBarMessages.survivor"));
+                    } else if (gameManager.playerManager.getPlayers().get(player) == PlayerType.SPECTATOR) {
+                        ChatUtils.sendActionBarMessage(player, ChatUtils.getRaw("actionBarMessages.spectator"));
                     }
                 }
 
