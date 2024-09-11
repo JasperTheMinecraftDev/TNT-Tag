@@ -53,7 +53,7 @@ public class ForceJoinSubCommand {
         for (Player target : plugin.getServer().getOnlinePlayers()) {
             if (arenaName == null) {
                 if (!plugin.getLobbyManager().playerIsInLobby(target)) {
-                    plugin.getLobbyManager().enterLobby(target);
+                    plugin.getLobbyManager().enterLobby(target, true);
                 }
             } else {
                 if (!arenaManager.playerIsInArena(target) && !target.hasPermission("tnttag.bypass-forcejoin")) {

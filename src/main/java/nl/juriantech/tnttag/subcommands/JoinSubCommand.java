@@ -30,7 +30,7 @@ public class JoinSubCommand {
         }
 
         if (!plugin.getLobbyManager().playerIsInLobby(player)) {
-            if (!plugin.getLobbyManager().enterLobby(player)) return;
+            if (!plugin.getLobbyManager().enterLobby(player, false)) return;
         } else if (arenaName == null) {
             ChatUtils.sendMessage(player, "player.already-in-lobby");
             return;

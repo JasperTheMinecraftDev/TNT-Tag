@@ -35,7 +35,7 @@ public class PlayerManager {
 
     public synchronized void addPlayer(Player player) {
         if (!lobbyManager.playerIsInLobby(player)) {
-            lobbyManager.enterLobby(player);
+            lobbyManager.enterLobby(player, true);
         }
 
         int minPlayers = gameManager.arena.getMinPlayers();

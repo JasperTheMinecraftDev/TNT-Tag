@@ -25,7 +25,7 @@ public class RandomJoinSubCommand {
     @CommandPermission("tnttag.join")
     public void onJoin(Player player) {
         if (!Tnttag.configfile.getBoolean("global-lobby") && !plugin.getLobbyManager().playerIsInLobby(player)) {
-            if (!plugin.getLobbyManager().enterLobby(player)) return;
+            if (!plugin.getLobbyManager().enterLobby(player, false)) return;
         }
 
         if (arenaManager.playerIsInArena(player)) {
