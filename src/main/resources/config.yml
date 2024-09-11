@@ -63,3 +63,6 @@ delay:
 # If set to false, the global lobby will be skipped. So players will instantly leave the TNT-Tag mode when they want to leave an arena.
 # Players won't be able to join it aswell if this is disabled.
 global-lobby: true
+
+# Don't teleport the player back to their location before joining the lobby.
+skip-location-restoral: false
