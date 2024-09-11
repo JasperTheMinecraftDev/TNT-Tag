@@ -47,9 +47,7 @@ public class LobbyManager {
         itemManager.clearInv(player);
         players.remove(player);
         PlayerInformation playerInfo = playerInformationMap.remove(player);
-        System.out.println("Checking info.");
         if (playerInfo != null) {
-            System.out.println("Found player " + playerInfo.getPlayer().getName() + " info.");
             playerInfo.restore();
         }
         ChatUtils.sendMessage(player, "player.leaved-lobby");
