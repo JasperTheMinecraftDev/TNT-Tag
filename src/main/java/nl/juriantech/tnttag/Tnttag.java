@@ -6,6 +6,7 @@ import dev.dejvokep.boostedyaml.YamlDocument;
 import nl.juriantech.tnttag.api.API;
 import nl.juriantech.tnttag.checkers.UpdateChecker;
 import nl.juriantech.tnttag.handlers.SetupCommandHandler;
+import nl.juriantech.tnttag.hooks.PartiesHook;
 import nl.juriantech.tnttag.hooks.PartyAndFriendsHook;
 import nl.juriantech.tnttag.hooks.PlaceholderAPIExpansion;
 import nl.juriantech.tnttag.hooks.TabHook;
@@ -46,6 +47,7 @@ public class Tnttag extends JavaPlugin {
     private EntityDamageByEntityListener entityDamageByEntityListener;
     private PlaceholderAPIExpansion placeholderAPIExpansion;
     private JoinSubCommand joinSubCommand;
+    private PartiesHook partiesHook;
 
     @Override
     public void onEnable() {
@@ -85,6 +87,11 @@ public class Tnttag extends JavaPlugin {
             logger.info("[TNT-Tag] TAB detected, enabling the hook.");
             this.tabHook = new TabHook(this);
             logger.info("[TNT-Tag] TAB hooks enabled.");
+        }
+
+        if (getServer().getPluginManager().isPluginEnabled("Parties")) {
+            this.partiesHook = new PartiesHook();
+            System.out.println("[TNT-Tag] Parties hooks enabled.");
         }
 
         api = new API(this);
@@ -285,5 +292,9 @@ public class Tnttag extends JavaPlugin {
 
     public JoinSubCommand getJoinSubCommand() {
         return joinSubCommand;
+    }
+
+    public PartiesHook getPartiesHook() {
+        return partiesHook;
     }
 }

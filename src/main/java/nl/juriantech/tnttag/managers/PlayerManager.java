@@ -1,11 +1,13 @@
 package nl.juriantech.tnttag.managers;
 
+import com.alessiodp.parties.api.interfaces.Party;
 import de.simonsator.partyandfriends.spigot.api.party.PlayerParty;
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.api.PlayerJoinArenaEvent;
 import nl.juriantech.tnttag.api.PlayerLeaveArenaEvent;
 import nl.juriantech.tnttag.enums.GameState;
 import nl.juriantech.tnttag.enums.PlayerType;
+import nl.juriantech.tnttag.hooks.PartiesHook;
 import nl.juriantech.tnttag.hooks.PartyAndFriendsHook;
 import nl.juriantech.tnttag.objects.PlayerData;
 import nl.juriantech.tnttag.objects.PlayerInformation;
@@ -49,6 +51,27 @@ public class PlayerManager {
             if (hook.playerIsInParty(player.getUniqueId())) {
                 PlayerParty party = hook.getPlayerParty(player.getUniqueId());
                 if (party.getLeader().getUniqueId().equals(player.getUniqueId())) {
+                    int partySize = hook.getPlayersOfParty(party).size();
+                    if (players.size() + partySize > maxPlayers) {
+                        ChatUtils.sendMessage(player, "party.too-much-players");
+                        return;
+                    }
+
+                    for (Player partyPlayer : hook.getPlayersOfParty(party)) {
+                        addPlayer(partyPlayer);
+                        ChatUtils.sendMessage(player, "party.joined-game");
+                    }
+                } else {
+                    ChatUtils.sendMessage(player, "party.not-the-leader");
+                }
+            }
+        }
+
+        if (plugin.getPartiesHook() != null) {
+            PartiesHook hook = plugin.getPartiesHook();
+            Party party = hook.getPlayerParty(player.getUniqueId());
+            if (party != null) {
+                if (party.getLeader().equals(player.getUniqueId())) {
                     int partySize = hook.getPlayersOfParty(party).size();
                     if (players.size() + partySize > maxPlayers) {
                         ChatUtils.sendMessage(player, "party.too-much-players");

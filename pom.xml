@@ -97,6 +97,10 @@
             <id>krypton</id>
             <url>https://repo.kryptonmc.org/releases</url>
         </repository>
+        <repository>
+            <id>alessiodp-repo</id>
+            <url>https://repo.alessiodp.com/releases/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -161,6 +165,12 @@
             <groupId>com.github.NEZNAMY</groupId>
             <artifactId>TAB-API</artifactId>
             <version>4.1.8</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.alessiodp.parties</groupId>
+            <artifactId>parties-api</artifactId>
+            <version>3.2.15</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
