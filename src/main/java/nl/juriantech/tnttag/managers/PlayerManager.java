@@ -79,8 +79,10 @@ public class PlayerManager {
                     }
 
                     for (Player partyPlayer : hook.getPlayersOfParty(party)) {
-                        addPlayer(partyPlayer);
-                        ChatUtils.sendMessage(player, "party.joined-game");
+                        if (!partyPlayer.getUniqueId().equals(player.getUniqueId())) {
+                            addPlayer(partyPlayer);
+                            ChatUtils.sendMessage(player, "party.joined-game");
+                        }
                     }
                 } else {
                     ChatUtils.sendMessage(player, "party.not-the-leader");
