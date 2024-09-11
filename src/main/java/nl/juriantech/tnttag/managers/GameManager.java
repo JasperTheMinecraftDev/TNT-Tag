@@ -96,7 +96,6 @@ public class GameManager {
                                     Bukkit.dispatchCommand(console, cmd.replace("%winner%", player.getName()));
                                 } else {
                                     boolean result = player.performCommand(cmd.replace("[PLAYER]", ""));
-                                    System.out.println("result: " + result);
                                 }
                             }
 
