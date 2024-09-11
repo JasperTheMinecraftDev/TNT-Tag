@@ -117,6 +117,8 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
                 if (arenaName.equals("current")) {
                     if (plugin.getArenaManager().playerIsInArena(player.getPlayer())) {
                         arena = plugin.getArenaManager().getPlayerArena(Bukkit.getPlayer(player.getUniqueId()));
+                    } else {
+                        return "Player not in arena.";
                     }
                 } else {
                     arena = plugin.getArenaManager().getArena(arenaName);
