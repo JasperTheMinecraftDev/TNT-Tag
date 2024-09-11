@@ -113,9 +113,16 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
                 String arenaName = parts[1];
                 String type = parts[2];
 
-                Arena arena = plugin.getArenaManager().getArena(arenaName);
-                if (arena == null) {
-                    return "Invalid arena";
+                Arena arena = null;
+                if (arenaName.equals("current")) {
+                    if (plugin.getArenaManager().playerIsInArena(player.getPlayer())) {
+                        arena = plugin.getArenaManager().getPlayerArena(Bukkit.getPlayer(player.getUniqueId()));
+                    }
+                } else {
+                    arena = plugin.getArenaManager().getArena(arenaName);
+                    if (arena == null) {
+                        return "Invalid arena";
+                    }
                 }
 
                 switch (type) {
