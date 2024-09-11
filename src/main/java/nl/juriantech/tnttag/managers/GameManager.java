@@ -91,8 +91,12 @@ public class GameManager {
                         Player player = entry.getKey();
                         if (entry.getValue() == PlayerType.SURVIVOR) {
                             for (String cmd : Tnttag.configfile.getStringList("arena-finish-commands")) {
-                                ConsoleCommandSender console = Bukkit.getConsoleSender();
-                                Bukkit.dispatchCommand(console, cmd.replace("%winner%", player.getName()));
+                                if (!cmd.startsWith("[PLAYER]")) {
+                                    ConsoleCommandSender console = Bukkit.getConsoleSender();
+                                    Bukkit.dispatchCommand(console, cmd.replace("%winner%", player.getName()));
+                                } else {
+                                    player.performCommand(cmd.replace("[PLAYER]", ""));
+                                }
                             }
 
                             PlayerData playerData = new PlayerData(player.getUniqueId());
