@@ -54,7 +54,9 @@ public class PlayerInformation {
         player.getInventory().setContents(inventory);
         player.getInventory().setArmorContents(armor);
         player.setTotalExperience(totalExperience);
-        if (!Tnttag.configfile.getBoolean("skip-location-restoral"))player.teleport(oldLocation);
+        System.out.println("Config value [DEBUG FOR ISSUE]:");
+        System.out.println(Tnttag.configfile.getBoolean("skip-location-restoral"));
+        if (!Tnttag.configfile.getBoolean("skip-location-restoral")) player.teleport(oldLocation);
         player.setGameMode(gameMode);
         player.setFoodLevel(foodLevel);
         player.setDisplayName(displayName);
