@@ -151,7 +151,7 @@ public class Round {
 
         playersInArena.remove(player);
         playersInArena.removeIf(p -> !gameManager.playerManager.getPlayers().containsKey(p));
-        playersInArena.removeIf(p -> p != null && gameManager.playerManager.getPlayers().get(p).equals(PlayerType.TAGGER));
+        playersInArena.removeIf(p -> p != null && !gameManager.playerManager.getPlayers().get(p).equals(PlayerType.SURVIVOR));
         playersInArena.sort(Comparator.comparingDouble(o -> o.getLocation().distanceSquared(location)));
         return playersInArena.isEmpty() ? null : playersInArena.get(0);
     }
