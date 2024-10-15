@@ -70,6 +70,12 @@ public class PlaceholderAPIExpansion extends PlaceholderExpansion {
             return String.valueOf(playerData.getWinstreak());
         }
 
+        if (params.equalsIgnoreCase("team")) {
+            return plugin.getArenaManager().getPlayerArena(player.getPlayer()) == null ?
+                            "N/A" :
+                            plugin.getArenaManager().getPlayerArena(player.getPlayer()).getGameManager().playerManager.getPlayerType(player.getPlayer()).name();
+        }
+
         if (params.startsWith("top_wins_") || params.startsWith("top_timestagged_") || params.startsWith("top_tags_")) {
             String[] parts = params.split("_");
             if (parts.length == 3) {
