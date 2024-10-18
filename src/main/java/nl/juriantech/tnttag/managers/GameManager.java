@@ -1,5 +1,6 @@
 package nl.juriantech.tnttag.managers;
 
+import dev.dejvokep.boostedyaml.YamlDocument;
 import nl.juriantech.tnttag.Arena;
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.api.ArenaEndingEvent;
@@ -27,6 +28,7 @@ public class GameManager {
     public final Arena arena;
     public GameState state = GameState.IDLE;
     public PlayerManager playerManager;
+    public ScoreboardManager scoreboardManager;
     public ItemManager itemManager;
     public StartRunnable startRunnable;
     public Round round;
@@ -35,6 +37,8 @@ public class GameManager {
         this.plugin = plugin;
         this.arena = arena;
         this.playerManager = new PlayerManager(plugin, this);
+        this.playerManager = new PlayerManager(plugin, this);
+        this.scoreboardManager = new ScoreboardManager(plugin, this, Tnttag.scoreboardFile);
         this.itemManager = plugin.getItemManager();
     }
 
@@ -78,10 +82,12 @@ public class GameManager {
 
                 playerManager.sendStartMessage();
                 startRound();
+                scoreboardManager.apply();
                 break;
             case ENDING:
                 this.state = GameState.ENDING;
                 if (round != null) round.end(forceWinForTagger);
+                scoreboardManager.remove();
 
                 ArrayList<Player> winners = new ArrayList<>();
 
@@ -146,5 +152,9 @@ public class GameManager {
 
     public boolean isRunning() {
         return this.state == GameState.INGAME;
+    }
+
+    public ScoreboardManager getScoreboardManager() {
+        return scoreboardManager;
     }
 }

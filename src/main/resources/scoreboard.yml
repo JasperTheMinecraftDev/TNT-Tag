@@ -1,0 +1,17 @@
+scoreboard:
+  title: '&e&lTNT TAG'
+  lines:
+    - '&7%date%'
+    - ' '
+    - '&fStatus: &a%state%'
+    - '&fTime: &a%time%&as'
+    - '  '
+    - '&fPlayers: &a%currentPlayers%&7/&a%maxPlayers%'
+    - '   '
+    - '&fTagged: &a%taggers%'
+    - '&fSurvivors: &a%survivors%'
+    - '&fSpectators: &a%spectators%'
+    - '    '
+    - '&fArena: &a%name%'
+    - '     '
+    - '&eYourserver.com'

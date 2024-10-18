@@ -34,7 +34,7 @@ public class Tnttag extends JavaPlugin {
 
     private final Logger logger = Bukkit.getLogger();
     private ArenaManager arenaManager;
-    public static YamlDocument arenasfile, customizationfile, configfile, playerdatafile, signsdatafile, itemsfile;
+    public static YamlDocument arenasfile, customizationfile, configfile, playerdatafile, signsdatafile, itemsfile, scoreboardFile;
     private UpdateChecker updateChecker;
     private SignManager signManager;
     private InventoryManager inventoryManager;
@@ -140,6 +140,7 @@ public class Tnttag extends JavaPlugin {
         playerdatafile = loadFile("playerdata.yml");
         signsdatafile = loadFile("signs.yml");
         itemsfile = loadFile("items.yml");
+        scoreboardFile = loadFile("scoreboard.yml");
 
         // We use a runnable, so it loads after the worlds.
         new BukkitRunnable() {

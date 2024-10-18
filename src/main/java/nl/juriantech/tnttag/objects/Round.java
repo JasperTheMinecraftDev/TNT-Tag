@@ -43,6 +43,7 @@ public class Round {
             @Override
             public void run() {
                 roundDuration--;
+                gameManager.getScoreboardManager().update();
                 for (Player player : gameManager.playerManager.getPlayers().keySet()) {
                     player.setLevel(Math.max(roundDuration, 0));
                     if (gameManager.playerManager.getPlayers().get(player) == PlayerType.TAGGER) {
@@ -154,5 +155,9 @@ public class Round {
         playersInArena.removeIf(p -> p != null && !gameManager.playerManager.getPlayers().get(p).equals(PlayerType.SURVIVOR));
         playersInArena.sort(Comparator.comparingDouble(o -> o.getLocation().distanceSquared(location)));
         return playersInArena.isEmpty() ? null : playersInArena.get(0);
+    }
+
+    public int getRoundDuration() {
+        return roundDuration;
     }
 }
