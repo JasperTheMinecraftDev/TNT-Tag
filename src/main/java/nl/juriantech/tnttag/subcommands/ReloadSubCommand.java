@@ -26,6 +26,7 @@ public class ReloadSubCommand {
     public void onReload(Player player) throws IOException {
         Tnttag.customizationfile.reload();
         Tnttag.configfile.reload();
+        Tnttag.scoreboardFile.reload();
         arenaManager.reload();
         plugin.getItemManager().reload();
 
