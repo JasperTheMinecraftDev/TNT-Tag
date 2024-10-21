@@ -2,6 +2,7 @@ package nl.juriantech.tnttag.managers;
 
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.enums.PlayerType;
+import nl.juriantech.tnttag.utils.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -80,7 +81,7 @@ public class ScoreboardManager {
                    .replace("%name%", gameManager.arena.getName());
 
         text = text.replace("%date%", getCurrentTime());
-        return ChatColor.translateAlternateColorCodes('&', text);
+        return ChatUtils.colorize(text);
     }
 
     private String getCurrentTime() {
