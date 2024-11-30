@@ -1,6 +1,5 @@
 package nl.juriantech.tnttag.managers;
 
-import dev.dejvokep.boostedyaml.YamlDocument;
 import nl.juriantech.tnttag.Arena;
 import nl.juriantech.tnttag.Tnttag;
 import nl.juriantech.tnttag.api.ArenaEndingEvent;
@@ -86,7 +85,9 @@ public class GameManager {
                 break;
             case ENDING:
                 this.state = GameState.ENDING;
-                if (round != null) round.end(forceWinForTagger);
+                if (round != null && !round.ended) {
+                    round.end(forceWinForTagger);
+                }
                 scoreboardManager.remove();
 
                 ArrayList<Player> winners = new ArrayList<>();

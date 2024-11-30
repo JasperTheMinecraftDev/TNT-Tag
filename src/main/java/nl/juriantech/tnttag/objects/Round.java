@@ -23,6 +23,7 @@ public class Round {
     private final Tnttag plugin;
     private final GameManager gameManager;
     private int roundDuration;
+    public boolean ended = false;
 
     public Round(Tnttag plugin, GameManager gameManager) {
         this.plugin = plugin;
@@ -58,10 +59,10 @@ public class Round {
 
                 if (roundDuration == 0) {
                     cancel();
-                    end(false);
                     if (gameManager.playerManager.getPlayerCount() == 1) {
-                        gameManager.setGameState(GameState.ENDING, false);
+                        gameManager.setGameState(GameState.ENDING, false); //Will already call round.end()!
                     } else {
+                        end(false);
                         //Start a new round
                         gameManager.playerManager.broadcast(ChatUtils.getRaw("arena.new-round-starting").replace("%seconds%", String.valueOf(Tnttag.configfile.getInt("delay.new-round") * 20)));
                         new BukkitRunnable() {
@@ -123,6 +124,7 @@ public class Round {
 
             ParticleUtils.Firework(player.getLocation(), 0);
         }
+        ended = true;
     }
 
     public void updateCompass(Player player) {
