@@ -59,10 +59,11 @@ public class Round {
 
                 if (roundDuration == 0) {
                     cancel();
+                    ended = true;
+                    end(false);
                     if (gameManager.playerManager.getPlayerCount() == 1) {
-                        gameManager.setGameState(GameState.ENDING, false); //Will already call round.end()!
+                        gameManager.setGameState(GameState.ENDING, false);
                     } else {
-                        end(false);
                         //Start a new round
                         gameManager.playerManager.broadcast(ChatUtils.getRaw("arena.new-round-starting").replace("%seconds%", String.valueOf(Tnttag.configfile.getInt("delay.new-round") * 20)));
                         new BukkitRunnable() {
