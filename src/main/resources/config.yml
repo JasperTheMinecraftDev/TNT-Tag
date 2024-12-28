@@ -5,12 +5,13 @@ round-finish-commands:
   survivors:
   # - eco add %player% 20
 
+arena-finish-commands-delay: 1 #This is in seconds.
 arena-finish-commands:
   #- eco add %winner% 1000
 
 # This will result in:
 # 1. Players instantly joining TNT-Tag once they get into the server.
-# 2. Players being unable to leave TNT-Tag, they will instead be connected to your lobby server once they try to leave.
+# 2. Players being unable to leave TNT-Tag, they will instead be connected to your lobby server when they try to leave.
 
 bungee-mode:
   enabled: false

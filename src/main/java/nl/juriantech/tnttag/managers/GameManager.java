@@ -97,14 +97,21 @@ public class GameManager {
                 for (Map.Entry<Player, PlayerType> entry : playersCopy.entrySet()) {
                         Player player = entry.getKey();
                         if (entry.getValue() == PlayerType.SURVIVOR) {
-                            for (String cmd : Tnttag.configfile.getStringList("arena-finish-commands")) {
-                                if (!cmd.contains("[PLAYER]")) {
-                                    ConsoleCommandSender console = Bukkit.getConsoleSender();
-                                    Bukkit.dispatchCommand(console, cmd.replace("%winner%", player.getName()));
-                                } else {
-                                    boolean result = player.performCommand(cmd.replace("[PLAYER]", ""));
+                            BukkitRunnable bukkitRunnable = new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    for (String cmd : Tnttag.configfile.getStringList("arena-finish-commands")) {
+                                        if (!cmd.contains("[PLAYER]")) {
+                                            ConsoleCommandSender console = Bukkit.getConsoleSender();
+                                            Bukkit.dispatchCommand(console, cmd.replace("%winner%", player.getName()));
+                                        } else {
+                                            boolean result = player.performCommand(cmd.replace("[PLAYER]", ""));
+                                        }
+                                    }
                                 }
-                            }
+                            };
+
+                            bukkitRunnable.runTaskLater(plugin, Tnttag.configfile.getInt("arena-finish-commands-delay") * 20);
 
                             PlayerData playerData = new PlayerData(player.getUniqueId());
                             int oldWins = playerData.getWins();
