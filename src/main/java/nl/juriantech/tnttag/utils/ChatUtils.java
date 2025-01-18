@@ -27,6 +27,7 @@ public class ChatUtils {
         String message = Tnttag.customizationfile.getString(path).replace("{player}", player.getName()).replace("{arena}", arena.getName());
         player.sendMessage(colorize(message));
     }
+
     public static void sendTitle(final Player player, final String path, long fadeIn, long stay, long fadeOut) {
         if (Tnttag.customizationfile.getString(path).isEmpty()) return;
 
@@ -36,7 +37,7 @@ public class ChatUtils {
     public static void sendTitle(final Player player, final String path, long fadeIn, long stay, long fadeOut, int seconds) {
         if (Tnttag.customizationfile.getString(path).isEmpty()) return;
 
-        player.sendTitle(colorize(Tnttag.customizationfile.getString(path + ".title")).replace("{seconds}", String.valueOf(seconds)), colorize(Tnttag.customizationfile.getString(path + ".subtitle")), (int) fadeIn, (int) stay, (int) fadeOut);
+        player.sendTitle(colorize(Tnttag.customizationfile.getString(path + ".title")).replace("{seconds}", String.valueOf(seconds)), colorize(Tnttag.customizationfile.getString(path + ".subtitle").replace("{seconds}", String.valueOf(seconds))), (int) fadeIn, (int) stay, (int) fadeOut);
     }
 
     public static void sendActionBarMessage(final Player player, final String message) {
