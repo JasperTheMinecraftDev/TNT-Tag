@@ -141,7 +141,7 @@ public class PlayerManager {
             plugin.getLobbyManager().leaveLobby(player);
         }
 
-        if (gameManager.startRunnable != null && !gameManager.startRunnable.isCancelled() && players.size() < gameManager.arena.getMinPlayers()) {
+        if (gameManager.startRunnable != null && !gameManager.startRunnable.isCancelled() && players.size() <= gameManager.arena.getMinPlayers()) {
             gameManager.startRunnable.cancel();
             broadcast(ChatUtils.getRaw("arena.countdown-stopped").replace("{player}", player.getName()));
             gameManager.setGameState(GameState.IDLE, false);
