@@ -174,6 +174,7 @@ public class PlayerManager {
     public void setPlayerType(Player player, PlayerType type) {
         if (!players.containsKey(player)) return; //Safety check.
         if (players.get(player) == type) return; //Safety check.
+        PlayerInformation playerInformation = plugin.getLobbyManager().getPlayerInformationMap().get(player);
 
         //If the player was a spectator before.
         if (players.get(player) == PlayerType.SPECTATOR) {
@@ -205,7 +206,10 @@ public class PlayerManager {
                 setType(player, PlayerType.WAITING);
                 player.teleport(gameManager.arena.getLobbyLocation());
 
-                setPlayerName(player, PlayerType.WAITING);
+                player.setDisplayName(playerInformation.getDisplayName());
+                player.setPlayerListName(playerInformation.getPlayerListName());
+                plugin.getTabHook().setPlayerPrefix(player.getUniqueId(), playerInformation.getTabPrefix());
+                System.out.println("TAB hook - restoring player prefix of " + player.getName() + " to " + playerInformation.getTabPrefix());
                 break;
             case SURVIVOR:
                 if (players.get(player) != PlayerType.TAGGER) {

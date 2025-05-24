@@ -94,10 +94,6 @@
             <url>https://simonsator.de/repo/</url>
         </repository>
         <repository>
-            <id>krypton</id>
-            <url>https://repo.kryptonmc.org/releases</url>
-        </repository>
-        <repository>
             <id>alessiodp-repo</id>
             <url>https://repo.alessiodp.com/releases/</url>
         </repository>
