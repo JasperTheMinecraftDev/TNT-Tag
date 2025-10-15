@@ -1,6 +1,7 @@
 package nl.juriantech.tnttag.hooks;
 
 import me.neznamy.tab.api.TabAPI;
+import me.neznamy.tab.api.TabPlayer;
 import nl.juriantech.tnttag.Tnttag;
 import org.bukkit.Bukkit;
 
@@ -45,6 +46,12 @@ public class TabHook {
     public String getPlayerPrefix(UUID playerUUID) {
         if (tabAPI.getNameTagManager() == null) return null;
 
-        return tabAPI.getNameTagManager().getOriginalPrefix(Objects.requireNonNull(tabAPI.getPlayer(playerUUID)));
+        TabPlayer tabPlayer = tabAPI.getPlayer(playerUUID);
+        if (tabPlayer == null || !tabPlayer.isLoaded()) {
+            return null; // not ready yet
+        }
+
+        return tabAPI.getNameTagManager().getOriginalPrefix(tabPlayer);
     }
+
 }

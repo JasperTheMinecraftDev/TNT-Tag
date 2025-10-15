@@ -53,6 +53,8 @@ commands:
   dump-confirmation: "&bExecute this command again within 10 seconds to proceed."
   forcejoin:
     success: "&6You successfully forced everyone to join the arena."
+  forceleave:
+    success: "&6You successfully forced everyone to leave the arena."
 
 info-command:
   - "&b=========TNT-Tag========="

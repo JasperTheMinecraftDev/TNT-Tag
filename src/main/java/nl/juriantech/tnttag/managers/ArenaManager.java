@@ -133,8 +133,8 @@ public class ArenaManager {
         arenasFile.set(arena.getName() + ".lobbyLocation.x", arena.getLobbyLocation().getX());
         arenasFile.set(arena.getName() + ".lobbyLocation.y", arena.getLobbyLocation().getY());
         arenasFile.set(arena.getName() + ".lobbyLocation.z", arena.getLobbyLocation().getZ());
-        arenasFile.set(arena.getName() + ".maxPlayers", arena.getMinPlayers());
-        arenasFile.set(arena.getName() + ".minPlayers", arena.getMaxPlayers());
+        arenasFile.set(arena.getName() + ".maxPlayers", arena.getMaxPlayers());
+        arenasFile.set(arena.getName() + ".minPlayers", arena.getMinPlayers());
         arenasFile.set(arena.getName() + ".potionEffects", arena.getPotionEffects());
         arenasFile.set(arena.getName() + ".roundDuration", arena.getRoundDuration());
         arenasFile.set(arena.getName() + ".countdown", arena.getCountdown());

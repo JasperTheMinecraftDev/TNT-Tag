@@ -38,7 +38,7 @@ public class ArenaSelector {
                     public void init(Player player, InventoryContents contents) {
                         int slot = 0;
                         for (Arena arena : arenaObjects) {
-                            String displayName = ChatUtils.colorize(ChatUtils.getRaw("join-gui.arenaTitle").replace("{name}", arena.getName()).replace("{state}", arena.getGameManager().state.toString()));
+                            String displayName = ChatUtils.colorize(ChatUtils.getRaw("join-gui.arenaTitle").replace("{name}", arena.getName()).replace("{state}", arena.getGameManager().state.toString()).replace("{current_players}", String.valueOf(arena.getGameManager().playerManager.getPlayerCount())));
                             contents.set(slot, IntelligentItem.of(new ItemBuilder(XMaterial.valueOf(ChatUtils.getRaw("join-gui.arenaMaterial")).parseMaterial()).displayName(displayName).lore(ChatUtils.getRaw("join-gui.arenaLore")).hideAttributes().build(), event -> {
                                 plugin.getJoinSubCommand().onJoin(player, arena.getName());
                                 player.closeInventory();

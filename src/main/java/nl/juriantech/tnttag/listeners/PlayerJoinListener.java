@@ -1,6 +1,7 @@
 package nl.juriantech.tnttag.listeners;
 
 import nl.juriantech.tnttag.Tnttag;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,7 +22,9 @@ public class PlayerJoinListener implements Listener {
         if (Tnttag.configfile.getBoolean("bungee-mode.enabled")) {
             player.performCommand("tt join");
             if (Tnttag.configfile.getBoolean("bungee-mode.enter-arena-instantly") && plugin.getArenaManager().getArenaObjects().size() == 1) {
-                plugin.getArenaManager().getArenaObjects().get(0).getGameManager().playerManager.addPlayer(player);
+                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                    plugin.getArenaManager().getArenaObjects().get(0).getGameManager().playerManager.addPlayer(player);
+                }, 2L); // 2 ticks (~100ms)
             }
         }
     }

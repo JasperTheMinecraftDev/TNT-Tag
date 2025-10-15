@@ -185,6 +185,7 @@ public class Tnttag extends JavaPlugin {
         handler.register(new TopSubCommand(this));
         handler.register(new RandomJoinSubCommand(this));
         handler.register(new ForceJoinSubCommand(this));
+        handler.register(new ForceLeaveSubCommand(this));
 
         handler.registerBrigadier();
     }
