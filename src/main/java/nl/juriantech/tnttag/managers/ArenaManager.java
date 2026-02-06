@@ -112,7 +112,7 @@ public class ArenaManager {
             List<String> potionEffects = arenasFile.getStringList(route + ".potionEffects");
 
             if (getArena(route) == null) {
-                Arena arena = new Arena(plugin, route, startLoc, lobbyLoc, minPlayers, maxPlayers, (ArrayList<String>) potionEffects, roundDuration, countdown);
+                Arena arena = new Arena(plugin, route, startLoc, lobbyLoc, maxPlayers, minPlayers, (ArrayList<String>) potionEffects, roundDuration, countdown);
                 Bukkit.getLogger().info("Loaded arena " + arena.getName());
                 arenaObjects.add(arena);
             }

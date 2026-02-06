@@ -65,13 +65,14 @@ public class Round {
                         gameManager.setGameState(GameState.ENDING, false);
                     } else {
                         //Start a new round
-                        gameManager.playerManager.broadcast(ChatUtils.getRaw("arena.new-round-starting").replace("%seconds%", String.valueOf(Tnttag.configfile.getInt("delay.new-round") * 20)));
+                        int delayNewRoundSeconds = Tnttag.configfile.getInt("delay.new-round");
+                        gameManager.playerManager.broadcast(ChatUtils.getRaw("arena.new-round-starting").replace("%seconds%", String.valueOf(delayNewRoundSeconds)));
                         new BukkitRunnable() {
                             @Override
                             public void run() {
                                 gameManager.startRound();
                             }
-                        }.runTaskLater(plugin, Tnttag.configfile.getInt("delay.new-round") * 20);
+                        }.runTaskLater(plugin, delayNewRoundSeconds * 20);
                     }
                 } else if (roundDuration < 0) {
                     //The game has crashed due to an error
