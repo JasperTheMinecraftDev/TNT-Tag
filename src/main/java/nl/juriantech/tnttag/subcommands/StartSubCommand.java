@@ -7,6 +7,7 @@ import nl.juriantech.tnttag.managers.ArenaManager;
 import nl.juriantech.tnttag.utils.ChatUtils;
 import org.bukkit.entity.Player;
 import revxrsal.commands.annotation.Command;
+import revxrsal.commands.annotation.Default;
 import revxrsal.commands.annotation.Optional;
 import revxrsal.commands.annotation.Subcommand;
 import revxrsal.commands.bukkit.annotation.CommandPermission;
@@ -22,7 +23,7 @@ public class StartSubCommand {
 
     @Subcommand("start")
     @CommandPermission("tnttag.start")
-    public void onStart(Player player, String arenaName, @Optional boolean forced) {
+    public void onStart(Player player, String arenaName, @Optional @Default("false") boolean forced) {
         Arena arena = arenaManager.getArena(arenaName);
         if (arena == null) {
             ChatUtils.sendMessage(player, "commands.invalid-arena");
